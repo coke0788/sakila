@@ -10,22 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CountryMapper;
 import com.gd.sakila.vo.Country;
-import com.gd.sakila.vo.PageParam;
+import com.gd.sakila.vo.Page;
 
-@Service
-@Transactional
+@Service //내부에서 자바 로직을 처리함
+@Transactional //트랜잭션 원칙대로 에러가 나면 롤백 처리한다.
 public class CountryService {
 	@Autowired //생성자 생성 따로 안 해줘도 됨. (객체가 자동으로 만들어짐.)
 	private CountryMapper countryMapper;
 	public Map<String, Object> getCountryList(int currentPage, int rowPerPage){
 		//컨트롤러에서 보내준 매개값을 가공
 		int beginRow = (currentPage-1) * rowPerPage;
-		PageParam pageParam = new PageParam();
-		pageParam.setBeginRow(beginRow);
-		pageParam.setRowPerPage(rowPerPage);
+		Page page = new Page();
+		page.setBeginRow(beginRow);
+		page.setRowPerPage(rowPerPage);
 		
 		//dao 호출
-		List<Country> list = countryMapper.selectCountryList(pageParam);
+		List<Country> list = countryMapper.selectCountryList(page);
 		int total = countryMapper.selectCountryTotal();
 		System.out.println(list.size());
 
