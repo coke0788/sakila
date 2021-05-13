@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.BoardMapper">
+<!-- MVC 모델에서 DAO - SQL 쿼리 작성부. sql=~~~, stmt.execute~~~ 모두 포함. -->
 	<select id="selectBoardList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.Board">
 		SELECT board_id boardId, board_title boardTitle, insert_date insertDate FROM board
 		<where>
@@ -12,7 +13,7 @@
 	</select>
 	
 	<!-- mybatis에서 if문으로 분기시키는 방법 -->
-	<select id="selectTotal" resultType="Integer" parameterType="String">
+	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM board 
 		<where>
 			<if test="searchWord != null">
@@ -22,13 +23,13 @@
 	</select>
 	
 	<!-- select는 무조건 반환타입이 List이고 resultType 안에는 제네릭(<> 안에 들어가는거)타입을 기재.-->
-	<select id="selectBoardOne" parameterType="Integer" resultType="com.gd.sakila.vo.Board">
-		SELECT board_id boardId, board_title boardTitle, board_content boardContent, staff_id staffId, insert_date insertDate FROM board WHERE board_id=#{boardId}
+	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map">
+		SELECT b.board_id boardId, b.board_title boardTitle, b.board_content boardContent, b.insert_date insertDate, s.username username FROM board b INNER JOIN staff s ON b.staff_id=s.staff_id WHERE board_id=#{boardId}
 	</select>
 	
 	<!-- paramType은 매개변수 타입, resultType은 반환 타입 -->
 	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
-		INSERT INTO board(board_pw, board_title, board_content, insert_date) VALUES (PASSWORD(#{boardPw), #{boardTitle}, #{boardContent}, NOW())
+		INSERT INTO board(board_pw, board_title, board_content, insert_date, staff_id) VALUES (PASSWORD(#{boardPw}), #{boardTitle}, #{boardContent}, NOW(), #{staffId})
 	</insert>
 	
 	<delete id="deleteBoard" parameterType="com.gd.sakila.vo.Board">

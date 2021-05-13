@@ -6,4 +6,5 @@ import lombok.Data;
 public class Page {
 	private int rowPerPage;
 	private int beginRow;
+	private String searchWord;
 }
