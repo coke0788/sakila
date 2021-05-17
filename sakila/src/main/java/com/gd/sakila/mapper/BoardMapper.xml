@@ -13,7 +13,7 @@
 	</select>
 	
 	<!-- mybatis에서 if문으로 분기시키는 방법 -->
-	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
+	<select id="selectBoardTotal" parameterType="String" resultType="Integer">
 		SELECT COUNT(*) FROM board 
 		<where>
 			<if test="searchWord != null">

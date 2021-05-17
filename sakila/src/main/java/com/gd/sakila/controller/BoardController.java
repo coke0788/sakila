@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.Comment;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,29 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	@PostMapping("/removeComment")
+	public String removeComment(Comment comment) {
+		int row = boardService.deleteComment(comment);
+		log.debug("=========코멘트 삭제 : "+comment.toString());
+		return "redirect:/getBoardOne?boardId="+comment.getBoardId();
+	}
+	
+	@GetMapping("/modifyBoard")
+	public String modifyBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
+		//select(insert form)
+		log.debug("=======수정 boardId:"+boardId);
+		Map<String, Object> map = boardService.getBoardOne(boardId);
+		model.addAttribute("boardMap", map.get("boardMap"));
+		return "modifyBoard";
+	}
+	@PostMapping("/modifyBoard")
+	public String modifyBoard(Board board) {
+		log.debug("========수정 board:"+board.toString());
+		//update
+		int row = boardService.modifyBoard(board);
+		log.debug("======수정 row :"+row);
+		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+	}
 	@GetMapping("/removeBoard") 
 	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
 		log.debug("====삭제 boardId:"+boardId);
@@ -53,8 +77,9 @@ public class BoardController {
 	//required는 꼭 받아와야하는지(true), 안 받아와도 되는지(false)를 확인? 함
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required=true) int boardId) {
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		model.addAttribute("map", map); //request.setAttribute와 비슷한 역할.
-		System.out.println("========map:"+map);
+		log.debug("map : "+map);
+		model.addAttribute("commentList", map.get("commentList")); //request.setAttribute와 비슷한 역할.
+		model.addAttribute("boardMap", map.get("boardMap"));
 		return "getBoardOne"; //return 값은 뷰. request.getdispather.forward 전부를 통틀어서 간단하게 얘 혼자 다 하고 있는거임.
 	}
 	@GetMapping("/getBoardList")
