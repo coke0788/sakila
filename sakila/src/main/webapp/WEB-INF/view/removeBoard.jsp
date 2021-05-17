@@ -9,9 +9,13 @@
 <script>
 $(document).ready(function(){
 	$('#btn').click(function(){
-		console.log('btn click');
-		// 폼 유효성 검사 코드 추가
-		$('#removeForm').submit();
+		if($('#boardPw').val().length<4){
+			alert('password는 4자 이상이어야 합니다.');
+			console.log('글자 수 누락');
+		} else {
+			console.log('btn click');
+			$('#removeForm').submit();
+		}
 	});
 });
 </script>
