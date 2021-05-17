@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +13,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 
-//MVC모델에서 컨트롤러. servelet 역할. Service에서 연산한 값들을 호출하고, view로 보내주고. view에서 보내준 값도 저장하고.
+import lombok.extern.slf4j.Slf4j;
 
+//MVC모델에서 컨트롤러. servelet 역할. Service에서 연산한 값들을 호출하고, view로 보내주고. view에서 보내준 값도 저장하고.
+@Slf4j
 @Controller
+@Transactional
 public class BoardController {
 	@Autowired
 	BoardService boardService;
+	
+	@GetMapping("/removeBoard") 
+	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
+		log.debug("====삭제 boardId:"+boardId);
+		model.addAttribute("boardId", boardId); //forwarding 하면 매개변수도 넘어가기 때문에 포워딩 쪽에서 requestParam으로 받아올 수 있음, 하지만 model에 저장해서 가져올 수도 있음.
+		return "removeBoard";
+	}
+	@PostMapping("/removeBoard")
+	public String removeBoard(Board board) {
+		int row = boardService.removeBoard(board);
+		log.debug("=====삭제 board:"+board.toString());
+		if(row==1) {
+			return "redirect:/getBoardList";
+		} 
+		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+	}
 	@GetMapping("/addBoard") //Get은 서블릿의 Get이고 Post는 서블릿의 Post 역할을 함.
 	public String addBoard() {
 		return "addBoard";

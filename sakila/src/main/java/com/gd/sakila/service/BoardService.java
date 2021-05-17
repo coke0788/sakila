@@ -8,15 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.BoardMapper;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.Page;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
+	public int removeBoard(Board board) {
+		log.debug("======= 삭제 Board :"+board.toString());
+		return boardMapper.deleteBoard(board);
+	}
 	public int addBoard(Board board) {
 		return boardMapper.insertBoard(board);
 	}
