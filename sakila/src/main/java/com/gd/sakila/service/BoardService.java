@@ -25,19 +25,29 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardService {
 	@Autowired BoardMapper boardMapper;
 	@Autowired CommentMapper commentMapper;
-	public int deleteComment(Comment comment) {
-		log.debug("========코멘트 삭제 comment"+comment.toString());
-		return commentMapper.deleteCommentByBoard(comment);
-	}
+	
+	//게시글 수정
 	public int modifyBoard(Board board){
 		log.debug("=========수정 Board : " + board.toString());
 		return boardMapper.updateBoard(board);
 	}
 	
+	//게시글 삭제
 	public int removeBoard(Board board) {
-		log.debug("======= 삭제 Board :"+board.toString());
-		return boardMapper.deleteBoard(board);
+		log.debug("======= 삭제 Board :"+ board.toString());
+		// 2) 게시글 삭제
+		int boardRow = boardMapper.deleteBoard(board);
+		log.debug("======= 삭제 Board :"+boardRow);
+		if(boardRow == 0) {
+			return 0;
+		}
+		// 1) 댓글 삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+		log.debug("======= 댓글삭제 BoardId :"+ commentRow);
+
+		return boardRow;
 	}
+	//게시글 추가
 	public int addBoard(Board board) {
 		log.debug("======= 등록 Board :"+board.toString());
 		return boardMapper.insertBoard(board);
@@ -46,10 +56,10 @@ public class BoardService {
 		log.debug("======= Board리스트 boardId :"+boardId);
 		// 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
-		log.debug("map : "+boardMap);
+		log.debug("======= map : "+boardMap);
 		//댓글 리스트
 		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
-		log.debug("댓글 목록 크기 : "+commentList.size());
+		log.debug("========= 댓글 목록 크기 : "+commentList.size());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boardMap", boardMap);
 		map.put("commentList", commentList);

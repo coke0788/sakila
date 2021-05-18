@@ -57,6 +57,12 @@ $(document).ready(function(){
     ${commentList.size()} 개의 댓글이 있습니다.
     <form id="deleteCommentForm" action="${pageContext.request.contextPath}/removeComment" method="post">
     <table class="table">
+        <tr>
+    		<td>내용</td>
+    		<td>이름</td>
+    		<td>등록일</td>
+    		<td></td>
+    	</tr>
     <c:forEach var="c" items="${commentList}">
     <input type="text" hidden="hidden" name="commentId" value="${c.commentId}">
     <input type="text" hidden="hidden" name="boardId" value="${boardMap.boardId}">
@@ -69,7 +75,7 @@ $(document).ready(function(){
     </c:forEach>
     </table>
     </form>
-    <div><a href=""><button type="button">댓글추가</button></a></div>
+    <div><a class="btn btn-default" href="${pageContext.request.contextPath}/addComment?boardId=${boardMap.boardId}">댓글추가</a></div>
 </div>
 </body>
 </html>

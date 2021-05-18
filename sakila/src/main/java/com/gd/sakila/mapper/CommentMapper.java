@@ -9,5 +9,7 @@ import com.gd.sakila.vo.Comment;
 @Mapper
 public interface CommentMapper {
 	List<Comment> selectCommentListByBoard(int boardId);
-	int deleteCommentByBoard(Comment comment);
+	int deleteCommentByBoardId(int boardId);
+	int deleteCommentByCommentId(int commentId);
+	int insertComment(Comment comment);
 }

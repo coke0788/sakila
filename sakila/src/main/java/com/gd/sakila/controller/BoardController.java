@@ -24,13 +24,6 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	@PostMapping("/removeComment")
-	public String removeComment(Comment comment) {
-		int row = boardService.deleteComment(comment);
-		log.debug("=========코멘트 삭제 : "+comment.toString());
-		return "redirect:/getBoardOne?boardId="+comment.getBoardId();
-	}
-	
 	@GetMapping("/modifyBoard")
 	public String modifyBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
 		//select(insert form)
@@ -57,10 +50,10 @@ public class BoardController {
 	public String removeBoard(Board board) {
 		int row = boardService.removeBoard(board);
 		log.debug("=====삭제 board:"+board.toString());
-		if(row==1) {
-			return "redirect:/getBoardList";
+		if(row==0) {
+			return "redirect:/getBoardOne?boardId="+board.getBoardId();
 		} 
-		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+		return "redirect:/getBoardList";
 	}
 	@GetMapping("/addBoard") //Get은 서블릿의 Get이고 Post는 서블릿의 Post 역할을 함.
 	public String addBoard() {
@@ -77,7 +70,7 @@ public class BoardController {
 	//required는 꼭 받아와야하는지(true), 안 받아와도 되는지(false)를 확인? 함
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required=true) int boardId) {
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		log.debug("map : "+map);
+		log.debug("================댓글리스트랑 보드map : "+map);
 		model.addAttribute("commentList", map.get("commentList")); //request.setAttribute와 비슷한 역할.
 		model.addAttribute("boardMap", map.get("boardMap"));
 		return "getBoardOne"; //return 값은 뷰. request.getdispather.forward 전부를 통틀어서 간단하게 얘 혼자 다 하고 있는거임.

@@ -4,8 +4,15 @@
 	<select id="selectCommentListByBoard" parameterType="Integer" resultType="com.gd.sakila.vo.Comment">
 		SELECT comment_id commentId, comment_content commentContent, username username, insert_date insertDate FROM comment WHERE board_id=#{boardId} ORDER BY insert_date DESC
 	</select>
-	<!-- 로그인 폼이 없어서 유저네임을 받아 올 수가 없음.... commentId만 받아서 지우는걸로 우선 구현해보기. -->
-	<delete id="deleteCommentByBoard" parameterType="Integer" >
-		DELETE from comment WHERE comment_id=#{commentId}
+	<!-- 트랜잭션, 보드가 삭제 될 때 같이 삭제 되어야함. -->
+	<delete id="deleteCommentByBoardId" parameterType="Integer">
+		DELETE FROM comment WHERE board_id = #{boardId}
 	</delete>
+	<delete id="deleteCommentByCommentId" parameterType="Integer">
+		DELETE FROM comment WHERE comment_id = #{commentId}
+	</delete>
+	<!-- 로그인 아직 안 만들어서 이름란은 적는 걸로 해서 만들기 -->
+	<insert id="insertComment" parameterType="com.gd.sakila.vo.Comment">
+		INSERT INTO comment(board_id, username, comment_content, insert_date) VALUES (#{boardId}, #{username}, #{commentContent}, NOW())
+	</insert>
 </mapper>
