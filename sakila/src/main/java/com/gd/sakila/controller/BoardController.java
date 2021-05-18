@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @Transactional
+@RequestMapping("/admin") // ~~Mapping 적혀있는 애들 앞에 /admin을 추가한다 --> 필터로 지나가는 것들 모두 일괄적으로 관리하도록
 public class BoardController {
 	@Autowired
 	BoardService boardService;
@@ -38,7 +40,7 @@ public class BoardController {
 		//update
 		int row = boardService.modifyBoard(board);
 		log.debug("======수정 row :"+row);
-		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	@GetMapping("/removeBoard") 
 	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
@@ -51,9 +53,9 @@ public class BoardController {
 		int row = boardService.removeBoard(board);
 		log.debug("=====삭제 board:"+board.toString());
 		if(row==0) {
-			return "redirect:/getBoardOne?boardId="+board.getBoardId();
+			return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 		} 
-		return "redirect:/getBoardList";
+		return "redirect:/admin/getBoardList";
 	}
 	@GetMapping("/addBoard") //Get은 서블릿의 Get이고 Post는 서블릿의 Post 역할을 함.
 	public String addBoard() {
@@ -63,7 +65,7 @@ public class BoardController {
 	public String addBoard(Board board) { //input에서 입력한 것들을 Board 타입으로 전부 묶어서 가져올 것이다. 대신, form의 이름과 vo의 이름을 통일시켜야함. = 커맨드객체
 		boardService.addBoard(board);
 		System.out.println("======입력 board값 :"+board);
-		return "redirect:/getBoardList"; //getBoardList만 적으면 forwarding 되므로, redirect:/ 을 붙여서 sendRedirect 시킨다.
+		return "redirect: /admin/getBoardList"; //getBoardList만 적으면 forwarding 되므로, redirect:/ 을 붙여서 sendRedirect 시킨다.
 		//추가로! reirect: 뒤에 / 만 적는 이유는 properties에서 request.contextPath를 그렇게 설정했기 때문.
 	}
 	@GetMapping("/getBoardOne") //@Servelet이랑 비슷한 역할.

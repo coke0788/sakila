@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,10 +29,14 @@
 	</table>
 	<div>
 		<c:if test="${currentPage>1}">
-			<a href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage-1}"><button type="button">previous</button></a>
+			<a
+				href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage-1}"><button
+					type="button">previous</button></a>
 		</c:if>
 		<c:if test="${lastPage > currentPage}">
-			<a href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage+1}"><button type="button">next</button></a>
+			<a
+				href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage+1}"><button
+					type="button">next</button></a>
 		</c:if>
 	</div>
 </body>
