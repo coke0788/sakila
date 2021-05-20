@@ -19,23 +19,23 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		/*
 		//요청전
 		log.debug("===========요청 전");
 		HttpSession session = null;
 		if(request instanceof HttpServletRequest) {
 			session = ((HttpServletRequest)request).getSession();
 		}
-		/*
 		if(session.getAttribute("loginStaff")==null) {
 			if(response instanceof HttpServletResponse){
 				((HttpServletResponse)response).sendRedirect("/");
 			}
 			return;
 		}
-		*/
 		chain.doFilter(request, response);
 		//요청후
 		log.debug("===========loginfilter 요청 후");
+		*/
 	}
 
 }
