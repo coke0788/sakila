@@ -29,6 +29,10 @@
 	
 	<!-- paramType은 매개변수 타입, resultType은 반환 타입 -->
 	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
+		<!-- 인서트 실행 시 셀렉트를 실행한다. resulttype은 integer, boardId에 값을 넣는다, 언제? 이후에 -->
+		<selectKey resultType="Integer" keyProperty="boardId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 		INSERT INTO board(board_pw, board_title, board_content, insert_date, staff_id) VALUES (PASSWORD(#{boardPw}), #{boardTitle}, #{boardContent}, NOW(), #{staffId})
 	</insert>
 	

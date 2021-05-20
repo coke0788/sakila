@@ -12,25 +12,53 @@
 <link href="../static/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#addButton').click(function() {
-            if ($('#boardPw').val().length < 4) {
+    $(document).ready(function() { //레디
+        $('#addButton').click(function() { //폼 add 버트 ㄴ눌렀을때
+        	
+        	let ck = false;
+        	let boardfile = $('.boardfile'); //배열
+        	
+        	for(let item of boardfile){ // 자바 스크립트의 foreach 문
+        		if($(item).val() == ''){
+        			ck = true;
+        			console.log('첨부되지 않은 파일이 존재합니다.');
+        			break;
+        		}
+        	}
+        	if(ck){ //ck==true 이면
+        		alert('첨부되지 않은 파일이 존재합니다.');
+        		console.log('첨부되지 않은 파일이 존재합니다.');
+        	} else if ($('#boardPw').val().length < 4) { //유효성 검사 실행
                 alert('boardPw는 4자이상 이어야 합니다');
+                console.log('패스워드 오류');
                 $('#boardPw').focus();
             } else if ($('#boardTitle').val() == '') {
                 alert('boardTitle을 입력하세요');
+                console.log('타이틀 오류');
                 $('#boardTitle').focus();
             } else if ($('#boardContent').val() == '') {
+            	console.log('내용 오류');
                 alert('boardContent을 입력하세요');
                 $('#boardContent').focus();
             } else if ($('#boardUser').val() == '') {
+            	console.log('유저 오류');
                 alert('boardUser을 입력하세요');
                 $('#boardUser').focus();
             } else {
                 $('#addForm').submit();
             }
         });
+        
+        $('#addFileBtn').click(function(){ //파일 추가
+        	console.log('addfile click');
+        	$('#inputFile').append('<input type="file" name="boardfile" class="boardfile">');
+        });
+        $('#delFileBtn').click(function(){ //파일 삭제 : 마지막 태그르 삭제
+        	console.log('delFile click');
+        	$('#inputFile').children().last().remove(); //inputfile 태그의 자식 중 가장 마지막 애를 삭제한다.
+        });
     });
+    
 </script>
 <title>addBoard</title>
 </head>
@@ -173,30 +201,38 @@
                                 <div class="form-validation">
                                 <h4>Edit Board</h4>
                                 <hr>
-						        <form id="addForm"
-						            action="${pageContext.request.contextPath}/admin/addBoard" method="post">
+						        <form id="addForm" action="${pageContext.request.contextPath}/admin/addBoard" method="post" enctype="multipart/form-data">
 						            <div class="form-group">
 						                <label for="boardPw" class="col-lg-8 col-form-label">board PW <span class="text-danger">*</span></label>
 						              	<div class="col-lg-8"> 
-						                	<input class="form-control" name="boardPw" id="boardPw" type="password" placeholder="4자 이상의 비밀번호를 입력하세요."/>
+						                	<input class="form-control" name="board.boardPw" id="boardPw" type="password" placeholder="4자 이상의 비밀번호를 입력하세요."/>
 						                </div>
 						            </div>
 						            <div class="form-group">
 						                <label for="boardTitle" class="col-lg-6 col-form-label">Title <span class="text-danger">*</span></label>
 						                <div class="col-lg-8"> 
-						                	<input class="form-control" name="boardTitle" id="boardTitle" type="text" placeholder="제목을 입력하세요."/>
+						                	<input class="form-control" name="board.boardTitle" id="boardTitle" type="text" placeholder="제목을 입력하세요."/>
 						                </div>
 						            </div>
 						            <div class="form-group">
 						                <label for="boardContent" class="col-lg-6 col-form-label">Content <span class="text-danger">*</span></label>
 						                <div class="col-lg-8">
-						                	<textarea class="form-control" name="boardContent" id="boardContent" rows="5" cols="50"></textarea>
+						                	<textarea class="form-control" name="board.boardContent" id="boardContent" rows="5" cols="50"></textarea>
 						                </div>
-						            </div>
+							        </div>
+							        <div class="form-group">
+							            <label for="boardfile" class="col-lg-6 col-form-label">File <span class="text-danger"> </span></label>
+							            <div class="col-lg-8">
+							                <button id="addFileBtn" type="button">파일추가</button>
+							                <button id="delFileBtn" type="button">파일삭제</button>
+							            </div>
+							            <div id="inputFile">
+							            </div>
+							        </div>
 						            <div class="form-group">
 						                <label for="staffId" class="col-lg-2 col-form-label">staff ID <span class="text-danger">*</span></label>
-						                <div class="col-lg-2">
-						                	<select class="form-control" id="staffId" name="staffId">
+						                <div class="col-lg-3">
+						                	<select class="form-control" id="staffId" name="board.staffId">
 						                		<option value="1">1: Mike</option>
 						                		<option value="2">2: Jon</option>
 						                	</select>

@@ -15,11 +15,10 @@ import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebFilter("/admin/*")
+@WebFilter("/_admin/*")
 public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		/*
 		//요청전
 		log.debug("===========요청 전");
 		HttpSession session = null;
@@ -35,7 +34,6 @@ public class LoginFilter implements Filter {
 		chain.doFilter(request, response);
 		//요청후
 		log.debug("===========loginfilter 요청 후");
-		*/
 	}
 
 }

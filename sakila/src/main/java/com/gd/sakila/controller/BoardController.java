@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.BoardForm;
 import com.gd.sakila.vo.Comment;
 
 import lombok.extern.slf4j.Slf4j;
@@ -62,10 +63,12 @@ public class BoardController {
 		return "addBoard";
 	}
 	@PostMapping("/addBoard")
-	public String addBoard(Board board) { //input에서 입력한 것들을 Board 타입으로 전부 묶어서 가져올 것이다. 대신, form의 이름과 vo의 이름을 통일시켜야함. = 커맨드객체
-		boardService.addBoard(board);
-		System.out.println("======입력 board값 :"+board);
-		return "redirect: /admin/getBoardList"; //getBoardList만 적으면 forwarding 되므로, redirect:/ 을 붙여서 sendRedirect 시킨다.
+	public String addBoard(BoardForm boardForm) { //input에서 입력한 것들을 Board 타입으로 전부 묶어서 가져올 것이다. 대신, form의 이름과 vo의 이름을 통일시켜야함. = 커맨드객체
+		//boardService.addBoard(board); --> boardform으로 변경해서 이걸 호출 할 수가 없음.
+		boardService.addBoard(boardForm);
+		log.debug("==============boardForm:"+boardForm);
+		return "redirect:/admin/getBoardList";
+		// return "redirect:/admin/getBoardList"; //getBoardList만 적으면 forwarding 되므로, redirect:/ 을 붙여서 sendRedirect 시킨다.
 		//추가로! reirect: 뒤에 / 만 적는 이유는 properties에서 request.contextPath를 그렇게 설정했기 때문.
 	}
 	@GetMapping("/getBoardOne") //@Servelet이랑 비슷한 역할.
