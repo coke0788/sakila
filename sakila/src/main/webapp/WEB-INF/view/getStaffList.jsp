@@ -4,9 +4,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>getStaffList</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#btn').click(function(){
+		console.log('btn click!');
+		$('#searchWordForm').submit();
+	});
+});
+</script>
 </head>
 <body>
+	<form action="${pageContext.request.contextPath}/admin/getStaffList" id="searchWordForm">
+		<div>
+			<input type="text" name="searchWord">
+			<button type="button" id="btn">검색</button>
+		</div>
+	</form>
 	<h1>Staff List</h1>
 		<table>
 			<thead>

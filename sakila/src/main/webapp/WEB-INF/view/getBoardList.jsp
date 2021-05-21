@@ -10,6 +10,7 @@
     <title>getBoardList</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
 	
