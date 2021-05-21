@@ -195,13 +195,13 @@ $(document).ready(function(){
 										<td>boardfile </td>
 										<td>
 											<div>
-												<a class="btn btn-sm btn-light" href="">파일추가</a>
+												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">파일추가</a>
 											</div>
 											<!-- 보드파일 출력하는 코드 구현(반복문) -->
 											<c:forEach var="f" items="${boardfileList}">
 												<div>
 													<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${boardfileId}"><i class="fa fa-trash"></i></a>
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}"><i class="fa fa-trash"></i></a>
 												</div>
 											</c:forEach>
 										</td>

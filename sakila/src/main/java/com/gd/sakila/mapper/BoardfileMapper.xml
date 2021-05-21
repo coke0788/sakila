@@ -8,17 +8,18 @@
 		2. resultMap을 만든다.
 		3. alias 쿼리 별명을 사용한다.
 	 -->
-	
+	 
 	<select id="selectBoardfileByBoardId" parameterType="int" resultType="com.gd.sakila.vo.Boardfile">
-		SELECT boardfile_id boardfileId, boardfile_name boardfileName, boardfile_size boardfileSize FROM boardfile WHERE board_id=#{boardId}
+		SELECT board_id boardId, boardfile_id boardfileId, boardfile_name boardfileName, boardfile_size boardfileSize FROM boardfile WHERE board_id=#{boardId}
 	</select>
 	
 	<insert id="insertBoardfile" parameterType="com.gd.sakila.vo.Boardfile">
 		INSERT INTO boardfile(board_id, boardfile_name, boardfile_type, boardfile_size) VALUES (#{boardId}, #{boardfileName}, #{boardfileType}, #{boardfileSize})
 	</insert>
+	
 	<!-- 게시글 삭제 시 참조되는 파일 다 삭제 -->
 	<delete id="deleteBoardfileByBoardId" parameterType="int">
-		DELETE FROM boardfile WHERE board_id=#{boardId}
+		DELETE FROM boardfile WHERE boardfile_id=#{boardfileId}
 	</delete>
 	<!-- 개별 파일 삭제 -->
 	<delete id="deleteBoardfileOne" parameterType="int">
