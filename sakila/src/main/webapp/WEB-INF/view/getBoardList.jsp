@@ -85,8 +85,12 @@
                                 <span class="activity active"></span>
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
-                            <!-- 로그아웃은 나중에 로그인 기능 만들고 추가하기! -->
-                            <div><span>Logout</span></div>
+                            <c:if test="${loginStaff!=null}">
+	                            <!-- 로그아웃 디자인 해야 함. -->
+	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
+	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
+	                            </form>
+                            </c:if>
                         </li>
                     </ul>
                 </div>
@@ -230,10 +234,6 @@
         <!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
 
     <!--**********************************
         Scripts

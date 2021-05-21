@@ -78,6 +78,7 @@ public class BoardController {
 		log.debug("================댓글리스트랑 보드map : "+map);
 		model.addAttribute("commentList", map.get("commentList")); //request.setAttribute와 비슷한 역할.
 		model.addAttribute("boardMap", map.get("boardMap"));
+		model.addAttribute("boardfileList", map.get("boardfileList"));
 		return "getBoardOne"; //return 값은 뷰. request.getdispather.forward 전부를 통틀어서 간단하게 얘 혼자 다 하고 있는거임.
 	}
 	@GetMapping("/getBoardList")

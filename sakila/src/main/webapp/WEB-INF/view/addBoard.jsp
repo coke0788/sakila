@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +51,7 @@
         
         $('#addFileBtn').click(function(){ //파일 추가
         	console.log('addfile click');
-        	$('#inputFile').append('<input type="file" name="boardfile" class="boardfile">');
+        	$('#inputFile').append('<input type="file" name="boardfile" class="boardfile btn btn-sm btn-light">');
         });
         $('#delFileBtn').click(function(){ //파일 삭제 : 마지막 태그르 삭제
         	console.log('delFile click');
@@ -116,8 +116,12 @@
                                 <span class="activity active"></span>
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
-                            <!-- 로그아웃은 나중에 로그인 기능 만들고 추가하기! -->
-                            <div><span>Logout</span></div>
+                            <c:if test="${loginStaff!=null}">
+	                            <!-- 로그아웃 디자인 해야 함. -->
+	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
+	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
+	                            </form>
+                            </c:if>
                         </li>
                     </ul>
                 </div>
@@ -223,8 +227,8 @@
 							        <div class="form-group">
 							            <label for="boardfile" class="col-lg-6 col-form-label">File <span class="text-danger"> </span></label>
 							            <div class="col-lg-8">
-							                <button id="addFileBtn" type="button">파일추가</button>
-							                <button id="delFileBtn" type="button">파일삭제</button>
+							                <button id="addFileBtn" type="button" class="btn btn-sm btn-light">파일추가</button>
+							                <button id="delFileBtn" type="button" class="btn btn-sm btn-light">파일삭제</button>
 							            </div>
 							            <div id="inputFile">
 							            </div>
@@ -254,6 +258,7 @@
             </div>
             <!-- #/ container -->
         </div>
+    </div>
         <!--**********************************
             입력폼 끝!
         ***********************************-->
@@ -269,10 +274,6 @@
         <!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
    <!--**********************************
         Scripts
     ***********************************-->

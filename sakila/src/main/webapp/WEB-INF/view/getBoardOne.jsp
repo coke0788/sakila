@@ -15,8 +15,12 @@
 <script>
 $(document).ready(function(){
 	$('#btn').click(function(){
-			console.log('btn click');
-			$('#deleteCommentForm').submit();
+		console.log('btn click');
+		$('#deleteCommentForm').submit();
+	});
+	$('#logoutBtn').click(function(){
+		console.log('logout!');
+		$('#logout').submit();
 	});
 });
 </script>
@@ -75,8 +79,12 @@ $(document).ready(function(){
                                 <span class="activity active"></span>
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
-                            <!-- 로그아웃은 나중에 로그인 기능 만들고 추가하기! -->
-                            <div><span>Logout</span></div>
+                            <c:if test="${loginStaff!=null}">
+	                            <!-- 로그아웃 디자인 해야 함. -->
+	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
+	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
+	                            </form>
+                            </c:if>
                         </li>
                     </ul>
                 </div>
@@ -183,6 +191,21 @@ $(document).ready(function(){
 										<td>insert_date </td>
 										<td>${boardMap.insertDate}</td>
 									</tr>
+									<tr>
+										<td>boardfile </td>
+										<td>
+											<div>
+												<a class="btn btn-sm btn-light" href="">파일추가</a>
+											</div>
+											<!-- 보드파일 출력하는 코드 구현(반복문) -->
+											<c:forEach var="f" items="${boardfileList}">
+												<div>
+													<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${boardfileId}"><i class="fa fa-trash"></i></a>
+												</div>
+											</c:forEach>
+										</td>
+									</tr>
 								</tbody>
 		</table>
 		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
@@ -191,9 +214,7 @@ $(document).ready(function(){
 		<hr>
 		<h4>Comment</h4>
 		${commentList.size()} 개의 댓글이 있습니다.
-		<form id="deleteCommentForm"
-			action="${pageContext.request.contextPath}/admin/removeComment"
-			method="post">
+		<form id="deleteCommentForm" action="${pageContext.request.contextPath}/admin/removeComment" method="post">
 			<table class="table">
 				<tr>
 					<td style="width:50%; vertical-align:middle">내용</td>
@@ -210,7 +231,7 @@ $(document).ready(function(){
 						<td style="width:50%; vertical-align:middle">${c.commentContent}</td>
 						<td style="width:20%; vertical-align:middle">${c.username}</td>
 						<td style="width:20%; vertical-align:middle">${c.insertDate}</td>
-						<td style="width:10%; vertical-align:middle"><button type="button" id="btn" class="btn mb-1 btn-flat btn-outline-danger"><i class="fa fa-trash"></i></button></td>
+						<td style="width:10%; vertical-align:middle"><button type="button" id="btn" class="btn mb-1 btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -223,6 +244,7 @@ $(document).ready(function(){
                   </div>
               </div>
         </div>
+    </div>
       <!--**********************************
             Footer start
         ***********************************-->
@@ -235,10 +257,6 @@ $(document).ready(function(){
         <!--**********************************
             Footer end
         ***********************************-->
-    </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
    <!--**********************************
         Scripts
     ***********************************-->

@@ -44,16 +44,31 @@ public class BoardService {
 	//게시글 삭제
 	public int removeBoard(Board board) {
 		log.debug("======= 삭제 Board :"+ board.toString());
-		// 2) 게시글 삭제
+		// 1) 게시글 삭제
 		int boardRow = boardMapper.deleteBoard(board);
-		log.debug("======= 삭제 Board :"+boardRow);
+		log.debug("======= 삭제 BoardRow :"+boardRow);
 		if(boardRow == 0) {
 			return 0;
 		}
-		// 1) 댓글 삭제
+		// 2) 댓글 삭제
 		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
-		log.debug("======= 댓글삭제 BoardId :"+ commentRow);
-
+		log.debug("======= 댓글삭제 BoardRow :"+ commentRow);
+		
+		// 3) 저장되어있는 물리적 파일 삭제(경로 안에 있는거)
+		List<Boardfile> list = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
+		if(list != null) {
+			for(Boardfile f : list) {
+				File temp = new File(""); //temp라는 빈 파일을 프로젝트 폴더에 만듦.
+				String path = temp.getAbsolutePath(); //이 파일이 어디에 저장 되어 있는지 경로를 알 수 있다.
+				File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());
+				file.delete();
+			}
+		}
+		
+		// 4) 파일 삭제(테이블 행 삭제)
+		int boardfileRow = boardfileMapper.deleteBoardfileByBoardId(board.getBoardId());
+		log.debug("======= 파일삭제 BoardRow :"+ boardfileRow);
+		
 		return boardRow;
 	}
 	//게시글 추가
@@ -83,7 +98,9 @@ public class BoardService {
 				log.debug("=============등록 boardfile:"+boardfile);
 				// 로컬에 파일 저장
 				try {
-				f.transferTo(new File("C:\\upload\\"+filename)); //try catch  해줘야 함.
+					File temp = new File(""); //temp라는 빈 파일을 프로젝트 폴더에 만듦.
+					String path = temp.getAbsolutePath(); //이 파일이 어디에 저장 되어 있는지 경로를 알 수 있다.
+					f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+filename)); //괄호 안에 있는 파일을 가져온다.
 				} catch (Exception e) {
 					throw new RuntimeException();
 				}
@@ -97,14 +114,19 @@ public class BoardService {
 		// 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
 		log.debug("======= map : "+boardMap);
+		//boardfile 목록
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(boardId);
+		log.debug("========== 파일 목록 :" + boardfileList);
 		//댓글 리스트
 		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
 		log.debug("========= 댓글 목록 크기 : "+commentList.size());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boardMap", boardMap);
 		map.put("commentList", commentList);
+		map.put("boardfileList", boardfileList);
 		return map;
 	}
+	
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord) {
 		int boardTotal = boardMapper.selectBoardTotal(searchWord); //searchword가 필요
 		int lastPage = boardTotal/rowPerPage;

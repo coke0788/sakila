@@ -75,8 +75,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 			<button type="button" class="btn btn-light" id="btn">수정</button>
-			<a href="${pageContext.request.contextPath}/admin/getBoardList"><button
-					type="button" class="btn btn-light">취소</button></a>
+			<a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}"><button type="button" class="btn btn-light">취소</button></a>
 		</form>
 	</div>
 </body>
