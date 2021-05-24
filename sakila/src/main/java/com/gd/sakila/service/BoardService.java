@@ -137,14 +137,14 @@ public class BoardService {
 		page.setBeginRow((currentPage-1)*rowPerPage);
 		page.setRowPerPage(rowPerPage);
 		page.setSearchWord(searchWord);
-		System.out.println("=======Page"+page);
+		log.debug("=======Page"+page);
 		
 		List<Board> boardList = boardMapper.selectBoardList(page); //page가 필요
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boardTotal", boardTotal);
 		map.put("boardList", boardList);
 		map.put("lastPage", lastPage);
-		System.out.println("=======map"+map);
+		log.debug("=======map"+map);
 		return map;
 	}
 }

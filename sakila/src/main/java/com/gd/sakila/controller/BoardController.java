@@ -44,7 +44,7 @@ public class BoardController {
 		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	@GetMapping("/removeBoard") 
-	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
+	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId, @RequestParam(value="staffId", required=true) int staffId) {
 		log.debug("====삭제 boardId:"+boardId);
 		model.addAttribute("boardId", boardId); //forwarding 하면 매개변수도 넘어가기 때문에 포워딩 쪽에서 requestParam으로 받아올 수 있음, 하지만 model에 저장해서 가져올 수도 있음.
 		return "removeBoard";
@@ -83,16 +83,12 @@ public class BoardController {
 	}
 	@GetMapping("/getBoardList")
 	public String getBoardList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, @RequestParam(value="searchWord", required = false) String searchWord) {
-		System.out.println("currentPage"+currentPage);
-		System.out.println("rowPerPage"+rowPerPage);
-		System.out.println("searchWord"+searchWord);
-		
 		Map<String, Object> map = boardService.getBoardList(currentPage, rowPerPage, searchWord);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("boardList", map.get("boardList"));
-		System.out.println("========map:"+map);
+		log.debug("=============== 게시판 리스트 map : " + map);
 		return "getBoardList";
 	}
 }

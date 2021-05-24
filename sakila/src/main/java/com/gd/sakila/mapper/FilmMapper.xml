@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	
+	<!-- 리스트 997개 나오는 이슈 있음. 해결 해야함. -->
+	<select id="selectFilmListByFilmIdSearchAsTitle" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
+		SELECT * FROM nicer_but_slower_film_list 
+		<where>
+			<if test="searchWord!=null">
+				title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+			<if test='orderWord.equals("title")'>
+				ORDER BY title LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("price")'>
+				ORDER BY price LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("rating")'>
+				ORDER BY rating DESC LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("category")'>
+				ORDER BY category LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+	</select>
+	
+	<!-- 이미 만들었음... 나중에 하나로 합치기.... -->
+	<select id="selectFilmListByFilmIdSearchAsActor" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
+		SELECT * FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord!=null">
+				actors LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+			<if test='orderWord.equals("title")'>
+				ORDER BY title LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("price")'>
+				ORDER BY price LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("rating")'>
+				ORDER BY rating DESC LIMIT #{beginRow}, #{rowPerPage}
+			</if>
+			<if test='orderWord.equals("category")'>
+				ORDER BY category LIMIT #{beginRow}, #{rowPerPage}
+			</if>	
+	</select>
+	
+	<select id="selectFilmTotalSearchAsTitle" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord!=null">
+				title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectFilmTotalSearchAsActor" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord!=null">
+				actors LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- db의 프로시저 호출하는 문법 -->
+	<!-- Map 안에 filmId(in), storeId(in), filmCount(out) 들어있음. -->
+	<select id="selectFilmInStock" parameterType="java.util.Map" resultType="Integer" statementType="CALLABLE">
+		{call film_in_stock(#{filmId}, #{storeId}, #{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=Integer})}
+	</select>
+	
+	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
+		SELECT f.film_id filmId, fl.title title, fl.description description, f.release_year releaseYear, f.rental_duration rentalDuration, fl.actors actors, fl.category category, fl.price rentalRate, fl.length length, fl.rating rating, f.special_features specialFeatures, f.last_update lastUpdate, f.replacement_cost replacementCost, l.name language FROM film f left JOIN nicer_but_slower_film_list fl ON(fl.FID=f.film_id) JOIN language l ON (f.language_id=l.language_id) WHERE f.film_id=#{filmId}
+	</select>
+</mapper>
