@@ -4,7 +4,7 @@
 	<select id="selectStaffByLogin" parameterType="com.gd.sakila.vo.Staff" resultType="com.gd.sakila.vo.Staff">
 		SELECT staff_id staffId, email, username FROM staff WHERE email=#{email} AND password = PASSWORD(#{password})
 	</select>
-	<select id="selectStaffList" parameterType="com.gd.sakila.vo.StaffList" resultType="com.gd.sakila.vo.StaffList">
+	<select id="selectStaffList" parameterType="String" resultType="com.gd.sakila.vo.StaffList">
 		SELECT ID, name, address, phone, city, country, SID FROM staff_list 
 		<where>
 			<if test="searchWord != null">
