@@ -23,7 +23,6 @@ public class FilmService {
 	@Autowired FilmMapper filmMapper; 
 	@Autowired CategoryMapper categoryMapper;
 	
-	//타이틀 기준으로 영화 목록 보여주기 --> 배우 기준으로 보여주는 것도 추가 수정 해야함. (이미 나눠 놓은 상태로 다 만들어놔서 이거 마지막에 해야할듯..)
 	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, 
 											String categoryName, String orderWord, Double price, 
 											String rating, String searchWordForActor){

@@ -48,6 +48,7 @@ public class BoardfileService {
 		//파일 이름(확장자 제외)
 		String prename = UUID.randomUUID().toString().replace("-", ""); //중복되지 않는 랜덤이름을. -는 공백으로 변경해서.
 		File file = new File(path+"\\src\\main\\webapp\\resource\\"+prename+ext);
+		log.debug("===============파일 이름:"+prename+ext);
 		//멀티파트파일에 있는 파일을 위의 파일에 넣어준다.
 		try {
 			multipartFile.transferTo(file);
