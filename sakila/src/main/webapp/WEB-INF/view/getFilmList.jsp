@@ -14,7 +14,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
-	
+    <script>
+	$(document).ready(function(){
+		$('#btnOrderWord').click(function(){
+			console.log('btn click');
+			$('#order').submit();
+		});
+		$('#btnSearch').click(function(){
+			console.log('btn click');
+			$('#search').submit();
+		});
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -68,23 +83,6 @@
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
                     </div>
                 </div>
-                <div class="header-left">
-                    <div class="input-group icons">
-                    	<!-- 검색어 입력창 -->
-					    <form action="/admin/getFilmList" method="get">
-                        <div class="input-group-prepend">
-                        	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
-							<select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="searchCategory">
-	                           	<option class="dropdown-item" value="title">검색기준</option>
-	                           	<option class="dropdown-item" value="title">Title</option>
-	                           	<option class="dropdown-item" value="actor">Actor</option>
-                           </select>
-					        <input name="searchWord" type="search" class="form-control" placeholder="Search Film">
-					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
-					    </div>
-					    </form>
-                    </div>
-                </div>
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
@@ -120,42 +118,19 @@
                         </a>
                     </li>
                     <li>
+                        <a href="${pageContext.request.contextPath}/admin/getFilmList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Film List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Staff List</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="widgets.html" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
                         </a>
-                    </li>
-                    <li class="nav-label">Forms</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./form-basic.html">Basic Form</a></li>
-                            <li><a href="./form-validation.html">Form Validation</a></li>
-                            <li><a href="./form-step.html">Step Form</a></li>
-                            <li><a href="./form-editor.html">Editor</a></li>
-                            <li><a href="./form-picker.html">Picker</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Pages</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-lock.html">Lock Screen</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                    <li><a href="./page-error-400.html">Error 400</a></li>
-                                    <li><a href="./page-error-500.html">Error 500</a></li>
-                                    <li><a href="./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -178,23 +153,78 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4>Board List</h4>
+                                    <h4>Film List</h4>
                                     <hr>
                                     <!-- 정렬 선택 창 -->
-                                    <form action="/admin/getFilmList" method="get">
+                                    <form action="${pageContext.request.contextPath}/admin/getFilmList" id="order" method="get">
                                     	<div class="btn-group m-b-20">
                                             <select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="orderWord">
-                                            	<option class="dropdown-item" value="">정렬기준</option>
+                                            	<option class="dropdown-item" value="FID">정렬기준</option>
                                             	<option class="dropdown-item" value="title">Title</option>
                                             	<option class="dropdown-item" value="price">Price</option>
                                             	<option class="dropdown-item" value="rating">rating</option>
                                             	<option class="dropdown-item" value="category">category</option>
                                             </select>
-                                            <button class="btn btn-light" type="submit"><i class="fa fa-check-circle"></i></button>
+                                            <select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="categoryName">
+                                            	<option value="">카테고리선택</option>
+                                            	<c:forEach var="cn" items="${categoryNameList}">
+                                            		<c:if test="${cn == categoryName}">
+											 			<option value="${cn}" selected="selected">${cn}</option>
+											 		</c:if>
+											 		<c:if test="${cn != categoryName}">
+											 			<option value="${cn}">${cn}</option>
+											 		</c:if>
+                                            	</c:forEach>
+                                            </select>
+                                            <!-- /정렬 선택 창 -->
+                                           
+                                            <!-- 검색 옵션 선택 창 -->
+                                            <select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="price">
+                                            	<option value="">가격선택</option>
+                                            		<c:if test="${price == 0.99}">
+                                            			<option value="0.99" selected="selected">0.99</option>
+                                            		</c:if>
+                                            		<c:if test="${price != 0.99}">
+                                            			<option value="0.99">0.99</option>
+                                            		</c:if>
+                                            		<c:if test="${price == 2.99}">
+                                            			<option value="2.99" selected="selected">2.99</option>
+                                            		</c:if>
+                                            		<c:if test="${price != 2.99}">
+                                            			<option value="2.99">2.99</option>
+                                            		</c:if>
+                                            		<c:if test="${price == 4.99}">
+                                            			<option value="4.99" selected="selected">4.99</option>
+                                            		</c:if>
+                                            		<c:if test="${price != 4.99}">
+                                            			<option value="4.99">4.99</option>
+                                            		</c:if>
+                                            </select>
+                                            <select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="rating">
+                                            	<option value="">등급선택</option>
+                                            	<c:forEach var="r" items="${ratingList}">
+                                            		<c:if test="${r == rating}">
+											 			<option value="${r}" selected="selected">${r}</option>
+											 		</c:if>
+											 		<c:if test="${r != rating}">
+											 			<option value="${r}">${r}</option>
+											 		</c:if>
+                                            	</c:forEach>
+                                            </select>
+                                            <!-- /검색 옵션 선택 창 -->
+                                          
+                                            <!-- 검색 창 -->
+                                            <input name="searchWord" type="search" class="form-control" placeholder="Search Title">
+                                            <input name="searchWordForActor" type="search" class="form-control" placeholder="Search Actor">
+                                            <button class="btn btn-light" id="btnOrderWord" type="button"><i class="fa fa-check-circle"></i></button>
+                                            <!-- /검색 창 -->
                                         </div>
                                     </form>
+                                    <a href="${pageContext.request.contextPath}/admin/getFilmList"><button class="btn btn-dark" type="button">검색초기화</button></a>
                                     <hr>
                                 </div>
+                                
+                                <!-- 목록 출력 창 -->
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -220,17 +250,21 @@
 							            	</c:forEach>
 							        	</tbody>
 									</table>
-	<div class="col-7">
-	    <div class="text-left">pages : ${currentPage} of ${lastPage}</div>
-	</div>
-    <div class="btn-group float-right">
-        <c:if test="${currentPage > 1}">
-            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&orderWord=${orderWord}&searchCategory=${searchCategory}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&orderWord=${orderWord}&searchCategory=${searchCategory}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
-        </c:if>
-    </div>
+								<!-- /목록 출력 창 -->
+								
+								<!-- 페이징 -->
+								<div class="col-7">
+								    <div class="text-left">pages : ${currentPage} of ${lastPage}</div>
+								</div>
+							    <div class="btn-group float-right">
+							        <c:if test="${currentPage > 1}">
+							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
+							        </c:if>
+							        <c:if test="${currentPage < lastPage}">
+							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
+							        </c:if>
+							    </div>
+							    <!-- /페이징 -->
                                 </div>
                             </div>
                         </div>

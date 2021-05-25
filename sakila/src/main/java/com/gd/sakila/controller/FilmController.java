@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,36 +20,60 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequestMapping("/admin")
 public class FilmController {
-	@Autowired FilmService filmservice;
+	@Autowired FilmService filmService;
+	
 	@GetMapping("/getFilmOne")
-	public String getFilmOne(Model model, @RequestParam(value="filmId", required=true) int filmId, @RequestParam(value="storeId", defaultValue="1",required=true) int storeId) {
-		Map<String, Object> map = filmservice.getFilmOne(filmId, storeId);
+	public String getFilmOne(Model model, @RequestParam(value="filmId", required=true) int filmId, 
+							@RequestParam(value="storeId", defaultValue="1",required=true) int storeId) {
+		Map<String, Object> map = filmService.getFilmOne(filmId, storeId);
 		model.addAttribute("filmId", filmId);
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("filmMap", map.get("filmMap"));
 		model.addAttribute("filmCount", map.get("filmCount"));
 		log.debug("================상세보기 filmId"+filmId);
 		log.debug("================상세보기 storeId"+storeId);
-		log.debug("================상세보기 filmList : "+ map.get("filmList"));
+		log.debug("================상세보기 filmCount" + map.get("filmCount"));
+		log.debug("================상세보기 filmList : "+ map.get("filmMap"));
 		return "getFilmOne";
 	}
-	
+
 	@GetMapping("/getFilmList")
-	public String getFilmList(Model model, @RequestParam(value="orderWord", defaultValue="title")String orderWord, @RequestParam(value="searchCategory", defaultValue="title") String searchCategory, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, @RequestParam(value="searchWord", required = false) String searchWord) {
-		if(searchCategory.equals("actor")) { //actor로 검색 목록을 출력할지 title로 검색목록을 출력할지 정해야함. default는 타이틀. --> 선택하는거 만들기
-			Map<String,Object> map = filmservice.getFilmListAsActor(currentPage, rowPerPage, searchWord, orderWord);
-			model.addAttribute("lastPage", map.get("lastPage"));
-			model.addAttribute("filmList", map.get("filmList"));
-		} else {
-			Map<String,Object> map = filmservice.getFilmListAsTitle(currentPage, rowPerPage, searchWord, orderWord);
-			model.addAttribute("lastPage", map.get("lastPage"));
-			model.addAttribute("filmList", map.get("filmList"));
+	public String getFilmList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
+							@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, 
+							@RequestParam(value="searchWord", required=false) String searchWord,
+							@RequestParam(value="searchWordForActor", required=false) String searchWordForActor,
+							@RequestParam(value="categoryName", required=false) String categoryName,
+							@RequestParam(value="orderWord", defaultValue="FID") String orderWord,
+							@RequestParam(value="price", required=false ) Double price,
+							@RequestParam(value="rating", required=false ) String rating) {
+		if(categoryName != null && categoryName.equals("")) {
+			categoryName = null;
 		}
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("rowPerPage", rowPerPage);
+		if(price != null && price == 0) {
+			price = null;
+		}
+		if(rating != null && rating.equals("")) {
+			rating = null;
+		}
+		
+		Map<String, Object> map = filmService.getFilmList(currentPage, rowPerPage, searchWord, categoryName, orderWord, price, rating, searchWordForActor);
+		log.debug("=============page 값" + rowPerPage);
+		log.debug("=============categoryNameList"+map.get("categoryNameList"));
+		log.debug("=============가격 값" + price);
+		model.addAttribute("filmList", map.get("filmList"));
 		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("searchWordForActor", searchWordForActor);
+		model.addAttribute("categoryNameList", map.get("categoryNameList"));
+		model.addAttribute("ratingList", map.get("ratingList"));
+		model.addAttribute("categoryName", categoryName);
 		model.addAttribute("orderWord", orderWord);
-		model.addAttribute("searchCategory", searchCategory);
+		model.addAttribute("price", price);
+		model.addAttribute("rating", rating);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("beginRow", map.get("beginRow"));
+		
 		return "getFilmList";
 	}
+
 }

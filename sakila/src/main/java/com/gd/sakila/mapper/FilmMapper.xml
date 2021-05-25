@@ -2,36 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
 	
-	<!-- 리스트 997개 나오는 이슈 있음. 해결 해야함. -->
-	<select id="selectFilmListByFilmIdSearchAsTitle" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
-		SELECT * FROM nicer_but_slower_film_list 
+	<!-- 
+		1. 기존 코드에 select 쿼리 두개를 합쳐야함.
+		2. page vo에 orderWord 추가했는데 이거 안된다고 하니까 수정해야함....
+	 -->
+	 
+	<select id="selectFilmListByFilmId" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT FID, title, category, price, rating, length FROM film_list
 		<where>
 			<if test="searchWord!=null">
-				title LIKE CONCAT('%', #{searchWord}, '%')
+				AND title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+			<if test="categoryName!=null">
+				AND category=#{categoryName}
+			</if>
+			<if test="price!=null">
+				AND price=#{price}
+			</if>
+			<if test="rating!=null">
+				AND rating=#{rating}
+			</if>
+			<if test="searchWordForActor!=null">
+				AND actors LIKE CONCAT('%', #{searchWordForActor}, '%')
 			</if>
 		</where>
-			<if test='orderWord.equals("title")'>
-				ORDER BY title LIMIT #{beginRow}, #{rowPerPage}
+			<if test='orderWord.equals("FID")'>
+				ORDER BY FID LIMIT #{beginRow}, #{rowPerPage}
 			</if>
-			<if test='orderWord.equals("price")'>
-				ORDER BY price LIMIT #{beginRow}, #{rowPerPage}
-			</if>
-			<if test='orderWord.equals("rating")'>
-				ORDER BY rating DESC LIMIT #{beginRow}, #{rowPerPage}
-			</if>
-			<if test='orderWord.equals("category")'>
-				ORDER BY category LIMIT #{beginRow}, #{rowPerPage}
-			</if>
-	</select>
-	
-	<!-- 이미 만들었음... 나중에 하나로 합치기.... -->
-	<select id="selectFilmListByFilmIdSearchAsActor" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
-		SELECT * FROM nicer_but_slower_film_list
-		<where>
-			<if test="searchWord!=null">
-				actors LIKE CONCAT('%', #{searchWord}, '%')
-			</if>
-		</where>
 			<if test='orderWord.equals("title")'>
 				ORDER BY title LIMIT #{beginRow}, #{rowPerPage}
 			</if>
@@ -46,20 +43,23 @@
 			</if>	
 	</select>
 	
-	<select id="selectFilmTotalSearchAsTitle" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM nicer_but_slower_film_list
+	<select id="selectFilmTotal" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*) FROM film_list
 		<where>
 			<if test="searchWord!=null">
-				title LIKE CONCAT('%', #{searchWord}, '%')
+				AND title LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
-		</where>
-	</select>
-	
-	<select id="selectFilmTotalSearchAsActor" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM nicer_but_slower_film_list
-		<where>
-			<if test="searchWord!=null">
-				actors LIKE CONCAT('%', #{searchWord}, '%')
+			<if test="categoryName!=null">
+				AND category=#{categoryName}
+			</if>
+						<if test="price!=null">
+				AND price=#{price}
+			</if>
+			<if test="rating!=null">
+				AND rating=#{rating}
+			</if>
+			<if test="searchWordForActor!=null">
+				AND actors LIKE CONCAT('%', #{searchWordForActor}, '%')
 			</if>
 		</where>
 	</select>
@@ -71,6 +71,10 @@
 	</select>
 	
 	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
-		SELECT f.film_id filmId, fl.title title, fl.description description, f.release_year releaseYear, f.rental_duration rentalDuration, fl.actors actors, fl.category category, fl.price rentalRate, fl.length length, fl.rating rating, f.special_features specialFeatures, f.last_update lastUpdate, f.replacement_cost replacementCost, l.name language FROM film f left JOIN nicer_but_slower_film_list fl ON(fl.FID=f.film_id) JOIN language l ON (f.language_id=l.language_id) WHERE f.film_id=#{filmId}
+		SELECT f.film_id filmId, fl.title title, fl.description description, f.release_year releaseYear, f.rental_duration rentalDuration, fl.actors actors, fl.category category, fl.price rentalRate, fl.length length, fl.rating rating, f.special_features specialFeatures, f.last_update lastUpdate, f.replacement_cost replacementCost, l.name language FROM film f left JOIN film_list fl ON(fl.FID=f.film_id) JOIN language l ON (f.language_id=l.language_id) WHERE f.film_id=#{filmId}
+	</select>
+	
+	<select id="selectRatingList" resultType="String">
+		SELECT rating FROM film GROUP BY rating
 	</select>
 </mapper>

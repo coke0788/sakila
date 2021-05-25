@@ -14,10 +14,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	$('#btn').click(function(){
-		console.log('btn click');
-		$('#deleteCommentForm').submit();
-	});
 	$('#logoutBtn').click(function(){
 		console.log('logout!');
 		$('#logout').submit();
@@ -106,42 +102,19 @@ $(document).ready(function(){
                         </a>
                     </li>
                     <li>
+                        <a href="${pageContext.request.contextPath}/admin/getFilmList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Film List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Staff List</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="widgets.html" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
                         </a>
-                    </li>
-                    <li class="nav-label">Forms</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./form-basic.html">Basic Form</a></li>
-                            <li><a href="./form-validation.html">Form Validation</a></li>
-                            <li><a href="./form-step.html">Step Form</a></li>
-                            <li><a href="./form-editor.html">Editor</a></li>
-                            <li><a href="./form-picker.html">Picker</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Pages</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-lock.html">Lock Screen</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                    <li><a href="./page-error-400.html">Error 400</a></li>
-                                    <li><a href="./page-error-500.html">Error 500</a></li>
-                                    <li><a href="./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -196,7 +169,7 @@ $(document).ready(function(){
 										<td>${filmMap.releaseYear}</td>
 									</tr>
 									<tr>
-										<td>language_id</td>
+										<td>language</td>
 										<td>${filmMap.language}</td>
 									</tr>
 									<tr>
@@ -223,16 +196,30 @@ $(document).ready(function(){
 										<td>last_update</td>
 										<td>${filmMap.lastUpdate}</td>
 									</tr>
+									<tr>
+										<td>film_stock</td>
+										<td>${filmCount} 개</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=1">1매장 재고 보기</a>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=2">2매장 재고 보기</a>
+										</td>
+									</tr>
 								</tbody>
 							</table>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList">목록</a>
-		<hr>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList">목록</a>
+							<hr>
                            </div>
                       </div>
                   </div>
               </div>
         </div>
     </div>
+     <!--**********************************
+         상세 내용 출력 끝!
+     ***********************************-->
       <!--**********************************
             Footer start
         ***********************************-->
