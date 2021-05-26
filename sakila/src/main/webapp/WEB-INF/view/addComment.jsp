@@ -101,45 +101,25 @@
         ***********************************-->
         <!--**********************************
             Sidebar start
-            그 때 그 때 필요한 것들 추가하기!
         ***********************************-->
-        <div class="nk-sidebar">           
-            <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getBoardList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Board List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getFilmList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Film List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Staff List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="widgets.html" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+		<jsp:include page="/WEB-INF/view/sideMenu.jsp"></jsp:include>
         <!--**********************************
             Sidebar end
         ***********************************-->
        <!--**********************************
             Content body start
-            디자인 이상함.....
         ***********************************-->
+	 <div class="content-body">    
+      <div class="row page-titles mx-0">
+          <div class="col p-md-0">
+              <ol class="breadcrumb">
+                  <li></li>
+              </ol>
+          </div>
+      </div>
 	<div class="container-fluid">
-		<div class="row">
-		<h1>addBoard</h1>
-		<div class="col-lg-12">
+		<div class="row justify-content-center">
+		<div class="col-lg-9">
                   <div class="card">
                       <div class="card-body">
                       	<div class="card-title">
@@ -147,8 +127,8 @@
                           <hr>
                           <div class="basic-form">
                               <form id="addForm" action="${pageContext.request.contextPath}/admin/addComment" method="post">
-                              	<input type="text" hidden="hidden" name="boardId" id="boardId" value="${boardId}">
-                                 	 <div class="form-group">
+                              	<div class="form-group">
+                              		<input type="text" hidden="hidden" name="boardId" id="boardId" value="${boardId}">
                                       	<label>Comment:</label>
                                       	<textarea class="form-control h-150px" rows="6" name="commentContent" id="commentContent"></textarea>
                                   	</div>
@@ -156,10 +136,9 @@
 										<label for="username">username :</label> <input class="form-control" name="username" id="username" type="text" />
 									</div>
 									<div>
-										<input class="btn btn-default" id="addButton" type="button"
-											value="글입력" /> <input class="btn btn-default" type="reset"
-											value="초기화" /> <a class="btn btn-default"
-											href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardId}">뒤로가기</a>
+										<input class="btn btn-default" id="addButton" type="button" value="글입력" /> 
+										<input class="btn btn-default" type="reset" value="초기화" /> 
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardId}">뒤로가기</a>
 									</div>
                               </form>
                           </div>
@@ -169,6 +148,7 @@
          </div>
 		 </div>
 	</div>
+</div>
 		 <!--**********************************
             Content body end
         ***********************************-->

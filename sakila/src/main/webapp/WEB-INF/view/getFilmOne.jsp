@@ -91,34 +91,8 @@ $(document).ready(function(){
         ***********************************-->
         <!--**********************************
             Sidebar start
-            그 때 그 때 필요한 것들 추가하기!
         ***********************************-->
-        <div class="nk-sidebar">           
-            <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getBoardList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Board List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getFilmList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Film List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Staff List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="widgets.html" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+		<jsp:include page="/WEB-INF/view/sideMenu.jsp"></jsp:include>
         <!--**********************************
             Sidebar end
         ***********************************-->

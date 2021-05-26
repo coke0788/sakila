@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>getBoardList</title>
+    <title>getActorList</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -69,14 +69,16 @@
                 </div>
                 <div class="header-left">
                     <div class="input-group icons">
+                    
                     	<!-- 검색어 입력창 -->
-					    <form action="/admin/getBoardList" method="get">
+					    <form action="/admin/getActorList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
-					        <input name="searchWord" type="search" class="form-control" placeholder="Search Board">
+					        <input name="searchWord" type="search" class="form-control" placeholder="Search Actor">
 					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
+					    
                     </div>
                 </div>
                 <div class="header-right">
@@ -103,7 +105,7 @@
 
         <!--**********************************
             Sidebar start
-            매번 바꾸기 귀찮아서 사이드메뉴로 아예 빼버림.
+            그 때 그 때 필요한 것들 추가하기!
         ***********************************-->
 		<jsp:include page="/WEB-INF/view/sideMenu.jsp"></jsp:include>
         <!--**********************************
@@ -127,24 +129,24 @@
                                     <h4>Board List</h4>
                                     <hr>
                                     <div class="text-right">
-								        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addBoard"><i class="fa fa-pencil"> 게시글 입력</i></a>
+								        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addActor"><i class="fa fa-pencil"> 배우 추가</i></a>
 								    </div>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
 								            <tr>
-								                <th>boardId</th>
-								                <th>boardTitle</th>
-								                <th>insertDate</th>
+								                <th>actor_id</th>
+								                <th>actor_name</th>
+								                <th>actor_film_info</th>
 								            </tr>
 								        </thead>
                                         <tbody>
-							            	<c:forEach var="b" items="${boardList}">
+							            	<c:forEach var="a" items="${actorList}">
 							                <tr>
-							                	<td>${b.boardId}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${b.boardId}">${b.boardTitle}</a></td>
-							                    <td>${b.insertDate}</td>
+							                	<td>${a.actorId}</td>
+							                    <td>${a.name}</td>
+							                    <td>${a.filmInfo}</td>
 							                </tr>
 							            	</c:forEach>
 							        	</tbody>
@@ -154,10 +156,10 @@
 	</div>
     <div class="btn-group float-right">
         <c:if test="${currentPage > 1}">
-            <a href="${pageContext.request.contextPath}/admin/getBoardList?currentPage=${currentPage-1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
+            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage-1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <a href="${pageContext.request.contextPath}/admin/getBoardList?currentPage=${currentPage+1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
+            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage+1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
         </c:if>
     </div>
                                 </div>

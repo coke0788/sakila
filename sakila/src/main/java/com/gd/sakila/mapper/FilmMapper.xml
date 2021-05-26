@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
-	
-	<!-- 
-		1. 기존 코드에 select 쿼리 두개를 합쳐야함.
-		2. page vo에 orderWord 추가했는데 이거 안된다고 하니까 수정해야함....
-	 -->
 	 
 	<select id="selectFilmListByFilmId" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT FID, title, category, price, rating, length FROM film_list
@@ -52,7 +47,7 @@
 			<if test="categoryName!=null">
 				AND category=#{categoryName}
 			</if>
-						<if test="price!=null">
+			<if test="price!=null">
 				AND price=#{price}
 			</if>
 			<if test="rating!=null">

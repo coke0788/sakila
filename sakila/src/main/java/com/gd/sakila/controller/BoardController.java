@@ -44,7 +44,7 @@ public class BoardController {
 		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	@GetMapping("/removeBoard") 
-	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId, @RequestParam(value="staffId", required=true) int staffId) {
+	public String removeBoard(Model model, @RequestParam(value="boardId", required=true) int boardId) {
 		log.debug("====삭제 boardId:"+boardId);
 		model.addAttribute("boardId", boardId); //forwarding 하면 매개변수도 넘어가기 때문에 포워딩 쪽에서 requestParam으로 받아올 수 있음, 하지만 model에 저장해서 가져올 수도 있음.
 		return "removeBoard";

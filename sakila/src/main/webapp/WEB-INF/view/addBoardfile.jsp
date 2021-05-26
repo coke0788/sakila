@@ -55,7 +55,7 @@
                                     </div>
                                     <button class="btn login-form__btn submit w-100" id="btn">파일추가</button>
                                 </form>
-                                <p class="mt-5 login-form__footer"><a href="${pageContext.request.contextPath}/admin/getBoardList" class="text-primary">목록으로 </a></p>
+                                <p class="mt-5 login-form__footer"><a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardId}" class="text-primary">이전화면 </a></p>
                             </div>
                         </div>
                     </div>
