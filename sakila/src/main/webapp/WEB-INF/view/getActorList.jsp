@@ -75,6 +75,7 @@
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
 					        <input name="searchWord" type="search" class="form-control" placeholder="Search Actor">
+					        <input name="searchWordForFilm" type="search" class="form-control" placeholder="Search film">
 					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
@@ -156,10 +157,10 @@
 	</div>
     <div class="btn-group float-right">
         <c:if test="${currentPage > 1}">
-            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage-1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
+            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage-1}&searchWord=${searchWord}&searchWordForFilm=${searchWordForFilm}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage+1}&searchWord=${searchWord}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
+            <a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage+1}&searchWord=${searchWord}&searchWordForFilm=${searchWordForFilm}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
         </c:if>
     </div>
                                 </div>

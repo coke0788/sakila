@@ -5,20 +5,26 @@
 	<insert id="insertActor" parameterType="com.gd.sakila.vo.Actor">
 		INSERT INTO actor(first_name, last_name) VALUES (UPPER(#{firstName}), UPPER(#{lastName}))
 	</insert>
-	<select id="selectActorInfoList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.Actor">
+	<select id="selectActorInfoList" parameterType="java.util.Map" resultType="com.gd.sakila.vo.Actor">
 		SELECT actor_id actorId, CONCAT(first_name,' ',last_name)name, film_info filmInfo FROM actor_info
 		<where>
 			<if test="searchWord != null">
-				first_name LIKE CONCAT('%', #{searchWord}, '%') OR last_name LIKE CONCAT('%', #{searchWord}, '%')
+				AND first_name LIKE CONCAT('%', #{searchWord}, '%') OR last_name LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+			<if test="searchWordForFilm != null">
+				AND film_info LIKE CONCAT('%', #{searchWordForFilm}, '%')
 			</if>
 		</where>
 		ORDER BY name LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-	<select id="selectActorTotal" parameterType="String" resultType="Integer">
+	<select id="selectActorTotal" parameterType="java.util.Map" resultType="Integer">
 		SELECT COUNT(*) FROM actor_info
 		<where>
 			<if test="searchWord != null">
-				first_name LIKE CONCAT('%', #{searchWord}, '%') OR last_name LIKE CONCAT('%', #{searchWord}, '%') 
+				AND first_name LIKE CONCAT('%', #{searchWord}, '%') OR last_name LIKE CONCAT('%', #{searchWord}, '%') 
+			</if>
+			<if test="searchWordForFilm != null">
+				AND film_info LIKE CONCAT('%', #{searchWordForFilm}, '%')
 			</if>
 		</where>
 	</select>

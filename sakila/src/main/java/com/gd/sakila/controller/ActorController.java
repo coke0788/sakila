@@ -36,14 +36,17 @@ public class ActorController {
 	public String getActorList( Model model,
 								@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 								@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage,
-								@RequestParam(value="searchWord", required=false) String searchWord) {
-		Map<String, Object> map = actorService.getActorList(currentPage, rowPerPage, searchWord);
+								@RequestParam(value="searchWord", required=false) String searchWord,
+								@RequestParam(value="searchWordForFilm", required=false) String searchWordForFilm) {
+		Map<String, Object> map = actorService.getActorList(currentPage, rowPerPage, searchWord, searchWordForFilm);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("searchWordForFilm", searchWordForFilm);
 		model.addAttribute("actorList", map.get("actorList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		log.debug("================배우 목록 검색어 : " + searchWord);
+		log.debug("================배우 목록 영화 검색어 : " + searchWordForFilm);
 		log.debug("================배우 목록 rowPerpage : " + rowPerPage);
 		log.debug("================배우 목록 현재 페이지 : " + currentPage);
 		log.debug("================배우 목록 마지막 페이지 : " + map.get("lastPage"));
