@@ -132,7 +132,10 @@ $(document).ready(function(){
 									</tr>
 									<tr>
 										<td>actors </td>
-										<td>${filmMap.actors}</td>
+										<td>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getActorListForFilm?filmId=${filmId}">배우추가</a>
+										<br>
+										${filmMap.actors}</td>
 									</tr>
 									<tr>
 										<td>description </td>

@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.vo.Actor;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,5 +77,20 @@ public class FilmController {
 		
 		return "getFilmList";
 	}
+	@GetMapping("/getActorListForFilm")
+	public String getActorListForFilm(Model model,
+			@RequestParam(value="filmId", required=true) int filmId) {
+		List<String> actorList = filmService.getActorListForFilm(filmId);
+			log.debug("==================배우 목록 :"+actorList);
+			model.addAttribute("actorList", actorList);
+			model.addAttribute("filmId", filmId);
+		return "getActorListForFilm";
+	}
+	/*
+	@GetMapping("/getActorListForFilmSearch")
+	public String getActorListForFilm(@RequestParam(value="searchWord", required=false) String searchWord) {
+		return "getActorListForFilm";
+	}
+	*/
 
 }

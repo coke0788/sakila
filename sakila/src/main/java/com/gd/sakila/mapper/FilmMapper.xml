@@ -72,4 +72,20 @@
 	<select id="selectRatingList" resultType="String">
 		SELECT rating FROM film GROUP BY rating
 	</select>
+	
+	<!-- 영화에 출연한 배우들 목록을 출력 시킬것임. 근데 검색 기능도 넣고 싶어서 쿼리 추가함.-->
+	<select id="selectActorForFilm" parameterType="Integer" resultType="com.gd.sakila.vo.Actor">
+		SELECT a.actor_id actorId, CONCAT(a.first_name,' ',a.last_name) name, IF(t.actor_id is NULL, 'X', 'O') ck 
+		FROM actor a 
+		LEFT JOIN (SELECT * FROM film_actor WHERE film_id=#{filmId}) t 
+		ON a.actor_id=t.actor_id 
+		<!-- 
+		<where>
+			<if test="searchWord != null">
+				a.first_name LIKE CONCAT('%', #{searchWord}, '%') OR a.last_name LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		 -->
+		ORDER BY name
+	</select>
 </mapper>

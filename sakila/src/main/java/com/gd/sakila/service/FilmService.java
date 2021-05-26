@@ -82,4 +82,10 @@ public class FilmService {
 		log.debug("================필름 상세보기 map : "+filmMap);
 		return map;
 	}
+	//영화에 출연한 배우 목록
+	public List<String> getActorListForFilm(int filmId){
+		List<String> actorList = filmMapper.selectActorForFilm(filmId);
+		log.debug("================배우 목록:"+actorList);
+		return actorList;
+	}
 }
