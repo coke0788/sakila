@@ -3,7 +3,7 @@
 <mapper namespace="com.gd.sakila.mapper.ActorMapper">
 
 	<insert id="insertActor" parameterType="com.gd.sakila.vo.Actor">
-		INSERT INTO actor(first_name, last_name) VALUES (#{firstName}, #{lastName})
+		INSERT INTO actor(first_name, last_name) VALUES (UPPER(#{firstName}), UPPER(#{lastName}))
 	</insert>
 	<select id="selectActorInfoList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.Actor">
 		SELECT actor_id actorId, CONCAT(first_name,' ',last_name)name, film_info filmInfo FROM actor_info
