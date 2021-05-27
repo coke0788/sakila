@@ -9,5 +9,4 @@ public class Actor {
 	private String lastName;
 	private String name;
 	private String filmInfo;
-	private String ck;
 }

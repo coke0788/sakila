@@ -20,5 +20,6 @@ public interface FilmMapper {
 	Map<String, Object> selectFilmOne(int filmId);
 	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
 	List<String> selectRatingList();
-	List<String> selectActorForFilm(int filmId);
+	List<Map<String, Object>> selectActorForFilm(int filmId);
+	int insertActorForFilm(Map<String, Object> map);
 }

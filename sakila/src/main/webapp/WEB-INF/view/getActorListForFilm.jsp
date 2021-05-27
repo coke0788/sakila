@@ -13,7 +13,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
-	
+	<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			console.log('click!');
+			if(!$("input:checked[id='ck']").is(":checked")){ //체크박스 아무것도 체크 안 하고 배우 추가 선택 시 경고창 출력.
+				alert('추가할 배우를 선택하세요.'); 
+			} else { 
+				$('#addForm').submit();
+			}
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -71,11 +82,11 @@
                     <div class="input-group icons">
                     
                     	<!-- 검색어 입력창 -->
-					    <form action="/admin/getActorList" method="get">
+					    <form action="/admin/getActorListForFilmSearch" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
+                        	<input name="filmId" type="search" class="form-control" value="${filmId}"hidden="hidden">
 					        <input name="searchWord" type="search" class="form-control" placeholder="Search Actor">
-					        <input name="searchWordForFilm" type="search" class="form-control" placeholder="Search film">
 					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
@@ -90,7 +101,6 @@
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- 로그아웃 디자인 해야 함. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -131,6 +141,11 @@
                                     <hr>
                                 </div>
                                 <div class="table-responsive">
+                                <form action="${pageContext.request.contextPath}/admin/getActorListForFilm" method="post" id="addForm">
+                                	<div class="float-right"> 
+                                		<button type="button" id="btn" class="btn mb-1 btn-sm btn-outline-primary">추가</button>
+                                		<input type="text" name="filmId" value="${filmId}" hidden="hidden">
+                                	</div>
                                     <table class="table">
                                         <thead>
 								            <tr>
@@ -145,18 +160,19 @@
 							                	<td>${a.actorId}</td>
 							                    <td>${a.name}</td>
 							                    <td>
-							                    <c:if test="${a.ck eq 'O'}">
-							                    	<input type="checkbox" class="form-check-input" name="ck" value="${a.actorId}" disabled checked>
+							                    <c:if test="${a.filmId != null}">
+							                    	<input type="checkbox" class="form-check-input" name="actorId" value="${a.actorId}" disabled checked>
 							                    	이미 출연 중인 배우입니다.
 							                    </c:if>
-							                    <c:if test="${a.ck eq 'X'}">
-							                    	<input type="checkbox" class="form-check-input" name="ck" value="${a.actorId}">
+							                    <c:if test="${a.filmId == null}">
+							                    	<input type="checkbox" class="form-check-input" name="actorId" value="${a.actorId}" id="ck">
 							                    </c:if>
 							                    </td>
 							                </tr>
 							            	</c:forEach>
 							        	</tbody>
 									</table>
+									</form>
                                 </div>
                             </div>
                         </div>

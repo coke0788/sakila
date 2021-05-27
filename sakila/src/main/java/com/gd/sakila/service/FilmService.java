@@ -1,5 +1,6 @@
 package com.gd.sakila.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,18 @@ public class FilmService {
 		return map;
 	}
 	//영화에 출연한 배우 목록
-	public List<String> getActorListForFilm(int filmId){
-		List<String> actorList = filmMapper.selectActorForFilm(filmId);
+	public List<Map<String, Object>> getActorListForFilm(int filmId){
+		List<Map<String, Object>> actorList = filmMapper.selectActorForFilm(filmId);
 		log.debug("================배우 목록:"+actorList);
 		return actorList;
+	}
+	//영화에 배우 추가
+	public int addActorForFilm(int filmId, int[] actorId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("filmId", filmId);
+		map.put("actorId", actorId);
+		int rowCnt = filmMapper.insertActorForFilm(map);
+		log.debug("=================영화에 배우 삽입 :" + rowCnt);
+		return rowCnt;
 	}
 }

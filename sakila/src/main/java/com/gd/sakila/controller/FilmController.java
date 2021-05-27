@@ -80,17 +80,30 @@ public class FilmController {
 	@GetMapping("/getActorListForFilm")
 	public String getActorListForFilm(Model model,
 			@RequestParam(value="filmId", required=true) int filmId) {
-		List<String> actorList = filmService.getActorListForFilm(filmId);
+		List<Map<String, Object>> actorList = filmService.getActorListForFilm(filmId);
 			log.debug("==================배우 목록 :"+actorList);
 			model.addAttribute("actorList", actorList);
 			model.addAttribute("filmId", filmId);
 		return "getActorListForFilm";
 	}
+	@PostMapping("/getActorListForFilm")
+	public String getActorListForFilm(@RequestParam(value="filmId", required=true) int filmId,
+									@RequestParam(value="actorId") int[] actorId) {
+		log.debug("==================추가 배우 :"+actorId.length);
+		log.debug("==================추가 필름ID :"+filmId);
+		filmService.addActorForFilm(filmId, actorId);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
 	/*
 	@GetMapping("/getActorListForFilmSearch")
-	public String getActorListForFilm(@RequestParam(value="searchWord", required=false) String searchWord) {
-		return "getActorListForFilm";
+	public String getActorListForFilm(Model model,
+									@RequestParam(value="searchWord", required=false) String searchWord,
+									@RequestParam(value="filmId", required=true) int filmId) {
+		List<String> actorList = filmService.getActorListForFilm(filmId);
+		log.debug("==================배우 목록 :"+actorList);
+		model.addAttribute("actorList", actorList);
+		model.addAttribute("filmId", filmId);
+		return "redirect:/admin/getActorListForFilm?searchWord="+searchWord+"&filmId="+filmId;
 	}
 	*/
-
 }
