@@ -49,7 +49,7 @@
     });
     
 </script>
-<title>addBoard</title>
+<title>addFilm</title>
 </head>
 <body>
     <!--*******************
@@ -143,7 +143,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                <h4>Edit Board</h4>
+                                <h4>Add Film</h4>
                                 <hr>
                                 	<!-- 테이블을 div로 디자인 변경 해야 함. -->
 						        <form method="post" action="${pageContext.request.contextPath}/admin/addFilm" id="addForm">
@@ -245,11 +245,14 @@
 						                  <input type="checkbox" name="specialFeatures" value="Deleted Scenes"> Deleted Scenes&nbsp;
 						                  <input type="checkbox" name="specialFeatures" value="Behind the Scenes"> Behind the Scenes
 						             </div>
+						        </div> 
+								<div class="form-group row">
+                                        <div class="col-lg-8 ml-auto">
+						                	<input class="btn btn-primary" id="addButton" type="button" value="등록"/> 
+						                    <a href="${pageContext.request.contextPath}/admin/getFilmList"><input class="btn btn-default" type="button" value="목록"></a>
+						            	</div>
 						        </div>
-						        <div>
-							     	<input class="btn btn-primary" id="addButton" type="button" value="등록"/>
-							    </div> 
-							      </form>
+							    </form>
                                 </div>
                             </div>
                         </div>
