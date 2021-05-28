@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.LanguageService;
 import com.gd.sakila.vo.Actor;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.FilmForm;
+import com.gd.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +28,25 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class FilmController {
 	@Autowired FilmService filmService;
+	@Autowired LanguageService languageService;
+	
+	@GetMapping("/addFilm")
+	public String addFilm(Model model) {
+		List<Category> categoryList = filmService.getCategoryList();
+		List<Language> languageList = languageService.getLanguageList();
+		log.debug("=================필름 추가 시 카테고리목록 사이즈"+categoryList.size());
+		log.debug("=================필름 추가 시 언어목록 사이즈"+languageList.size());
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("languageList", languageList);
+		return "addFilm";
+	}
+	@PostMapping("/addFilm")
+	public String addFilm(FilmForm filmForm) {  // 기본(값)티입의 경우 매개변수 이름과 name이 같으면 매핑. 참조타입은 필드명과 name이 같으면 매핑.
+		int filmId = filmService.addFilm(filmForm);
+		log.debug("=================추가 필름 아이디 :"+filmId);
+		log.debug("=================입력값 :"+filmForm);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
 	
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model, @RequestParam(value="filmId", required=true) int filmId, 

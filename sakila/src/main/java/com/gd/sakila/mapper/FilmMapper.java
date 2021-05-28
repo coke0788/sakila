@@ -5,12 +5,15 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Film;
 import com.gd.sakila.vo.FilmList;
 import com.gd.sakila.vo.Page;
 
 @Mapper
 public interface FilmMapper {
 	List<Map<String, Object>> selectFilmListByFilmId(Map<String, Object> map);
+	int insertFilm(Film film);
+	int insertFilmCategory(Map<String, Object> map);
 	/*
 	List<FilmList> selectFilmListByFilmIdSearchAsActor(Map<String, Object> pageMap);
 	int selectFilmTotalSearchAsTitle(String searchWord);

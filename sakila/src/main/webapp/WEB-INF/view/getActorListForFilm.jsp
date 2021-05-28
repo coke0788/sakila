@@ -149,6 +149,7 @@
                                     <table class="table">
                                         <thead>
 								            <tr>
+								            	<th>sorting</th>
 								                <th>actor_id</th>
 								                <th>actor_name</th>
 								                <th>check</th>
@@ -157,6 +158,7 @@
                                         <tbody>
 							            	<c:forEach var="a" items="${actorList}">
 							                <tr>
+							                	<td></td>
 							                	<td>${a.actorId}</td>
 							                    <td>${a.name}</td>
 							                    <td>

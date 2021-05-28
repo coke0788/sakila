@@ -128,6 +128,9 @@
                             <div class="card-body">
                                 <div class="card-title">
                                     <h4>Film List</h4>
+                                <div class="text-right">
+								     <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm"><i class="fa fa-pencil"> 영화 추가</i></a>
+								</div>
                                     <hr>
                                     <!-- 정렬 선택 창 -->
                                     <form action="${pageContext.request.contextPath}/admin/getFilmList" id="order" method="get">
@@ -141,12 +144,12 @@
                                             </select>
                                             <select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="categoryName">
                                             	<option value="">카테고리선택</option>
-                                            	<c:forEach var="cn" items="${categoryNameList}">
-                                            		<c:if test="${cn == categoryName}">
-											 			<option value="${cn}" selected="selected">${cn}</option>
+                                            	<c:forEach var="c" items="${categoryNameList}">
+                                            		<c:if test="${c.name == categoryName}">
+											 			<option value="${c.name}" selected="selected">${c.name}</option>
 											 		</c:if>
-											 		<c:if test="${cn != categoryName}">
-											 			<option value="${cn}">${cn}</option>
+											 		<c:if test="${c.name != categoryName}">
+											 			<option value="${c.name}">${c.name}</option>
 											 		</c:if>
                                             	</c:forEach>
                                             </select>

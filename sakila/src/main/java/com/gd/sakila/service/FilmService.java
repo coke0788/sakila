@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.Film;
+import com.gd.sakila.vo.FilmForm;
 import com.gd.sakila.vo.FilmList;
 import com.gd.sakila.vo.Page;
 
@@ -23,6 +26,21 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmService {
 	@Autowired FilmMapper filmMapper; 
 	@Autowired CategoryMapper categoryMapper;
+	
+	// categoryService.class로 이동?
+	public List<Category> getCategoryList(){	
+		return categoryMapper.selectCategoryList();
+	}
+	
+	public int addFilm(FilmForm filmForm) { //입력값 : film입력 폼
+		Film film = filmForm.getFilm();
+		filmMapper.insertFilm(film); //film id 생성 후 film.setFilmId(생성된 값) 호출
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		map.put("filmId", film.getFilmId());
+		filmMapper.insertFilmCategory(map);
+		return film.getFilmId(); //컨트롤러에 filmid를 리턴 한다. 컨트롤러에서 입력된 film의 filmid값을 얻기 위해서 
+	}
 	
 	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, 
 											String categoryName, String orderWord, Double price, 
@@ -45,7 +63,7 @@ public class FilmService {
 			lastPage += 1;
 		}
 		List<Map<String, Object>> filmList = filmMapper.selectFilmListByFilmId(paramMap);
-		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
+		List<Category> categoryNameList = categoryMapper.selectCategoryList();
 		List<String> ratingList = filmMapper.selectRatingList();
 		
 		Map<String, Object> map = new HashMap<>();
@@ -90,12 +108,15 @@ public class FilmService {
 		return actorList;
 	}
 	//영화에 배우 추가
-	public int addActorForFilm(int filmId, int[] actorId) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("filmId", filmId);
-		map.put("actorId", actorId);
-		int rowCnt = filmMapper.insertActorForFilm(map);
+	public void addActorForFilm(int filmId, int[] actorId) {
+		int rowCnt=0;
+		for(int a : (int[])actorId) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("filmId", filmId);
+			map.put("actorId", a);
+			rowCnt = filmMapper.insertActorForFilm(map);
+			log.debug("=================영화에 배우 삽입 :" + a);
+		}
 		log.debug("=================영화에 배우 삽입 :" + rowCnt);
-		return rowCnt;
 	}
 }

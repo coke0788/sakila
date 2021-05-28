@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
-	 
+	<insert id="insertFilm" parameterType="com.gd.sakila.vo.Film">
+	 	<selectKey resultType="Integer" keyProperty="filmId" order="AFTER">
+	 		SELECT LAST_INSERT_ID()
+	 	</selectKey>
+	 	<if test="originalLanguageId!=0">
+		 	INSERT INTO film(title, description, release_year, language_id, 
+		 	original_language_id, rental_duration, rental_rate, length, 
+		 	replacement_cost, rating, special_features) 
+		 	VALUES (#{title}, #{description}, #{releaseYear}, #{languageId}, #{originalLanguageId}, #{rentalDuration},
+		 	#{rentalRate}, #{length}, #{replacementCost}, #{rating}, #{specialFeatures})
+	 	</if>
+	 	<if test="originalLanguageId==0">
+	 		INSERT INTO film(title, description, release_year, language_id, rental_duration, rental_rate, length, 
+		 	replacement_cost, rating, special_features) 
+		 	VALUES (#{title}, #{description}, #{releaseYear}, #{languageId}, #{rentalDuration},
+		 	#{rentalRate}, #{length}, #{replacementCost}, #{rating}, #{specialFeatures})
+	 	</if>
+	</insert>
+	
+	<insert id="insertFilmCategory" parameterType="java.util.Map">
+		INSERT INTO film_category(film_id, category_id) VALUES (#{filmId}, #{categoryId})
+	</insert>
+	
 	<select id="selectFilmListByFilmId" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT FID, title, category, price, rating, length FROM film_list
 		<where>
@@ -66,7 +88,10 @@
 	</select>
 	
 	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
-		SELECT f.film_id filmId, fl.title title, fl.description description, f.release_year releaseYear, f.rental_duration rentalDuration, fl.actors actors, fl.category category, fl.price rentalRate, fl.length length, fl.rating rating, f.special_features specialFeatures, f.last_update lastUpdate, f.replacement_cost replacementCost, l.name language FROM film f left JOIN film_list fl ON(fl.FID=f.film_id) JOIN language l ON (f.language_id=l.language_id) WHERE f.film_id=#{filmId}
+		SELECT f.film_id filmId, fl.title title, fl.description description, YEAR(f.release_year) releaseYear, f.rental_duration rentalDuration, 
+		fl.actors actors, fl.category category, fl.price rentalRate, fl.length length, fl.rating rating, f.special_features specialFeatures, 
+		f.last_update lastUpdate, f.replacement_cost replacementCost, l.name language FROM film f left JOIN film_list fl ON(fl.FID=f.film_id) 
+		JOIN language l ON (f.language_id=l.language_id) WHERE f.film_id=#{filmId}
 	</select>
 	
 	<select id="selectRatingList" resultType="String">
@@ -89,9 +114,6 @@
 		ORDER BY name
 	</select>
 	<insert id="insertActorForFilm" parameterType="java.util.Map">
-		<!-- 한개까지는 되는데 두개 이상 등록하면 오류 남. 해결 못 하겠음. -->
-		<foreach collection="actorId" item="c">
-			INSERT INTO film_actor(actor_id, film_id) VALUES (#{c}, #{filmId})
-		</foreach>
+		INSERT INTO film_actor(actor_id, film_id) VALUES (#{actorId}, #{filmId})
 	</insert>
 </mapper>
