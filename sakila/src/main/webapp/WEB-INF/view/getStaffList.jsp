@@ -1,11 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-<html>
+<html lang="utf-8">
+
 <head>
-<meta charset="UTF-8">
-<title>getStaffList</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>getFilmList</title>
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Custom Stylesheet -->
+<link href="../static/css/style.css" rel="stylesheet">
 <script>
 $(document).ready(function(){
 	$('#btn').click(function(){
@@ -16,6 +24,43 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="${pageContext.request.contextPath}/">
+                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                    <span class="brand-title">
+                        <p class="font-weight-bold text-white">Sakila</p>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
 	<form action="${pageContext.request.contextPath}/admin/getStaffList" id="searchWordForm">
 		<div>
 			<input type="text" name="searchWord">
@@ -49,5 +94,26 @@ $(document).ready(function(){
 				</c:forEach>
 			</tbody>
 		</table>
+		<!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+                <p> Developed by Hyeyoung : coke0788, 2021 </p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="../static/plugins/common/common.min.js"></script>
+    <script src="../static/js/custom.min.js"></script>
+    <script src="../static/js/settings.js"></script>
+    <script src="../static/js/gleek.js"></script>
+    <script src="../static/js/styleSwitcher.js"></script>
 </body>
 </html>
