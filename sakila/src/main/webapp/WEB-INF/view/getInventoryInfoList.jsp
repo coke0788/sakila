@@ -70,7 +70,7 @@
                 <div class="header-left">
                     <div class="input-group icons">
                     	<!-- 검색어 입력창 -->
-					    <form action="/admin/getInventoryInfoListList" method="get">
+					    <form action="/admin/getInventoryInfoList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
 					        <input name="searchWord" type="search" class="form-control" placeholder="Search Board">
@@ -134,6 +134,7 @@
 								                <th>Film Title</th>
 								                <th>Store ID</th>
 								                <th>총 수량</th>
+								                <!-- 검색했을 때 검색 수량에 상관없이 무조건 10개 출력 됨. 쿼리 불러오는 것으로 구현 필요. -->
 								                <th>대여 중</th>
 								                <th>대여 가능 수량</th>
 								            </tr>

@@ -4,11 +4,9 @@
 	<select id="selectInventoryInfoList" parameterType="com.gd.sakila.vo.Page" resultType="java.util.Map">
 		SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
 		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
-		<where>
 		<if test="searchWord!=null">
-			title LIKE CONCAT('%', #{searchWord}, '%')
+			HAVING f.title LIKE CONCAT('%', #{searchWord}, '%')
 		</if>
-		</where>
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<select id="selectInventoryTotal" resultType="int">
