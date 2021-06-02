@@ -47,10 +47,15 @@ public class InventoryController {
 	}
 	
 	@GetMapping("/getInventoryOne")
-	public String getInventoryOne(Model model, @RequestParam(value="filmId", required=true) int filmId) {
-		List<Integer> list = inventoryService.getInventoryOne(filmId);
-		model.addAttribute("list",list);
-		log.debug("+===============리스트"+list);
+	public String getInventoryOne(Model model, @RequestParam(value="filmId", required=true) int filmId,
+												@RequestParam(value="title", required=true) String title) {
+		Map<String, Object> map = inventoryService.getInventoryOne(filmId);
+		model.addAttribute("stockList1",map.get("stockList1"));
+		model.addAttribute("stockList2",map.get("stockList2"));
+		model.addAttribute("notStockList1",map.get("notStockList1"));
+		model.addAttribute("notStockList2",map.get("notStockList2"));
+		model.addAttribute("title", title);
+		model.addAttribute("filmId", filmId);
 		return "getInventoryOne";
 	}
 }

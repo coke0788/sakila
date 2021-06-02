@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
+	
+	<!-- 리스트 출력 -->
 	<select id="selectInventoryInfoList" parameterType="com.gd.sakila.vo.Page" resultType="java.util.Map">
 		SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
 		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
@@ -9,25 +11,35 @@
 		</if>
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	<!-- 각 매장의 해당 필름 전체 재고량 -->
 	<select id="selectInventoryTotal" resultType="int">
 		SELECT i.film_id, COUNT(*) '총량' FROM inventory i LEFT JOIN film f ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
 	</select>
 	
+	<!-- 대여가능 재고 -->
 	<select id="selectInventoryStockCnt" parameterType="java.util.Map" resultType="Integer">
 	SELECT COUNT(*) cnt FROM inventory WHERE film_id = #{filmId}
      AND store_id = #{storeId} AND inventory_in_stock(inventory_id) 
 	</select>
+	<!-- 대여중 재고 -->
 	<select id="selectInventoryNotStockCnt" parameterType="java.util.Map" resultType="Integer">
      SELECT COUNT(*) cnt FROM inventory WHERE film_id = #{filmId}
      AND store_id = #{storeId} AND NOT inventory_in_stock(inventory_id);
 	</select>
 	
-	<select id="selectInventory" parameterType="java.util.Map" resultType="Integer">
+	<!-- 상세페이지 대여가능 -->
+	<select id="selectInventoryOneStock" parameterType="java.util.Map" resultType="Integer">
 	SELECT inventory_id inventoryId FROM inventory WHERE film_id = #{filmId}
-     AND store_id = #{storeId}
-     AND inventory_in_stock(inventory_id) 
+     AND store_id = #{storeId} AND inventory_in_stock(inventory_id)
 	</select>
-		<select id="selectInventoryTotalCount" parameterType="com.gd.sakila.vo.Page" resultType="int">
+	<!-- 상세페이지 대여 중 -->
+	<select id="selectInventoryOneNotStock" parameterType="java.util.Map" resultType="Integer">
+	SELECT inventory_id inventoryId FROM inventory WHERE film_id = #{filmId}
+     AND store_id = #{storeId} AND NOT inventory_in_stock(inventory_id)
+	</select>
+	
+	<!-- 페이징용 전체 리스트 개수 -->
+	<select id="selectInventoryTotalCount" parameterType="com.gd.sakila.vo.Page" resultType="int">
 		SELECT COUNT(*) FROM 
 		(SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
 		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id

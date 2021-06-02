@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>getBoardList</title>
+    <title>Inventory List</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -73,7 +73,7 @@
 					    <form action="/admin/getInventoryInfoList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
-					        <input name="searchWord" type="search" class="form-control" placeholder="Search Board">
+					        <input name="searchWord" type="search" class="form-control" placeholder="Search Film">
 					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
@@ -134,7 +134,6 @@
 								                <th>Film Title</th>
 								                <th>Store ID</th>
 								                <th>총 수량</th>
-								                <!-- 검색했을 때 검색 수량에 상관없이 무조건 10개 출력 됨. 쿼리 불러오는 것으로 구현 필요. -->
 								                <th>대여 중</th>
 								                <th>대여 가능 수량</th>
 								            </tr>
@@ -154,7 +153,7 @@
 							                <tr>
 							                <c:if test="${list[i].filmId!=list[i-1].filmId}">
 							                	<td>${list[i].filmId}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}">${list[i].title}</a></td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}&title=${list[i].title}">${list[i].title}</a></td>
 							                    <td>${list[i].storeId}</td>
 							                    <td>${list[i].total}</td>
 							                    <td>${notStockCnt[i]}</td>

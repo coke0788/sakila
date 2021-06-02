@@ -29,8 +29,6 @@ public class InventoryService {
 		page.setSearchWord(searchWord);
 		log.debug("=======Page"+page);
 		int beginRow = ((currentPage-1)*page.getRowPerPage());
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("page", page);
 		int filmTotal = inventoryMapper.selectInventoryTotalCount(page);
 		int lastPage = filmTotal/page.getRowPerPage();
 		if(filmTotal%page.getRowPerPage()!=0) {
@@ -38,7 +36,6 @@ public class InventoryService {
 		}
 		log.debug("=======마지막 페이지:"+lastPage);
 		log.debug("=======전체 영화 수:"+filmTotal);
-		log.debug("=======파람:"+paramMap);
 		
 		List<Map<String, Object>> list = inventoryMapper.selectInventoryInfoList(page);
 		List<Integer> storeIdList = new ArrayList<>();
@@ -48,7 +45,6 @@ public class InventoryService {
 		List<Integer> notStockCnt = new ArrayList<>();
 		int storeId=0;
 		int filmId=0;
-		
 		
 		for(Map<String, Object> data : list) {
 			storeId = (int) data.get("storeId");
@@ -75,16 +71,26 @@ public class InventoryService {
 		map.put("notStockCnt", notStockCnt);
 		return map;
 	}
-	public List<Integer> getInventoryOne(int filmId) {
+	public Map<String, Object> getInventoryOne(int filmId) {
 		int store1Id = 1;
 		int store2Id = 2;
-		int stockCount = 0;
-		int inventoryId = 0;
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("storeId", store1Id);
 		paramMap.put("filmId", filmId);
-		List<Integer> list = inventoryMapper.selectInventory(paramMap);
-		log.debug("-===============리스트"+list);
-		return list;
+		List<Integer> stockList1 = inventoryMapper.selectInventoryOneStock(paramMap);
+		List<Integer> notStockList1 = inventoryMapper.selectInventoryOneNotStock(paramMap);
+		paramMap.put("storeId", store2Id);
+		List<Integer> stockList2 = inventoryMapper.selectInventoryOneStock(paramMap);
+		List<Integer> notStockList2 = inventoryMapper.selectInventoryOneNotStock(paramMap);
+		
+		
+		log.debug("-===============1매장 대여가능 리스트"+stockList1);
+		log.debug("-===============2매장 대여가능 리스트"+stockList2);
+		Map<String, Object> map = new HashMap<>();
+		map.put("stockList1", stockList1);
+		map.put("stockList2", stockList2);
+		map.put("notStockList1", notStockList1);
+		map.put("notStockList2", notStockList2);
+		return map;
 	}
 }
