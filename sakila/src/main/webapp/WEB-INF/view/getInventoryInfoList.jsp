@@ -134,17 +134,21 @@
 								                <th>Film Title</th>
 								                <th>Store ID</th>
 								                <th>총 수량</th>
+								                <th>대여 중</th>
+								                <th>대여 가능 수량</th>
 								            </tr>
 								        </thead>
                                         <tbody>
-                                        <c:forEach var="l" items="${list}">
+                                        <c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
 							                <tr>
-							                	<td>${l.filmId}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=">${l.title}</a></td>
-							                    <td>${l.storeId}</td>
-							                    <td>${l.total}</td>
+							                	<td>${list[i].filmId}</td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}">${list[i].title}</a></td>
+							                    <td>${list[i].storeId}</td>
+							                    <td>${list[i].total}</td>
+							                    <td>${list[i].total-stockCnt[i]}</td>
+							                    <td>${stockCnt[i]}</td>
 							                </tr>
-							           	</c:forEach>
+							            </c:forEach>
 							        	</tbody>
 									</table>
 	<div class="col-7">

@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,18 @@ public class InventoryController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("stockCnt", map.get("stockCnt"));
+		log.debug("==================대여가능수량 리스트:"+map.get("stockCnt"));
 		log.debug("==================인벤토리 리스트:"+map.get("list"));
 		log.debug("==================인벤토리 리스트 검색어:"+searchWord);
 		return "getInventoryInfoList";
+	}
+	
+	@GetMapping("/getInventoryOne")
+	public String getInventoryOne(Model model, @RequestParam(value="filmId", required=true) int filmId) {
+		List<Integer> list = inventoryService.getInventoryOne(filmId);
+		model.addAttribute("list",list);
+		log.debug("+===============리스트"+list);
+		return "getInventoryOne";
 	}
 }

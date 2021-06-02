@@ -30,6 +30,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="${pageContext.request.contextPath}/admin/getInventoryInfoList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Inventory List</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="widgets.html" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
                         </a>

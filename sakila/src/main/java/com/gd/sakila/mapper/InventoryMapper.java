@@ -10,4 +10,7 @@ import com.gd.sakila.vo.Page;
 @Mapper
 public interface InventoryMapper {
 	List<Map<String, Object>> selectInventoryInfoList(Page page);
+	List<Integer> selectInventoryTotal();
+	int selectInventoryStockCnt(Map<String, Object> map);
+	List<Integer> selectInventory(Map<String, Object> map);
 }
