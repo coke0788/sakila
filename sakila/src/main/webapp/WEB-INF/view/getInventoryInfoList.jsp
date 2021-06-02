@@ -141,13 +141,25 @@
 								        </thead>
                                         <tbody>
                                         <c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
+                                        	<tr>
+                                        	<c:if test="${list[i].filmId==list[i-1].filmId}">
+							                	<td></td>
+							                    <td></td>
+							                    <td>${list[i].storeId}</td>
+							                    <td>${list[i].total}</td>
+							                    <td>${notStockCnt[i]}</td>
+							                    <td>${stockCnt[i]}</td>
+							                </c:if>
+							                </tr>
 							                <tr>
+							                <c:if test="${list[i].filmId!=list[i-1].filmId}">
 							                	<td>${list[i].filmId}</td>
 							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}">${list[i].title}</a></td>
 							                    <td>${list[i].storeId}</td>
 							                    <td>${list[i].total}</td>
-							                    <td>${list[i].total-stockCnt[i]}</td>
+							                    <td>${notStockCnt[i]}</td>
 							                    <td>${stockCnt[i]}</td>
+							                </c:if>
 							                </tr>
 							            </c:forEach>
 							        	</tbody>

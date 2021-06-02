@@ -31,16 +31,21 @@ public class InventoryService {
 		int beginRow = ((currentPage-1)*page.getRowPerPage());
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("page", page);
-		int filmTotal = filmMapper.selectFilmTotal(paramMap);
+		int filmTotal = inventoryMapper.selectInventoryTotalCount(page);
 		int lastPage = filmTotal/page.getRowPerPage();
 		if(filmTotal%page.getRowPerPage()!=0) {
 			lastPage += 1;
 		}
+		log.debug("=======마지막 페이지:"+lastPage);
+		log.debug("=======전체 영화 수:"+filmTotal);
+		log.debug("=======파람:"+paramMap);
+		
 		List<Map<String, Object>> list = inventoryMapper.selectInventoryInfoList(page);
 		List<Integer> storeIdList = new ArrayList<>();
 		List<Integer> filmIdList = new ArrayList<>();
 		Map<String, Object> inMap = new HashMap<>();
 		List<Integer> stockCnt = new ArrayList<>();
+		List<Integer> notStockCnt = new ArrayList<>();
 		int storeId=0;
 		int filmId=0;
 		
@@ -53,10 +58,12 @@ public class InventoryService {
 			inMap.put("storeId", storeId);
 			inMap.put("filmId", filmId);
 			stockCnt.add(inventoryMapper.selectInventoryStockCnt(inMap));
+			notStockCnt.add(inventoryMapper.selectInventoryNotStockCnt(inMap));
 		}
 		
 		log.debug("==================inMap:"+inMap);
 		log.debug("==================stockCnt:"+stockCnt);
+		log.debug("==================notStockCnt:"+notStockCnt);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
@@ -65,6 +72,7 @@ public class InventoryService {
 		map.put("lastPage", lastPage);
 		map.put("stockCnt", stockCnt);
 		map.put("rowPerPage", rowPerPage);
+		map.put("notStockCnt", notStockCnt);
 		return map;
 	}
 	public List<Integer> getInventoryOne(int filmId) {

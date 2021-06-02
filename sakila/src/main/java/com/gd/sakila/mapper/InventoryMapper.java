@@ -13,4 +13,6 @@ public interface InventoryMapper {
 	List<Integer> selectInventoryTotal();
 	int selectInventoryStockCnt(Map<String, Object> map);
 	List<Integer> selectInventory(Map<String, Object> map);
+	int selectInventoryNotStockCnt (Map<String, Object> map);
+	int selectInventoryTotalCount (Page page);
 }

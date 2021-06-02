@@ -12,13 +12,28 @@
 	<select id="selectInventoryTotal" resultType="int">
 		SELECT i.film_id, COUNT(*) '총량' FROM inventory i LEFT JOIN film f ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
 	</select>
+	
 	<select id="selectInventoryStockCnt" parameterType="java.util.Map" resultType="Integer">
 	SELECT COUNT(*) cnt FROM inventory WHERE film_id = #{filmId}
      AND store_id = #{storeId} AND inventory_in_stock(inventory_id) 
 	</select>
+	<select id="selectInventoryNotStockCnt" parameterType="java.util.Map" resultType="Integer">
+     SELECT COUNT(*) cnt FROM inventory WHERE film_id = #{filmId}
+     AND store_id = #{storeId} AND NOT inventory_in_stock(inventory_id);
+	</select>
+	
 	<select id="selectInventory" parameterType="java.util.Map" resultType="Integer">
 	SELECT inventory_id inventoryId FROM inventory WHERE film_id = #{filmId}
      AND store_id = #{storeId}
      AND inventory_in_stock(inventory_id) 
+	</select>
+		<select id="selectInventoryTotalCount" parameterType="com.gd.sakila.vo.Page" resultType="int">
+		SELECT COUNT(*) FROM 
+		(SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
+		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
+		<if test="searchWord!=null">
+			HAVING f.title LIKE CONCAT('%', #{searchWord}, '%')
+		</if> 
+		) s
 	</select>
 </mapper>

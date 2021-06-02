@@ -37,7 +37,10 @@ public class InventoryController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("stockCnt", map.get("stockCnt"));
+		model.addAttribute("notStockCnt", map.get("notStockCnt"));
+		log.debug("==================마지막페이지:"+map.get("lastPage"));
 		log.debug("==================대여가능수량 리스트:"+map.get("stockCnt"));
+		log.debug("==================대여중수량 리스트:"+map.get("notStockCnt"));
 		log.debug("==================인벤토리 리스트:"+map.get("list"));
 		log.debug("==================인벤토리 리스트 검색어:"+searchWord);
 		return "getInventoryInfoList";
