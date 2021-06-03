@@ -117,7 +117,7 @@ $(document).ready(function(){
                               <hr>
                               </div>
                               <div class="text-right">
-                              		<a class="btn btn-default" href="${pageContext.request.contextPath}/addInvetory"><i class="fa fa-pencil"> 재고 추가</i></a>
+                              		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory?title=${title}&filmId=${filmId}&currentPage=${currentPage}&searchWord=${searchWord}"><i class="fa fa-pencil"> 재고 추가</i></a>
                               </div>
                               <div>
                               	<h4 class="font-weight-bold"> store 1 </h4>
@@ -137,7 +137,7 @@ $(document).ready(function(){
 										<td>Inventory Id</td>
 										<td></td>
 										<td>${s1}</td>
-										<td><a href="${pageContext.request.contextPath}/removeIventory?inventoryId=${s1}"><i class="fa fa-trash"></i></a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/removeInventory?inventoryId=${s1}&title=${title}&filmId=${filmId}&currentPage=${currentPage}&searchWord=${searchWord}"><i class="fa fa-trash"></i></a></td>
 									</tr>
 									</c:forEach>
 									<c:forEach var="ns1" items="${notStockList1}">
@@ -169,7 +169,7 @@ $(document).ready(function(){
 										<td>Inventory Id</td>
 										<td></td>
 										<td>${s2}</td>
-										<td><a href="${pageContext.request.contextPath}/removeIventory?inventoryId=${s2}"><i class="fa fa-trash"></i></a></td>
+										<td><a href="${pageContext.request.contextPath}/admin/removeInventory?inventoryId=${s2}&title=${title}&filmId=${filmId}&currentPage=${currentPage}&searchWord=${searchWord}"><i class="fa fa-trash"></i></a></td>
 									</tr>
 									</c:forEach>
 								<c:forEach var="ns2" items="${notStockList2}">
@@ -183,7 +183,7 @@ $(document).ready(function(){
 							</tbody>
 							</table>
 							<hr>
-							<a class="btn btn-light" href="javascript:history.back()">목록</a>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getInventoryInfoList?currentPage=${currentPage}&searchWord=${searchWord}">목록</a>
                            </div>
                       </div>
                   </div>

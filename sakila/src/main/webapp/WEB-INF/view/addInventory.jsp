@@ -1,32 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>getBoardOne</title>
+<title>addInventory</title>
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link href="../static/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-	$('#btn').click(function(){
-		console.log('btn click');
-		$('#deleteCommentForm').submit();
-	});
-	$('#logoutBtn').click(function(){
-		console.log('logout!');
-		$('#logout').submit();
-	});
-});
+    $(document).ready(function() { //ë ˆë””
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+    	$('#addButton').click(function(){
+    		console.log('ìž…ë ¥!');
+    		$('#addForm').submit();
+    	});
+    });
+    
 </script>
+<title>addFilm</title>
 </head>
 <body>
-  <!--*******************
+    <!--*******************
         Preloader start
     ********************-->
     <div id="preloader">
@@ -62,7 +63,7 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ¸Ó¸® ºÎºÐ ½ÃÀÛ
+            ë¨¸ë¦¬ ë¶€ë¶„ ì‹œìž‘
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
@@ -80,7 +81,7 @@ $(document).ready(function(){
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- ·Î±×¾Æ¿ô µðÀÚÀÎ ÇØ¾ß ÇÔ. -->
+	                            <!-- ë¡œê·¸ì•„ì›ƒ ë””ìžì¸ í•´ì•¼ í•¨. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -91,7 +92,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ¸Ó¸® ³¡!
+            ë¨¸ë¦¬ ë!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -100,10 +101,10 @@ $(document).ready(function(){
         <!--**********************************
             Sidebar end
         ***********************************-->
-      <!--**********************************
-         »ó¼¼ ³»¿ë Ãâ·Â ½ÃÀÛ!
+     <!--**********************************
+         ê²Œì‹œê¸€ ìž…ë ¥ í¼ ì‹œìž‘!
      ***********************************-->
- <div class="content-body">    
+    <div class="content-body">    
       <div class="row page-titles mx-0">
           <div class="col p-md-0">
               <ol class="breadcrumb">
@@ -111,88 +112,53 @@ $(document).ready(function(){
               </ol>
           </div>
       </div>
-      <div class="container-fluid">
-              <div class="row justify-content-center">
-                  <div class="col-lg-8">
-                      <div class="card">
-                          <div class="card-body">
-                              <div class="form-validation">
-                              <h4>Board One</h4>
-                              <hr>
-                              </div>
-                              <table class="table">
-								<tbody>
-									<tr>
-										<td>board_id </td>
-										<td>${boardMap.boardId}</td>
-									</tr>
-									<tr>
-										<td>board_title </td>
-										<td>${boardMap.boardTitle}</td>
-									</tr>
-									<tr>
-										<td>board_content </td>
-										<td>${boardMap.boardContent}</td>
-									</tr>
-									<tr>
-										<td>username </td>
-										<td>${boardMap.username}</td>
-									</tr>
-									<tr>
-										<td>insert_date </td>
-										<td>${boardMap.insertDate}</td>
-									</tr>
-									<tr>
-										<td>boardfile </td>
-										<td>
-											<div>
-												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">ÆÄÀÏÃß°¡</a>
-											</div>
-											<!-- º¸µåÆÄÀÏ Ãâ·ÂÇÏ´Â ÄÚµå ±¸Çö(¹Ýº¹¹®) -->
-											<c:forEach var="f" items="${boardfileList}">
-												<div>
-													<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}"><i class="fa fa-trash"></i></a>
-												</div>
-											</c:forEach>
-										</td>
-									</tr>
-								</tbody>
-		</table>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">¼öÁ¤</a>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">»èÁ¦</a>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getBoardList">¸ñ·Ï</a>
-		<hr>
-		<h4>Comment</h4>
-		${commentList.size()} °³ÀÇ ´ñ±ÛÀÌ ÀÖ½À´Ï´Ù.
-			<table class="table">
-				<tr>
-					<td style="width:50%; vertical-align:middle">³»¿ë</td>
-					<td style="width:20%; vertical-align:middle">ÀÌ¸§</td>
-					<td style="width:20%; vertical-align:middle">µî·ÏÀÏ</td>
-					<td style="width:10%; vertical-align:middle"></td>
-				</tr>
-				<c:forEach var="c" items="${commentList}">
-					<tr>
-						<td style="width:50%; vertical-align:middle">${c.commentContent}</td>
-						<td style="width:20%; vertical-align:middle">${c.username}</td>
-						<td style="width:20%; vertical-align:middle">${c.insertDate}</td>
-						<td style="width:10%; vertical-align:middle"><a href="${pageContext.request.contextPath}/admin/removeComment?boardId=${boardMap.boardId}&commentId=${c.commentId}"><button type="button" id="btn" class="btn mb-1 btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button></a></td>
-					</tr>
-				</c:forEach>
-			</table>
-
-		<div>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/addComment?boardId=${boardMap.boardId}">´ñ±Ûµî·Ï</a>
-		</div>
-                           </div>
-                      </div>
-                  </div>
-              </div>
+        <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-validation">
+                                <h4>Add Inventory</h4>
+                                <hr>
+						        <form method="post" action="${pageContext.request.contextPath}/admin/addInventory" id="addForm">
+						        <input type="text" name="currentPage" value="${currentPage}" hidden="hidden">
+						        <input type="text" name="searchWord" value="${searchWord}" hidden="hidden">
+						         <div class="form-group">
+						              <label for="title" class="col-lg-8 col-form-label">Title</label>
+						              <div class="col-lg-8"> 
+						                  <input type="text" name="filmId" class="form-control" value="${filmId}" hidden="hidden"> 
+						                  <input type="text" name="title" class="form-control" value="${title}" readonly>
+						              </div>
+						        </div>
+					            <div class="form-group">
+					              <label for="categoryId" class="col-lg-8 col-form-label">Store ID <span class="text-danger">*</span></label>
+					            	<div class="col-lg-8"> 
+						                  <select name="storeId" id ="storeId" class="form-control">
+						                        <option value="1">store 1</option>
+						                        <option value="2">store 2</option>
+						                  </select>
+						              </div>
+						        </div>
+								<div class="form-group row">
+                                        <div class="col-lg-8 ml-auto">
+						                	<input class="btn btn-primary" id="addButton" type="button" value="ë“±ë¡"/> 
+						                    <a href="${pageContext.request.contextPath}/admin/getInventoryOne?currentPage=${currentPage}&searchWord=${searchWord}&filmId=${filmId}&title=${title}"><input class="btn btn-default" type="button" value="ë’¤ë¡œê°€ê¸°"></a>
+						            	</div>
+						        </div>
+							    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
         </div>
     </div>
-   </div>
-      <!--**********************************
+        <!--**********************************
+            ìž…ë ¥í¼ ë!
+        ***********************************-->
+       <!--**********************************
             Footer start
         ***********************************-->
         <div class="footer">

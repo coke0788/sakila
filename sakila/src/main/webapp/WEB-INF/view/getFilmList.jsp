@@ -217,7 +217,7 @@
 							            	<c:forEach var="f" items="${filmList}">
 							                <tr>
 							                	<td>${f.FID}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.FID}">${f.title}</a></td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.FID}&currentPage=${currentPage}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}">${f.title}</a></td>
 							                    <td>${f.category}</td>
 							                    <td>$ ${f.price}</td>
 							                    <td>${f.length} min</td>
@@ -234,10 +234,10 @@
 								</div>
 							    <div class="btn-group float-right">
 							        <c:if test="${currentPage > 1}">
-							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
+							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
 							        </c:if>
 							        <c:if test="${currentPage < lastPage}">
-							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
+							            <a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
 							        </c:if>
 							    </div>
 							    <!-- /페이징 -->

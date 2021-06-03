@@ -14,6 +14,10 @@
 <script>
     $(document).ready(function() { //레디
     	var checkNum = RegExp(/[^0-9]$/);
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
         $('#addButton').click(function() { //폼 add 버트 ㄴ눌렀을때
         	if($('#title').val()==''){
         		alert('타이틀을 입력해주세요.');

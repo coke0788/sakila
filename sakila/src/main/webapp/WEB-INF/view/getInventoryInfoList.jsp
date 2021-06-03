@@ -13,7 +13,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
-	
+	<script>
+	$(document).ready(function(){
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -153,7 +160,7 @@
 							                <tr>
 							                <c:if test="${list[i].filmId!=list[i-1].filmId}">
 							                	<td>${list[i].filmId}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}&title=${list[i].title}">${list[i].title}</a></td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}&title=${list[i].title}&currentPage=${currentPage}&searchWord=${searchWord}">${list[i].title}</a></td>
 							                    <td>${list[i].storeId}</td>
 							                    <td>${list[i].total}</td>
 							                    <td>${notStockCnt[i]}</td>

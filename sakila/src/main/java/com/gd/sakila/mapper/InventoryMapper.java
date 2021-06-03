@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Inventory;
 import com.gd.sakila.vo.Page;
 
 @Mapper
@@ -16,4 +17,6 @@ public interface InventoryMapper {
 	List<Integer> selectInventoryOneNotStock(Map<String, Object> map);
 	int selectInventoryNotStockCnt (Map<String, Object> map);
 	int selectInventoryTotalCount (Page page);
+	int deleteInventoryByInventoryId(int inventoryId);
+	int insertInventory(Inventory inventory);
 }

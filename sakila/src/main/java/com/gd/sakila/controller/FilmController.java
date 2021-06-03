@@ -50,10 +50,25 @@ public class FilmController {
 	
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model, @RequestParam(value="filmId", required=true) int filmId, 
-							@RequestParam(value="storeId", defaultValue="1",required=true) int storeId) {
+							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+							@RequestParam(value="storeId", defaultValue="1",required=true) int storeId,
+							@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, 
+							@RequestParam(value="searchWord", required=false) String searchWord,
+							@RequestParam(value="searchWordForActor", required=false) String searchWordForActor,
+							@RequestParam(value="categoryName", required=false) String categoryName,
+							@RequestParam(value="orderWord", defaultValue="FID") String orderWord,
+							@RequestParam(value="price", required=false ) Double price,
+							@RequestParam(value="rating", required=false ) String rating) {
 		Map<String, Object> map = filmService.getFilmOne(filmId, storeId);
 		model.addAttribute("filmId", filmId);
+		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("storeId", storeId);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("searchWordForActor", searchWordForActor);
+		model.addAttribute("categoryName", categoryName);
+		model.addAttribute("orderWord", orderWord);
+		model.addAttribute("price", price);
+		model.addAttribute("rating", rating);
 		model.addAttribute("filmMap", map.get("filmMap"));
 		model.addAttribute("filmCount", map.get("filmCount"));
 		log.debug("================상세보기 filmId"+filmId);

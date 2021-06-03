@@ -12,7 +12,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 각 매장의 해당 필름 전체 재고량 -->
-	<select id="selectInventoryTotal" resultType="int">
+	<select id="selectInventoryTotal" resultType="Integer">
 		SELECT i.film_id, COUNT(*) '총량' FROM inventory i LEFT JOIN film f ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
 	</select>
 	
@@ -39,7 +39,7 @@
 	</select>
 	
 	<!-- 페이징용 전체 리스트 개수 -->
-	<select id="selectInventoryTotalCount" parameterType="com.gd.sakila.vo.Page" resultType="int">
+	<select id="selectInventoryTotalCount" parameterType="com.gd.sakila.vo.Page" resultType="Integer">
 		SELECT COUNT(*) FROM 
 		(SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
 		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
@@ -48,4 +48,14 @@
 		</if> 
 		) s
 	</select>
+	
+	<!-- 인벤토리 삭제 -->
+	<delete id="deleteInventoryByInventoryId" parameterType="Integer">
+		DELETE FROM inventory WHERE inventory_id = #{inventoryId}
+	</delete>
+	
+	<!-- 인벤토리 추가 -->
+	<insert id="insertInventory" parameterType="com.gd.sakila.vo.Inventory">
+		INSERT INTO inventory(film_id, store_id, last_update) VALUES (#{filmId}, #{storeId}, NOW());
+	</insert>
 </mapper>

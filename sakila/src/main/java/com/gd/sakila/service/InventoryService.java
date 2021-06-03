@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.FilmMapper;
 import com.gd.sakila.mapper.InventoryMapper;
+import com.gd.sakila.vo.Inventory;
 import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
@@ -93,4 +94,15 @@ public class InventoryService {
 		map.put("notStockList2", notStockList2);
 		return map;
 	}
+	public int removeInventory(int inventoryId) {
+		int row = inventoryMapper.deleteInventoryByInventoryId(inventoryId);
+		log.debug("=================인벤토리 삭제 row : "+row);
+		return row;
+	}
+	public int addInventory(Inventory inventory) {
+		int row = inventoryMapper.insertInventory(inventory);
+		log.debug("=================인벤토리 추가 row : "+row);
+		return row;
+	}
+	
 }

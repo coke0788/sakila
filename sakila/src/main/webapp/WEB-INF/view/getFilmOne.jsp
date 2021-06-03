@@ -186,7 +186,7 @@ $(document).ready(function(){
 									</tr>
 								</tbody>
 							</table>
-							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList">목록</a>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}">목록</a>
 							<hr>
                            </div>
                       </div>

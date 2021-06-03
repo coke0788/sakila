@@ -19,6 +19,7 @@ public class CommentService {
 	public int removeComment(int commentId) {
 		int row = commentMapper.deleteCommentByCommentId(commentId);
 		log.debug("============댓글 삭제 row 값 :" + row);
+		log.debug("============댓글 삭제 commentId 값 :" + commentId);
 		return row;
 	}
 	//댓글 등록

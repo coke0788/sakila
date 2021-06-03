@@ -22,12 +22,13 @@ public class CommentController {
 	@Autowired CommentService commentService;
 	
 	//댓글 삭제
-	@PostMapping("/removeComment")
-	public String removeComment (Comment comment) {
-		int row = commentService.removeComment(comment.getCommentId());
-		log.debug("============댓글 삭제 commentId : "+comment.getCommentId());
+	@GetMapping("/removeComment")
+	public String removeComment (@RequestParam(value="commentId", required=true) int commentId, @RequestParam(value="boardId", required=true) int boardId) {
+
+		int row = commentService.removeComment(commentId);
+		log.debug("============댓글 삭제 commentId : "+commentId);
 		log.debug("============댓글 삭제 row : "+row);
-		return "redirect:/admin/getBoardOne?boardId="+comment.getBoardId();
+		return "redirect:/admin/getBoardOne?boardId="+boardId;
 	}
 	
 	//댓글 입력
