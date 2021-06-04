@@ -13,7 +13,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
-	
+	<script>
+	$(document).ready(function(){
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+		$('#btnSearch').click(function(){
+			console.log('btn click');
+			$('#search').submit();
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -74,9 +85,9 @@
 					    <form action="/admin/getActorList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
-					        <input name="searchWord" type="search" class="form-control" placeholder="Search Actor">
-					        <input name="searchWordForFilm" type="search" class="form-control" placeholder="Search film">
-					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
+					        <input name="searchWord" id="search" class="form-control" placeholder="Search Actor">
+					        <input name="searchWordForFilm" id="search" class="form-control" placeholder="Search film">
+					        <button class="btn btn-primary" id="btnSearch"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
 					    
@@ -127,7 +138,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4>Board List</h4>
+                                    <h4>Actor List</h4>
                                     <hr>
                                     <div class="text-right">
 								        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addActor"><i class="fa fa-pencil"> 배우 추가</i></a>

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>getActorListForFilm</title>
+    <title>getCustomerList</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -15,17 +15,13 @@
     <link href="../static/css/style.css" rel="stylesheet">
 	<script>
 	$(document).ready(function(){
-		$('#btn').click(function(){
-			console.log('click!');
-			if(!$("input:checked[id='ck']").is(":checked")){ //체크박스 아무것도 체크 안 하고 배우 추가 선택 시 경고창 출력.
-				alert('추가할 배우를 선택하세요.'); 
-			} else { 
-				$('#addForm').submit();
-			}
-		});
 		$('#logoutBtn').click(function(){
 			console.log('logout!');
 			$('#logout').submit();
+		});
+		$('#btnSearch').click(function(){
+			console.log('btn click');
+			$('#search').submit();
 		});
 	});
 	</script>
@@ -86,15 +82,43 @@
                     <div class="input-group icons">
                     
                     	<!-- 검색어 입력창 -->
-					    <form action="/admin/getActorListForFilmSearch" method="get">
+					    <form id="search" action="/admin/getCustomerList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
-                        	<input name="filmId" type="search" class="form-control" value="${filmId}"hidden="hidden">
-					        <input name="searchWord" type="search" class="form-control" placeholder="Search Actor">
-					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
+                        	<select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="storeId">                        		
+                        		<option value="0">지점선택</option>
+                        		<c:if test="${storeId==1}">
+                        			<option value="1" selected>store 1</option>
+                        		</c:if>
+                        		<c:if test="${storeId!=1}">
+                        			<option value="1">store 1</option>
+                        		</c:if>
+                        		<c:if test="${storeId==2}">
+                        			<option value="2" selected>store 2</option>
+                        		</c:if>
+                        		<c:if test="${storeId!=2}">
+                        			<option value="2">store 2</option>
+                        		</c:if>
+                        	</select>
+                        	<select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="active">
+                        		<option value="2">고객활성상태</option>
+                        		<c:if test="${active==0}">
+                        			<option value="0" selected>INACTIVE</option>
+                        		</c:if>
+                        		<c:if test="${active!=0}">
+                        			<option value="0">INACTIVE</option>
+                        		</c:if>
+                        		<c:if test="${active==1}">
+                        			<option value="1" selected>ACTIVE</option>
+                        		</c:if>
+                        		<c:if test="${active!=1}">
+                        			<option value="1">ACTIVE</option>
+                        		</c:if>
+                        	</select>
+					        <input name="searchWord" type="text" class="form-control" placeholder="Search Customer">
+					        <button class="btn btn-primary" id="btnSearch"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
-					    
                     </div>
                 </div>
                 <div class="header-right">
@@ -105,6 +129,7 @@
                                 <img src="images/user/1.png" height="40" width="40" alt="">
                             </div>
                             <c:if test="${loginStaff!=null}">
+	                            <!-- 로그아웃 디자인 해야 함. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -141,44 +166,51 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h4>Appeared actor List</h4>
+                                    <h4>Customer List</h4>
                                     <hr>
+                                    <div class="text-right">
+								        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer"><i class="fa fa-pencil"> 고객 추가</i></a>
+								    </div>
                                 </div>
                                 <div class="table-responsive">
-                                <form action="${pageContext.request.contextPath}/admin/getActorListForFilm" method="post" id="addForm">
-                                	<div class="float-right"> 
-                                		<button type="button" id="btn" class="btn mb-1 btn-sm btn-outline-primary">추가</button>
-                                		<input type="text" name="filmId" value="${filmId}" hidden="hidden">
-                                	</div>
                                     <table class="table">
                                         <thead>
 								            <tr>
-								            	<th>sorting</th>
-								                <th>actor_id</th>
-								                <th>actor_name</th>
-								                <th>check</th>
+								            	<th>Store ID</th>
+								                <th>Customer ID</th>
+								                <th>Name</th>
+								                <th>Email</th>
+								                <th>Status</th>
 								            </tr>
 								        </thead>
                                         <tbody>
-							            	<c:forEach var="a" items="${actorList}">
+							            	<c:forEach var="l" items="${list}">
 							                <tr>
-							                	<td></td>
-							                	<td>${a.actorId}</td>
-							                    <td>${a.name}</td>
-							                    <td>
-							                    <c:if test="${a.filmId != null}">
-							                    	<input type="checkbox" class="form-check-input" name="actorId" value="${a.actorId}" disabled checked>
-							                    	이미 출연 중인 배우입니다.
+							                	<td>${l.storeId}</td>
+							                    <td>${l.customerId}</td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${l.customerId}&currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}&active=${active}">${l.firstName} ${l.lastName}</a></td>
+							                    <td>${l.email}</td>
+							                    <c:if test="${l.active==1}">
+							                    	<td>ACTIVE</td>
 							                    </c:if>
-							                    <c:if test="${a.filmId == null}">
-							                    	<input type="checkbox" class="form-check-input" name="actorId" value="${a.actorId}" id="ck">
+							                    <c:if test="${l.active==0}">
+							                    	<td style="color:red">INACTIVE</td>
 							                    </c:if>
-							                    </td>
 							                </tr>
 							            	</c:forEach>
 							        	</tbody>
 									</table>
-									</form>
+	<div class="col-7">
+	    <div class="text-left">pages : ${currentPage} of ${lastPage}</div>
+	</div>
+    <div class="btn-group float-right">
+        <c:if test="${currentPage > 1}">
+            <a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage-1}&searchWord=${searchWord}&storeId=${storeId}&active=${active}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-left"></i></button></a>
+        </c:if>
+        <c:if test="${currentPage < lastPage}">
+            <a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchWord=${searchWord}&storeId=${storeId}&active=${active}"><button class="btn btn-gradient" type="button"><i class="fa fa-angle-right"></i></button></a>
+        </c:if>
+    </div>
                                 </div>
                             </div>
                         </div>

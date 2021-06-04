@@ -4,4 +4,40 @@
 	<update id="updateCustomerActiveByScheduler">
 		UPDATE customer c, (SELECT customer_id, MAX(rental_date), DATEDIFF(NOW(), MAX(rental_date)) FROM rental GROUP BY customer_id HAVING DATEDIFF(NOW(), MAX(rental_date)) > 365) A SET c.active = 0 WHERE c.customer_id = A.customer_id
 	</update>
+	
+	<!-- 고객 리스트  -->
+	<select id="selectCustomerList" parameterType="java.util.Map" resultType="com.gd.sakila.vo.Customer">
+		SELECT customer_id customerId, store_id storeId, first_name firstName, last_name lastName , email, active FROM customer
+		<where>
+			<if test="searchWord!=null">
+				AND CONCAT(first_name, last_name) LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+			<if test="storeId!=0">
+				AND store_id=${storeId}
+			</if>
+			<if test="active!=2">
+				AND active=${active}
+			</if>
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 전체 고객 수 -->
+	<select id="selectCustomerTotal" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM customer
+		<where>
+			<if test="searchWord!=null">
+				AND CONCAT(first_name, last_name) LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+			<if test="storeId!=0">
+				AND store_id=${storeId}
+			</if>
+			<if test="active!=2">
+				AND active=${active}
+			</if>
+		</where>
+	</select>
+	<!-- 고객 상세 페이지 -->
+	<select id="selectCustomerOne" parameterType="int" resultType="java.util.Map">
+		SELECT ID customerId, name, address, 'zip CODE' zipCode, phone, city, country, notes, SID storeId  from customer_list WHERE ID=${customerId}
+	</select>
 </mapper>

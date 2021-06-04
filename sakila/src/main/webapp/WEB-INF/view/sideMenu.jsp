@@ -35,6 +35,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="${pageContext.request.contextPath}/admin/getCustomerList" aria-expanded="false">
+                            <i class="fa fa-clipboard"></i><span class="nav-text">Customer List</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="widgets.html" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
                         </a>

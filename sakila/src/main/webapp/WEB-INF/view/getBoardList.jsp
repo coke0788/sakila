@@ -13,7 +13,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
-	
+	<script>
+	$(document).ready(function(){
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+		$('#btnSearch').click(function(){
+			console.log('btn click');
+			$('#search').submit();
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -74,7 +85,7 @@
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
 					        <input name="searchWord" type="search" class="form-control" placeholder="Search Board">
-					        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button></span>
+					        <button class="btn btn-primary" id="btnSearch"><i class="mdi mdi-magnify"></i></button></span>
 					    </div>
 					    </form>
                     </div>
