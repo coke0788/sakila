@@ -53,6 +53,7 @@ public class CustomerService {
 	public Map<String, Object> getCustoemrOne(int customerId){
 		Map<String, Object> map = customerMapper.selectCustomerOne(customerId);
 		log.debug("=======================고객리스트:"+map.get("storeId"));
+		log.debug("=======================고객리스트:"+map.get("email"));
 		return map;
 	}
 }

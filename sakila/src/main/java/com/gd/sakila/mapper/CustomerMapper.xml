@@ -13,10 +13,10 @@
 				AND CONCAT(first_name, last_name) LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 			<if test="storeId!=0">
-				AND store_id=${storeId}
+				AND store_id=#{storeId}
 			</if>
 			<if test="active!=2">
-				AND active=${active}
+				AND active=#{active}
 			</if>
 		</where>
 		LIMIT #{beginRow}, #{rowPerPage}
@@ -29,15 +29,17 @@
 				AND CONCAT(first_name, last_name) LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 			<if test="storeId!=0">
-				AND store_id=${storeId}
+				AND store_id=#{storeId}
 			</if>
 			<if test="active!=2">
-				AND active=${active}
+				AND active=#{active}
 			</if>
 		</where>
 	</select>
 	<!-- 고객 상세 페이지 -->
 	<select id="selectCustomerOne" parameterType="int" resultType="java.util.Map">
-		SELECT ID customerId, name, address, 'zip CODE' zipCode, phone, city, country, notes, SID storeId  from customer_list WHERE ID=${customerId}
+		SELECT cl.ID customerId, cl.NAME name, cl.address address, cl.`zip code` zipCode, cl.phone phone, cl.city city, cl.country country, cl.notes notes, cl.SID storeId, c.email email, 
+		c.create_date createDate, c.last_update lastUpdate FROM customer_list cl 
+		JOIN customer c ON cl.ID=c.customer_id WHERE cl.ID=#{customerId}
 	</select>
 </mapper>

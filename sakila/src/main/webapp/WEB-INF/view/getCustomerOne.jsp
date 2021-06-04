@@ -113,7 +113,7 @@ $(document).ready(function(){
                       <div class="card">
                           <div class="card-body">
                               <div class="form-validation">
-                              <h4>Film One</h4>
+                              <h4>Customer One</h4>
                               <hr>
                               </div>
                               <table class="table">
@@ -127,7 +127,11 @@ $(document).ready(function(){
 										<td>${map.customerId}. ${map.name}</td>
 									</tr>
 									<tr>
-										<td>address </td>
+										<td>E-mail </td>
+										<td>${map.email}</td>
+									</tr>
+									<tr>
+										<td>Address </td>
 										<td>${map.address}</td>
 									</tr>
 									<tr>
@@ -150,6 +154,14 @@ $(document).ready(function(){
 										<c:if test="${map.notes==''}">
 											<td style="color:red">INACTIVE</td>
 										</c:if>
+									</tr>
+									<tr>
+										<td>Create Date </td>
+										<td>${map.createDate}</td>
+									</tr>
+									<tr>
+										<td>Last Update Date </td>
+										<td>${map.lastUpdate}</td>
 									</tr>
 								</tbody>
 							</table>
