@@ -1,5 +1,6 @@
 package com.gd.sakila.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +42,21 @@ public class CustomerService {
 			lastPage += 1;
 		}
 		
+		List<Integer> blackList = new ArrayList<>();
 		List<Customer> list = customerMapper.selectCustomerList(paramMap);
 		log.debug("=======================고객리스트:"+list);
+		int customerId = 0;
+		for(Customer data : list) {
+			customerId = (int) data.getCustomerId();
+			blackList.addAll(customerMapper.selectBalckConsumer(customerId));
+		}
+		log.debug("=======================블랙리스트:"+blackList);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("beginRow", beginRow);
 		map.put("lastPage", lastPage);
 		map.put("list", list);
+		map.put("blackList", blackList);
 		return map;
 	}
 	

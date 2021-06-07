@@ -42,4 +42,15 @@
 		c.create_date createDate, c.last_update lastUpdate FROM customer_list cl 
 		JOIN customer c ON cl.ID=c.customer_id WHERE cl.ID=#{customerId}
 	</select>
+	<!-- 고객 블랙리스트 -->
+	<select id="selectBalckConsumer" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM (SELECT r.customer_id customerId, i.inventory_id, i.film_id, r.rental_date, r.return_date,
+			DATEDIFF(r.return_date, r.rental_date) DAY,
+			if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
+			if(DATEDIFF(r.return_date, r.rental_date) > f.rental_duration, '연체', '정상반납')) state, f.rental_duration
+		FROM inventory i
+		JOIN film f ON i.film_id = f.film_id
+		JOIN rental r ON r.inventory_id = i.inventory_id) e 
+		WHERE e.state='연체' AND e.customerId=#{customerId}
+	</select>
 </mapper>

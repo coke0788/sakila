@@ -34,7 +34,8 @@ public class CustomerController {
 		Map<String, Object> map = customerService.getCustomerList(currentPage, rowPerPage, searchWord, storeId, active);
 		log.debug("=======================고객리스트:"+map.get("list"));
 		log.debug("=======================고객리스트 검색어:"+searchWord);
-		log.debug("=======================고객리스트 현재 페이지:"+map.get("beginRow"));
+		log.debug("=======================고객리스트 시작 페이지:"+map.get("beginRow"));
+		log.debug("=======================고객리스트 rowPerPage:"+rowPerPage);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("beginRow", map.get("beginRow"));
 		model.addAttribute("currentPage", currentPage);
@@ -43,6 +44,8 @@ public class CustomerController {
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("active", active);
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("blackList", map.get("blackList"));
+		log.debug("=======================고객리스트 :"+map.get("list"));
 		return "getCustomerList";
 	}
 	

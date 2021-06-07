@@ -14,4 +14,5 @@ public interface CustomerMapper {
 	List<Customer> selectCustomerList(Map<String, Object> map);
 	int selectCustomerTotal(Map<String, Object> map);
 	Map<String, Object> selectCustomerOne(int customerId);
+	List<Integer> selectBalckConsumer(int customerId);
 }

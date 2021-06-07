@@ -181,23 +181,30 @@
 								                <th>Name</th>
 								                <th>Email</th>
 								                <th>Status</th>
+								                <th>Black List</th>
 								            </tr>
 								        </thead>
                                         <tbody>
-							            	<c:forEach var="l" items="${list}">
+						            	<c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
 							                <tr>
-							                	<td>${l.storeId}</td>
-							                    <td>${l.customerId}</td>
-							                    <td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${l.customerId}&currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}&active=${active}">${l.firstName} ${l.lastName}</a></td>
-							                    <td>${l.email}</td>
-							                    <c:if test="${l.active==1}">
+							                	<td>${list[i].storeId}</td>
+							                    <td>${list[i].customerId}</td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${list[i].customerId}&currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}&active=${active}">${list[i].firstName} ${list[i].lastName}</a></td>
+							                    <td>${list[i].email}</td>
+							                    <c:if test="${list[i].active==1}">
 							                    	<td>ACTIVE</td>
 							                    </c:if>
-							                    <c:if test="${l.active==0}">
+							                    <c:if test="${list[i].active==0}">
 							                    	<td style="color:red">INACTIVE</td>
 							                    </c:if>
+							                    <c:if test="${blackList[i]<=10}">
+							                    	<td>NORMAL</td>
+							                    </c:if>
+							                    <c:if test="${blackList[i]>10}">
+							                    	<td style="color:red">BLACK CONSUMER</td>
+							                    </c:if>
 							                </tr>
-							            	</c:forEach>
+						            	</c:forEach>
 							        	</tbody>
 									</table>
 	<div class="col-7">
