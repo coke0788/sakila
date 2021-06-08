@@ -119,6 +119,24 @@ $(document).ready(function(){
                               <table class="table">
 								<tbody>
 									<tr>
+										<td>Features</td>
+										<td>
+										<c:if test="${blackList[0]>15}">
+											BlackList
+										</c:if>
+										<c:if test="${blackList[0]<=15}">
+											-
+										</c:if>
+										/
+										<c:if test="${VIPList[0]>=130 && blackList[0]<=15}">
+											VIP
+										</c:if>
+										<c:if test="${VIPList[0]<130}">
+											-
+										</c:if>
+										</td>
+									</tr>
+									<tr>
 										<td>Store ID </td>
 										<td>${map.storeId}</td>
 									</tr>
@@ -145,6 +163,18 @@ $(document).ready(function(){
 									<tr>
 										<td>City(Country) </td>
 										<td>${map.city} (${map.country})</td>
+									</tr>
+									<tr>
+										<td>Payment</td>
+										<td>$ ${VIPList[0]}</td>
+									</tr>
+									<tr>
+										<td>Now Rental</td>
+										<td>
+										<c:forEach var="r" items="${rentalList}">
+											${r.inventoryId} / ${r.filmId} / ${r.title} <br>
+										</c:forEach>
+										</td>
 									</tr>
 									<tr>
 										<td>Status </td>

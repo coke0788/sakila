@@ -20,6 +20,10 @@ $(document).ready(function(){
 		console.log('btn click!');
 		$('#searchWordForm').submit();
 	});
+	$('#logoutBtn').click(function(){
+		console.log('logout!');
+		$('#logout').submit();
+	});
 });
 </script>
 </head>
@@ -37,7 +41,6 @@ $(document).ready(function(){
     <!--*******************
         Preloader end
     ********************-->
-
     
     <!--**********************************
         Main wrapper start
@@ -61,39 +64,106 @@ $(document).ready(function(){
         <!--**********************************
             Nav header end
         ***********************************-->
-	<form action="${pageContext.request.contextPath}/admin/getStaffList" id="searchWordForm">
-		<div>
-			<input type="text" name="searchWord">
-			<button type="button" id="btn">검색</button>
+        <!--**********************************
+            머리 부분 시작
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                    	<!-- 검색어 입력창 -->
+					    <form action="${pageContext.request.contextPath}/admin/getStaffList" method="get" id="searchWordForm">
+                        <div class="input-group-prepend">
+                        	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
+					        <input name="searchWord" type="search" class="form-control" placeholder="Search Staff">
+					        <button class="btn btn-primary" id="btn"><i class="mdi mdi-magnify"></i></button></span>
+					    </div>
+					    </form>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="images/user/1.png" height="40" width="40" alt="">
+                            </div>
+                            <c:if test="${loginStaff!=null}">
+	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
+	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
+	                            </form>
+                            </c:if>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            머리 끝!
+        ***********************************-->
+       <!--**********************************
+            Sidebar start
+        ***********************************-->
+		<jsp:include page="/WEB-INF/view/sideMenu.jsp"></jsp:include>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+      <!--**********************************
+         리스트 시작!
+     ***********************************-->
+     <div class="container">
+      <div class="row justify-content-center">
+          <div class="col p-md-3">
+              <div class="col-lg-11">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h4>Staff List</h4>
+                                    <hr>
+                                </div>
+                            <div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>SID</th>
+											<th>Id</th>
+											<th>name</th>
+											<th>address</th>
+											<th>phone</th>
+											<th>city</th>
+											<th>country</th>
+										</tr>	
+									</thead>
+									<tbody>
+										<c:forEach var="s" items="${staffList}">
+										<tr>
+											<td>${s.sid}</td>
+											<td>${s.id}</td>
+											<td>${s.name}</td>
+											<td>${s.address}</td>
+											<td>${s.phone}</td>
+											<td>${s.city}</td>
+											<td>${s.country}</td>
+										</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</form>
-	<h1>Staff List</h1>
-		<table>
-			<thead>
-				<tr>
-					<th>SID</th>
-					<th>Id</th>
-					<th>name</th>
-					<th>address</th>
-					<th>phone</th>
-					<th>city</th>
-					<th>country</th>
-				</tr>	
-			</thead>
-			<tbody>
-				<c:forEach var="s" items="${staffList}">
-				<tr>
-					<td>${s.sid}</td>
-					<td>${s.id}</td>
-					<td>${s.name}</td>
-					<td>${s.address}</td>
-					<td>${s.phone}</td>
-					<td>${s.city}</td>
-					<td>${s.country}</td>
-				</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	</div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
 		<!--**********************************
             Footer start
         ***********************************-->
@@ -106,7 +176,7 @@ $(document).ready(function(){
         <!--**********************************
             Footer end
         ***********************************-->
-
+</div>
     <!--**********************************
         Scripts
     ***********************************-->

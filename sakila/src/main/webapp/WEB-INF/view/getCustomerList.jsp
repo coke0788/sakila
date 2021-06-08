@@ -182,10 +182,11 @@
 								                <th>Email</th>
 								                <th>Status</th>
 								                <th>Black List</th>
+								                <th>VIP</th>
 								            </tr>
 								        </thead>
                                         <tbody>
-						            	<c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
+						            	<c:forEach var="i" begin="0" end="10">
 							                <tr>
 							                	<td>${list[i].storeId}</td>
 							                    <td>${list[i].customerId}</td>
@@ -197,14 +198,20 @@
 							                    <c:if test="${list[i].active==0}">
 							                    	<td style="color:red">INACTIVE</td>
 							                    </c:if>
-							                    <c:if test="${blackList[i]<=10}">
+							                    <c:if test="${blackList[i]>15}">
+							                    	<td style="color:red">BLACK</td>
+							                    </c:if>
+							                    <c:if test="${blackList[i]<=15}">
 							                    	<td>NORMAL</td>
 							                    </c:if>
-							                    <c:if test="${blackList[i]>10}">
-							                    	<td style="color:red">BLACK CONSUMER</td>
+							                    <c:if test="${VIPList[i]>=130&& blackList[i]<=15}">
+							                    	<td style="font-weight:bold">VIP</td>
+							                    </c:if>
+							                    <c:if test="${VIPList[i]<130}">
+							                    	<td></td>
 							                    </c:if>
 							                </tr>
-						            	</c:forEach>
+							            	</c:forEach>
 							        	</tbody>
 									</table>
 	<div class="col-7">

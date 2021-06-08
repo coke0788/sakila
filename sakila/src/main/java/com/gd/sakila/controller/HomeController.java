@@ -39,6 +39,6 @@ public class HomeController {
 		if(loginStaff!=null) { //로그인 성공
 			session.setAttribute("loginStaff", loginStaff); //new Staff를 넣을 것임.
 		}
-		return "redirect:/";
+		return "redirect:/admin/getBoardList";
 	}
 }

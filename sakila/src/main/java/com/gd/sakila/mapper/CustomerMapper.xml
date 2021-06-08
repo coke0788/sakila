@@ -42,8 +42,8 @@
 		c.create_date createDate, c.last_update lastUpdate FROM customer_list cl 
 		JOIN customer c ON cl.ID=c.customer_id WHERE cl.ID=#{customerId}
 	</select>
-	<!-- 고객 블랙리스트 -->
-	<select id="selectBalckConsumer" parameterType="int" resultType="int">
+	<!-- 고객 블랙리스트 15번 초과 연체 시 블랙리스트 -->
+	<select id="selectBlackConsumer" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM (SELECT r.customer_id customerId, i.inventory_id, i.film_id, r.rental_date, r.return_date,
 			DATEDIFF(r.return_date, r.rental_date) DAY,
 			if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
@@ -52,5 +52,36 @@
 		JOIN film f ON i.film_id = f.film_id
 		JOIN rental r ON r.inventory_id = i.inventory_id) e 
 		WHERE e.state='연체' AND e.customerId=#{customerId}
+	</select>
+	<select id="selectRentalListByCustomerId" parameterType="int" resultType="java.util.Map">
+			SELECT e.inventoryId, e.filmId, e.title FROM (SELECT r.customer_id customerId, i.inventory_id inventoryId, i.film_id filmId, f.title title, r.rental_date, r.return_date,
+		DATEDIFF(r.return_date, r.rental_date) DAY,
+		if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
+			if(DATEDIFF(r.return_date, r.rental_date) > f.rental_duration, '연체', '정상반납')) state, f.rental_duration
+		FROM inventory i
+		JOIN film f ON i.film_id = f.film_id
+		JOIN rental r ON r.inventory_id = i.inventory_id) e 
+		WHERE e.state='대여중' AND e.customerId=${customerId}
+	</select>
+	<!-- 고객당 판매량 130불 이상 일 경우 VIP -->
+	<select id="selectVIPCustomer" parameterType="int" resultType="int">
+		SELECT SUM(amount) FROM payment WHERE customer_id=#{customerId}
+	</select>
+	
+	<!-- 고객 추가용(address) -->
+	<insert id="insertAddressForCustomer" parameterType="com.gd.sakila.vo.CustomerForm">
+		INSERT INTO address(address, address2, district, city_id, postal_code, phone) VALUES(#{address}, #{address2}, #{district}, #{cityId}, #{postalCode}, #{phone})
+	</insert>
+	<!-- 고객 추가용(customer) -->
+	<insert id="insertCustomer" parameterType="com.gd.sakila.vo.CustomerForm">
+		<selectKey resultType="Integer" keyProperty="addressId" order="BEFORE">
+	 		SELECT LAST_INSERT_ID()
+	 	</selectKey>
+		INSERT INTO customer(store_id, first_name, last_name, email, address_id, active)  VALUES(#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId}, 1)
+	</insert>
+	
+	<!-- 고객 추가용 city 리스트 -->
+	<select id="selectCityList" resultType="java.util.Map">
+		SELECT city_id cityId, city FROM city
 	</select>
 </mapper>

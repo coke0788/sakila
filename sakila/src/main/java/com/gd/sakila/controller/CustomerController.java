@@ -8,10 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.sakila.mapper.CustomerMapper;
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.vo.CustomerForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +24,20 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class CustomerController {
 	@Autowired CustomerService customerService;
+	@Autowired CustomerMapper customerMapper;
+	
+	@GetMapping("/addCustomer")
+	public String addCustomer(Model model) {
+		List<Map<String, Object>> list = customerMapper.selectCityList();
+		model.addAttribute("list", list);
+		return "addCustomer";
+	}
+	
+	@PostMapping("/addCustomer")
+	public String addCustomer(CustomerForm customerForm) {
+		customerService.addCustomer(customerForm);
+		return "redirect:/admin/getCustomerList";
+	}
 	
 	@GetMapping("/getCustomerList")
 	public String getCustomerList (Model model, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage,
@@ -45,6 +62,7 @@ public class CustomerController {
 		model.addAttribute("active", active);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("blackList", map.get("blackList"));
+		model.addAttribute("VIPList", map.get("VIPList"));
 		log.debug("=======================고객리스트 :"+map.get("list"));
 		return "getCustomerList";
 	}
@@ -61,7 +79,12 @@ public class CustomerController {
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("active", active);
-		model.addAttribute("map", map);
+		model.addAttribute("map", map.get("map"));
+		model.addAttribute("blackList", map.get("blackList"));
+		model.addAttribute("VIPList", map.get("VIPList"));
+		model.addAttribute("rentalList", map.get("rentalList"));
+		log.debug("==============================VIP"+map.get("VIPList"));
+		log.debug("==============================BLACK"+map.get("blackList"));
 		return "getCustomerOne";	
 	} 
 }

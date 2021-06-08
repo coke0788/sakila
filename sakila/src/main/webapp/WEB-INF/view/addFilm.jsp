@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>addBoard</title>
+<title>addFilm</title>
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <!-- Custom Stylesheet -->
@@ -45,7 +45,7 @@
         		alert('대체금액을 입력해주세요.');
         	} else if(checkNum.test($('#replacementCost').val())){
         		console.log('숫자 아님 숫자 아님');
-        		alert('대채금액은 숫자를 입력해주세요.');
+        		alert('대체금액은 숫자를 입력해주세요.');
         	} else {
 			 $('#addForm').submit();
         	}
