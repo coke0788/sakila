@@ -172,7 +172,11 @@ $(document).ready(function(){
 										<td>Now Rental</td>
 										<td>
 										<c:forEach var="r" items="${rentalList}">
-											${r.inventoryId} / ${r.filmId} / ${r.title} <br>
+											${r.inventoryId} / ${r.filmId} / ${r.title}
+											<c:if test="${r!=null}">
+												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}">¹Ý³³</a>
+											</c:if>
+											<br>
 										</c:forEach>
 										</td>
 									</tr>

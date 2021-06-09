@@ -54,7 +54,7 @@
 		WHERE e.state='연체' AND e.customerId=#{customerId}
 	</select>
 	<select id="selectRentalListByCustomerId" parameterType="int" resultType="java.util.Map">
-			SELECT e.inventoryId, e.filmId, e.title FROM (SELECT r.customer_id customerId, i.inventory_id inventoryId, i.film_id filmId, f.title title, r.rental_date, r.return_date,
+			SELECT e.rentalId, e.inventoryId, e.filmId, e.title FROM (SELECT r.rental_id rentalId, r.customer_id customerId, i.inventory_id inventoryId, i.film_id filmId, f.title title, r.rental_date, r.return_date,
 		DATEDIFF(r.return_date, r.rental_date) DAY,
 		if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
 			if(DATEDIFF(r.return_date, r.rental_date) > f.rental_duration, '연체', '정상반납')) state, f.rental_duration
