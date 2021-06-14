@@ -119,7 +119,7 @@ public class FilmController {
 	@GetMapping("/getActorListForFilm")
 	public String getActorListForFilm(Model model,
 			@RequestParam(value="filmId", required=true) int filmId,
-			@RequestParam(value="searchWord", required=true) String searchWord) {
+			@RequestParam(value="searchWord", required=false) String searchWord) {
 		List<Map<String, Object>> actorList = filmService.getActorListForFilm(filmId, searchWord);
 			log.debug("==================배우 목록 :"+actorList);
 			model.addAttribute("actorList", actorList);

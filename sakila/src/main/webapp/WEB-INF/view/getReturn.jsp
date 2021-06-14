@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>addPayment</title>
+<title>getReturn</title>
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <!-- Custom Stylesheet -->
@@ -13,39 +13,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() { //레디
-        $('#addButton').click(function() { //폼 add 버트 ㄴ눌렀을때
-        	if(ck){ //ck==true 이면
-        		alert('첨부되지 않은 파일이 존재합니다.');
-        		console.log('첨부되지 않은 파일이 존재합니다.');
-        	} else if ($('#boardPw').val().length < 4) { //유효성 검사 실행
-                alert('boardPw는 4자이상 이어야 합니다');
-                console.log('패스워드 오류');
-                $('#boardPw').focus();
-            } else if ($('#boardTitle').val() == '') {
-                alert('boardTitle을 입력하세요');
-                console.log('타이틀 오류');
-                $('#boardTitle').focus();
-            } else if ($('#boardContent').val() == '') {
-            	console.log('내용 오류');
-                alert('boardContent을 입력하세요');
-                $('#boardContent').focus();
-            } else if ($('#boardUser').val() == '') {
-            	console.log('유저 오류');
-                alert('boardUser을 입력하세요');
-                $('#boardUser').focus();
-            } else {
-                $('#addForm').submit();
-            }
-        });
-        
-        $('#addFileBtn').click(function(){ //파일 추가
-        	console.log('addfile click');
-        	$('#inputFile').append('<input type="file" name="boardfile" class="boardfile btn btn-sm btn-light">');
-        });
-        $('#delFileBtn').click(function(){ //파일 삭제 : 마지막 태그르 삭제
-        	console.log('delFile click');
-        	$('#inputFile').children().last().remove(); //inputfile 태그의 자식 중 가장 마지막 애를 삭제한다.
-        });
+    	 var checkNum = RegExp(/^\d*[.]\d{2}$/); 
+		$('#logoutBtn').click(function(){
+			console.log('logout!');
+			$('#logout').submit();
+		});
+    	$('#addButton').click(function(){
+    		if($('#amount').val()==''){
+        		alert('반납 금액을 입력해주세요.');
+        	} else {
+	    		console.log('입력!');
+	    		$('#addForm').submit();
+        	}
+    	});
     });
     
 </script>
@@ -138,57 +118,47 @@
       </div>
         <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                <h4>아이디, 타이틀, 가격 넣기.</h4>
+                                <h4>Payment</h4>
                                 <hr>
-						        <form id="addForm" action="${pageContext.request.contextPath}/admin/addPayment" method="post">
-						            <div class="form-group">
-						                <label for="boardPw" class="col-lg-8 col-form-label">amount <span class="text-danger">*</span></label>
-						              	<div class="col-lg-8"> 
-						                	<input class="form-control" name="amount" id="amount" type="text" value="${rental}"/>
-						                </div>
+						        <form method="post" action="${pageContext.request.contextPath}/admin/getReturn" id="addForm">
+						        <input type="text" name="customerId" class="form-control" value="${customerId}" hidden="hidden">
+						        <input type="text" name="rentalId" class="form-control" value="${rentalId}" hidden="hidden">
+						        	<div class="form-group">
+										<label for="title" class="col-lg-8 col-form-label">Title</label>
+										<div class="col-lg-8">${film.title}</div>
 						            </div>
+						        	<div class="form-group">
+						              <label for="title" class="col-lg-8 col-form-label">Normal Price</label>
+						              <div class="col-lg-8"> 
+						              	${film.rentalRate}
+						              </div>
+						        	</div>
 						            <div class="form-group">
-						                <label for="boardTitle" class="col-lg-6 col-form-label">Title <span class="text-danger">*</span></label>
-						                <div class="col-lg-8"> 
-						                	<input class="form-control" name="board.boardTitle" id="boardTitle" type="text" placeholder="제목을 입력하세요."/>
-						                </div>
-						            </div>
-						            <div class="form-group">
-						                <label for="boardContent" class="col-lg-6 col-form-label">Content <span class="text-danger">*</span></label>
-						                <div class="col-lg-8">
-						                	<textarea class="form-control" name="board.boardContent" id="boardContent" rows="5" cols="50"></textarea>
-						                </div>
+						              <label for="categoryId" class="col-lg-8 col-form-label">Staff<span class="text-danger">*</span></label>
+						            	<div class="col-lg-8"> 
+							                  <select name="staffId" id ="staffId" class="form-control">
+							                        <c:forEach var="s" items="${staff}">
+							                        	<option value="${s.id}">${s.id} : ${s.name}</option>
+							                        </c:forEach>
+							                  </select>
+							              </div>
 							        </div>
 							        <div class="form-group">
-							            <label for="boardfile" class="col-lg-6 col-form-label">File <span class="text-danger"> </span></label>
-							            <div class="col-lg-8">
-							                <button id="addFileBtn" type="button" class="btn btn-sm btn-light">파일추가</button>
-							                <button id="delFileBtn" type="button" class="btn btn-sm btn-light">파일삭제</button>
-							            </div>
-							            <div id="inputFile">
-							            </div>
-							        </div>
-						            <div class="form-group">
-						                <label for="staffId" class="col-lg-2 col-form-label">staff ID <span class="text-danger">*</span></label>
-						                <div class="col-lg-3">
-						                	<select class="form-control" id="staffId" name="board.staffId">
-						                		<option value="1">1: Mike</option>
-						                		<option value="2">2: Jon</option>
-						                	</select>
-						                </div>
-						            </div>
-						            <div class="form-group row">
-                                        <div class="col-lg-8 ml-auto">
-						                	<input class="btn btn-primary" id="addButton" type="button" value="등록"/> 
-						                    <input class="btn btn-default" type="reset" value="초기화" />
-						                    <a href="${pageContext.request.contextPath}/admin/getBoardList"><input class="btn btn-default" type="button" value="목록"></a>
-						            	</div>
-						            </div>
-						        </form>
+						              <label for="title" class="col-lg-8 col-form-label">Payment <span class="text-danger">*</span></label>
+						              <div class="col-lg-8">
+						              	<input type="text" class="form-control" name="amount" id="amount"> 
+						              </div>
+						        	</div>
+								<div class="form-group row">
+			                        <div class="col-lg-8 ml-auto">
+					                	<input class="btn btn-primary" id="addButton" type="button" value="등록"/> 
+					            	</div>
+						        </div>
+							    </form>
                                 </div>
                             </div>
                         </div>

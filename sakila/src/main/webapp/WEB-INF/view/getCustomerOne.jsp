@@ -174,7 +174,7 @@ $(document).ready(function(){
 										<c:forEach var="r" items="${rentalList}">
 											${r.inventoryId} / ${r.filmId} / ${r.title}
 											<c:if test="${r!=null}">
-												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}">¹Ý³³</a>
+												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}">¹Ý³³</a>
 											</c:if>
 											<br>
 										</c:forEach>

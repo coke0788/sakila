@@ -99,7 +99,7 @@
 	</select>
 	
 	<!-- 영화에 출연한 배우들 목록을 출력 시킬것임. 근데 검색 기능도 넣고 싶어서 쿼리 추가함.-->
-	<select id="selectActorForFilm" parameterType="Integer" resultType="java.util.Map">
+	<select id="selectActorForFilm" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT a.actor_id actorId, CONCAT(a.first_name,' ',a.last_name) name, film_id filmId
 		FROM actor a 
 		LEFT JOIN (SELECT * FROM film_actor WHERE film_id=#{filmId}) t 
