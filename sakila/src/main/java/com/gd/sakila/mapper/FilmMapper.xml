@@ -104,13 +104,11 @@
 		FROM actor a 
 		LEFT JOIN (SELECT * FROM film_actor WHERE film_id=#{filmId}) t 
 		ON a.actor_id=t.actor_id 
-		<!--
 		<where>
 			<if test="searchWord != null">
 				a.first_name LIKE CONCAT('%', #{searchWord}, '%') OR a.last_name LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
-		-->
 		ORDER BY name
 	</select>
 	<insert id="insertActorForFilm" parameterType="java.util.Map">

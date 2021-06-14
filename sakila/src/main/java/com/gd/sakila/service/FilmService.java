@@ -102,8 +102,11 @@ public class FilmService {
 		return map;
 	}
 	//영화에 출연한 배우 목록
-	public List<Map<String, Object>> getActorListForFilm(int filmId){
-		List<Map<String, Object>> actorList = filmMapper.selectActorForFilm(filmId);
+	public List<Map<String, Object>> getActorListForFilm(int filmId, String searchWord){
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchWord", searchWord);
+		map.put("filmId", filmId);
+		List<Map<String, Object>> actorList = filmMapper.selectActorForFilm(map);
 		log.debug("================배우 목록:"+actorList);
 		return actorList;
 	}

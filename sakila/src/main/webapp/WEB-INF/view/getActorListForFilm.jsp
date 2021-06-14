@@ -86,7 +86,7 @@
                     <div class="input-group icons">
                     
                     	<!-- 검색어 입력창 -->
-					    <form action="/admin/getActorListForFilmSearch" method="get">
+					    <form action="/admin/getActorListForFilm" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
                         	<input name="filmId" type="search" class="form-control" value="${filmId}"hidden="hidden">
