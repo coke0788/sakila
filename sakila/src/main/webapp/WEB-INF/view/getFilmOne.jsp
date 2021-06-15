@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -58,7 +58,7 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ∏”∏Æ ∫Œ∫– Ω√¿€
+            Î®∏Î¶¨ Î∂ÄÎ∂Ñ ÏãúÏûë
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
@@ -71,12 +71,7 @@ $(document).ready(function(){
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- ∑Œ±◊æ∆øÙ µ¿⁄¿Œ «ÿæﬂ «‘. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -87,7 +82,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ∏”∏Æ ≥°!
+            Î®∏Î¶¨ ÎÅù!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -97,7 +92,7 @@ $(document).ready(function(){
             Sidebar end
         ***********************************-->
       <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ Ω√¿€!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÏãúÏûë!
      ***********************************-->
  <div class="content-body">    
       <div class="row page-titles mx-0">
@@ -133,7 +128,7 @@ $(document).ready(function(){
 									<tr>
 										<td>actors </td>
 										<td>
-										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getActorListForFilm?filmId=${filmId}">πËøÏ√ﬂ∞°</a>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getActorListForFilm?filmId=${filmId}">Î∞∞Ïö∞Ï∂îÍ∞Ä</a>
 										<br>
 										${filmMap.actors}</td>
 									</tr>
@@ -151,7 +146,7 @@ $(document).ready(function(){
 									</tr>
 									<tr>
 										<td>rental_duration</td>
-										<td>${filmMap.rentalDuration} ¿œ</td>
+										<td>${filmMap.rentalDuration} Ïùº</td>
 									</tr>
 									<tr>
 										<td>rental_rate</td>
@@ -175,18 +170,18 @@ $(document).ready(function(){
 									</tr>
 									<tr>
 										<td>film_stock</td>
-										<td>${filmCount} ∞≥</td>
+										<td>${filmCount} Í∞ú</td>
 									</tr>
 									<tr>
 										<td></td>
 										<td>
-										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=1">1∏≈¿Â ¿Á∞Ì ∫∏±‚</a>
-										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=2">2∏≈¿Â ¿Á∞Ì ∫∏±‚</a>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=1">1Îß§Ïû• Ïû¨Í≥† Î≥¥Í∏∞</a>
+										<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${filmId}&storeId=2">2Îß§Ïû• Ïû¨Í≥† Î≥¥Í∏∞</a>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}">∏Ò∑œ</a>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&rating=${rating}&searchWordForAcotor=${searchWordForAcotor}&orderWord=${orderWord}&categoryName=${categoryName}&price=${price}">Î™©Î°ù</a>
 							<hr>
                            </div>
                       </div>
@@ -195,7 +190,7 @@ $(document).ready(function(){
         </div>
     </div>
      <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ ≥°!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÎÅù!
      ***********************************-->
       <!--**********************************
             Footer start

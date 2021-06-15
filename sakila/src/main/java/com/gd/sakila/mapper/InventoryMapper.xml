@@ -4,7 +4,7 @@
 	
 	<!-- 리스트 출력 -->
 	<select id="selectInventoryInfoList" parameterType="com.gd.sakila.vo.Page" resultType="java.util.Map">
-		SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total FROM inventory i LEFT JOIN film f 
+		SELECT i.film_id filmId, f.title title, i.store_id storeId, COUNT(*) total, i.inventory_id inventoryId FROM inventory i LEFT JOIN film f 
 		ON i.film_id = f.film_id GROUP BY i.film_id, i.store_id
 		<if test="searchWord!=null">
 			HAVING f.title LIKE CONCAT('%', #{searchWord}, '%')
@@ -58,4 +58,19 @@
 	<insert id="insertInventory" parameterType="com.gd.sakila.vo.Inventory">
 		INSERT INTO inventory(film_id, store_id, last_update) VALUES (#{filmId}, #{storeId}, NOW());
 	</insert>
+	<!-- 대여용 필름(인벤토리) 리스트 출력 -->
+	<select id="selectInventoryForRental" parameterType="com.gd.sakila.vo.Page" resultType="java.util.Map">
+		SELECT i.film_id filmId, f.title title, i.inventory_id inventoryId FROM inventory i LEFT JOIN film f 
+		ON i.film_id = f.film_id
+		<where>
+			<if test="searchWord!=null">
+				AND f.title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		ORDER BY i.inventory_id LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 대여용, 대여중 구분 위한 쿼리 -->
+	<select id="selectInventoryHeldByCustomer" parameterType="com.gd.sakila.vo.Page" resultType="java.util.Map">
+		SELECT inventory_held_by_customer(inventory_id) rentalCustomer, inventory_id inventoryId FROM inventory LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 </mapper>

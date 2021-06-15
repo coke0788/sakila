@@ -1,5 +1,8 @@
 package com.gd.sakila.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,5 +31,22 @@ public class RentalService {
 		payment.setStaffId(staffId);
 		int row = rentalMapper.insertPaymentByReturn(payment);
 		log.debug("========================대여료 row값:"+row);
+	}
+	public Map<String, Object> getDuration(int rentalId, int customerId){
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("rentalId", rentalId);
+		paramMap.put("customerId", customerId);
+		map = rentalMapper.selectRentalDurationAndDate(paramMap);
+		log.debug("========================대여기간:"+map);
+		return map;
+	}
+	public void addRental(int inventoryId, int customerId, int staffId) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("inventoryId", inventoryId);
+		paramMap.put("customerId", customerId);
+		paramMap.put("staffId", staffId);
+		int row = rentalMapper.insertRentalData(paramMap);
+		log.debug("========================반납 row값:"+row);
 	}
 }

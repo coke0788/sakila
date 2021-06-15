@@ -81,10 +81,6 @@
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
@@ -129,12 +125,24 @@
 						        <input type="text" name="rentalId" class="form-control" value="${rentalId}" hidden="hidden">
 						        	<div class="form-group">
 										<label for="title" class="col-lg-8 col-form-label">Title</label>
-										<div class="col-lg-8">${film.title}</div>
+										<div class="col-lg-8">${duration.title}</div>
 						            </div>
 						        	<div class="form-group">
-						              <label for="title" class="col-lg-8 col-form-label">Normal Price</label>
+						              <label for="title" class="col-lg-8 col-form-label">Normal Price / Late Fee(per day)</label>
 						              <div class="col-lg-8"> 
-						              	${film.rentalRate}
+						              	${duration.rentalRate} / 1.00
+						              </div>
+						        	</div>
+						        	<div class="form-group">
+						              <label for="title" class="col-lg-8 col-form-label">Duration</label>
+						              <div class="col-lg-8"> 
+						              	${duration.duration}
+						              </div>
+						        	</div>
+						        	<div class="form-group">
+						              <label for="title" class="col-lg-8 col-form-label">Rental Date</label>
+						              <div class="col-lg-8"> 
+						              	${duration.date}
 						              </div>
 						        	</div>
 						            <div class="form-group">
@@ -150,12 +158,17 @@
 							        <div class="form-group">
 						              <label for="title" class="col-lg-8 col-form-label">Payment <span class="text-danger">*</span></label>
 						              <div class="col-lg-8">
-						              	<input type="text" class="form-control" name="amount" id="amount"> 
+						              	<c:if test="${duration.date<=duration.duration}">
+						              		<input type="text" class="form-control" name="amount" id="amount" value="${duration.rentalRate}">
+						              	</c:if> 
+						              	<c:if test="${duration.date>duration.duration}">
+						              		<input type="text" class="form-control" name="amount" id="amount" value="${duration.rentalRate+(duration.date-duration.duration)}">
+						              	</c:if>
 						              </div>
 						        	</div>
 								<div class="form-group row">
 			                        <div class="col-lg-8 ml-auto">
-					                	<input class="btn btn-primary" id="addButton" type="button" value="등록"/> 
+					                	<input class="btn btn-primary" id="addButton" type="button" value="반납"/>
 					            	</div>
 						        </div>
 							    </form>

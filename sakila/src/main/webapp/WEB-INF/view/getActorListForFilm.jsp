@@ -100,10 +100,6 @@
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>

@@ -40,8 +40,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="widgets.html" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
+                        <a href="${pageContext.request.contextPath}/admin/getReport" aria-expanded="false">
+                            <i class="icon-graph menu-icon"></i><span class="nav-text">Report</span>
                         </a>
                     </li>
                 </ul>

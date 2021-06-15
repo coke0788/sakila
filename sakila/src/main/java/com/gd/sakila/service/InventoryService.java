@@ -23,6 +23,33 @@ public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	@Autowired FilmMapper filmMapper;
 	
+	//렌탈용 인벤토리 리스트
+	public Map<String, Object> getInventoryForRental(int currentPage, int rowPerPage, String searchWord){
+		Page page = new Page();
+		page.setBeginRow((currentPage-1)*rowPerPage);
+		page.setRowPerPage(rowPerPage);
+		page.setSearchWord(searchWord);
+		List<Map<String, Object>> list = inventoryMapper.selectInventoryForRental(page);
+		int beginRow = ((currentPage-1)*page.getRowPerPage());
+		int filmTotal = inventoryMapper.selectInventoryTotalCount(page);
+		int lastPage = filmTotal/page.getRowPerPage();
+		if(filmTotal%page.getRowPerPage()!=0) {
+			lastPage += 1;
+		}
+		List<Map<String, Object>> stockList = inventoryMapper.selectInventoryHeldByCustomer(page);
+		log.debug("=======마지막 페이지:"+lastPage);
+		log.debug("=======전체 영화 수:"+filmTotal);
+		log.debug("=======대여중 리스트:"+stockList);
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("stockList", stockList);
+		map.put("filmTotal", filmTotal);
+		map.put("beginRow", beginRow);
+		map.put("lastPage", lastPage);
+		map.put("rowPerPage", rowPerPage);
+		return map;
+	}
+	
 	public Map<String, Object> getInventoryInfoList(int currentPage, int rowPerPage, String searchWord){
 		Page page = new Page();
 		page.setBeginRow((currentPage-1)*rowPerPage);

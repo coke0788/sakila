@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.InventoryService;
 import com.gd.sakila.service.RentalService;
 import com.gd.sakila.service.StaffService;
 import com.gd.sakila.vo.Payment;
@@ -30,21 +31,22 @@ public class RentalController {
 	@Autowired RentalService rentalService;
 	@Autowired FilmService filmService;
 	@Autowired StaffService staffService;
+	@Autowired InventoryService inventoryService;
 	
 	@GetMapping("/getReturn")
 	public String getReturn(Model model, @RequestParam(value= "customerId", required=true) int customerId,
 										@RequestParam(value= "rentalId", required=true) int rentalId,
 										@RequestParam(value="filmId", required=true) int filmId) {
-		int storeId = 1;
-		//대여료 받아오기 위해서 film의 상세페이지 메서드 호출.
-		Map<String, Object> map = filmService.getFilmOne(filmId, storeId);
 		//선택용 staffList 받아오기 위해서 메서드 호출
 		List<StaffList> staffList = staffService.getStaffList(null);
+		//원래 대여기간, 사용자가 반납 할 때 총 대여기간, 대여료 표시용 메서드 호출
+		Map<String, Object> durationMap = rentalService.getDuration(rentalId, customerId);
 		model.addAttribute("rentalId",rentalId);
 		model.addAttribute("customerId",customerId);
-		model.addAttribute("film", map.get("filmMap"));
 		model.addAttribute("staff", staffList);
+		model.addAttribute("duration", durationMap);
 		log.debug("=====================렌탈 아이디:"+rentalId);
+		log.debug("=====================대여기간 표시용"+durationMap);
 		return "getReturn";
 	}
 	@PostMapping("/getReturn")
@@ -65,5 +67,34 @@ public class RentalController {
 	public String addPayment(Model model, @RequestParam(value= "customerId", required=true) int customerId,
 										@RequestParam(value= "rentalId", required=true) int rentalId) {
 		return "addPayment";
+	}
+	@GetMapping("/addRental")
+	public String addRental(Model model, @RequestParam(value= "customerId", required=true) int customerId,
+										@RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage,
+										@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+										@RequestParam(value="searchWord", required=false) String searchWord) {
+		if(searchWord!=null && searchWord.equals("")) {
+			searchWord = null;
+		}
+		Map<String, Object> map = inventoryService.getInventoryForRental(currentPage, rowPerPage, searchWord);
+		//선택용 staffList 받아오기 위해서 메서드 호출
+		List<StaffList> staffList = staffService.getStaffList(null);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", map.get("rowPerPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("ck", map.get("stockList"));
+		model.addAttribute("staff", staffList);
+		return "addRental";
+	}
+	@PostMapping("/addRental")
+	public String addRental(@RequestParam(value= "customerId", required=true) int customerId,
+							@RequestParam(value= "staffId", required=true) int staffId,
+							@RequestParam(value= "inventoryId", required=true) int inventoryId) {
+		rentalService.addRental(inventoryId, customerId, staffId);
+		return "redirect:/admin/getCustomerOne?customerId="+customerId;
 	}
 }

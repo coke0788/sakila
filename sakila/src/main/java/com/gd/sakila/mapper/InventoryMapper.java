@@ -11,6 +11,7 @@ import com.gd.sakila.vo.Page;
 @Mapper
 public interface InventoryMapper {
 	List<Map<String, Object>> selectInventoryInfoList(Page page);
+	List<Map<String, Object>> selectInventoryForRental(Page page);
 	List<Integer> selectInventoryTotal();
 	int selectInventoryStockCnt(Map<String, Object> map);
 	List<Integer> selectInventoryOneStock(Map<String, Object> map);
@@ -19,4 +20,5 @@ public interface InventoryMapper {
 	int selectInventoryTotalCount (Page page);
 	int deleteInventoryByInventoryId(int inventoryId);
 	int insertInventory(Inventory inventory);
+	List<Map<String, Object>> selectInventoryHeldByCustomer(Page page);
 }

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -14,8 +14,8 @@
 $(document).ready(function(){
 	$('#btn').click(function(){
 		if($('#boardPw').val().length<4){
-			alert('password¥¬ 4¿⁄ ¿ÃªÛ¿ÃæÓæﬂ «’¥œ¥Ÿ.');
-			console.log('±€¿⁄ ºˆ ¥©∂Ù');
+			alert('passwordÎäî 4Ïûê Ïù¥ÏÉÅÏù¥Ïñ¥Ïïº Ìï©ÎãàÎã§.');
+			console.log('Í∏ÄÏûê Ïàò ÎàÑÎùΩ');
 		} else {
 			console.log('btn click');
 			$('#modifyForm').submit();
@@ -61,7 +61,7 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ∏”∏Æ ∫Œ∫– Ω√¿€
+            Î®∏Î¶¨ Î∂ÄÎ∂Ñ ÏãúÏûë
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
@@ -74,10 +74,6 @@ $(document).ready(function(){
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
@@ -89,7 +85,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ∏”∏Æ ≥°!
+            Î®∏Î¶¨ ÎÅù!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -99,7 +95,7 @@ $(document).ready(function(){
             Sidebar end
         ***********************************-->
      <!--**********************************
-         ∞‘Ω√±€ ºˆ¡§ ∆˚ Ω√¿€!
+         Í≤åÏãúÍ∏Ä ÏàòÏ†ï Ìèº ÏãúÏûë!
      ***********************************-->
     <div class="content-body">    
       <div class="row page-titles mx-0">
@@ -127,7 +123,7 @@ $(document).ready(function(){
 						            <div class="form-group">
 						                <label for="boardTitle" class="col-lg-6 col-form-label">Title <span class="text-danger">*</span></label>
 						                <div class="col-lg-8"> 
-						                	<input class="form-control" name="board.boardTitle" id="boardTitle" type="text" placeholder="¡¶∏Ò¿ª ¿‘∑¬«œººø‰."/>
+						                	<input class="form-control" name="board.boardTitle" id="boardTitle" type="text" placeholder="Ï†úÎ™©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî."/>
 						                </div>
 						            </div>
 						            <div class="form-group">
@@ -139,8 +135,8 @@ $(document).ready(function(){
 							        <div class="form-group">
 							            <label for="boardfile" class="col-lg-6 col-form-label">File <span class="text-danger"> </span></label>
 							            <div class="col-lg-8">
-							                <button id="addFileBtn" type="button" class="btn btn-sm btn-light">∆ƒ¿œ√ﬂ∞°</button>
-							                <button id="delFileBtn" type="button" class="btn btn-sm btn-light">∆ƒ¿œªË¡¶</button>
+							                <button id="addFileBtn" type="button" class="btn btn-sm btn-light">ÌååÏùºÏ∂îÍ∞Ä</button>
+							                <button id="delFileBtn" type="button" class="btn btn-sm btn-light">ÌååÏùºÏÇ≠Ï†ú</button>
 							            </div>
 							            <div id="inputFile">
 							            </div>
@@ -157,14 +153,14 @@ $(document).ready(function(){
 									<div class="form-group">
 						                <label for="boardPw" class="col-lg-8 col-form-label">board PW <span class="text-danger">*</span></label>
 						              	<div class="col-lg-8"> 
-						                	<input class="form-control" name="board.boardPw" id="boardPw" type="password" placeholder="4¿⁄ ¿ÃªÛ¿« ∫Òπ–π¯»£∏¶ ¿‘∑¬«œººø‰."/>
+						                	<input class="form-control" name="board.boardPw" id="boardPw" type="password" placeholder="4Ïûê Ïù¥ÏÉÅÏùò ÎπÑÎ∞ÄÎ≤àÌò∏Î•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî."/>
 						                </div>
 						            </div>
 						            <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
-						                	<input class="btn btn-primary" id="addButton" type="button" value="µÓ∑œ"/> 
-						                    <input class="btn btn-default" type="reset" value="√ ±‚»≠" />
-						                    <a href="${pageContext.request.contextPath}/admin/getBoardList"><input class="btn btn-default" type="button" value="∏Ò∑œ"></a>
+						                	<input class="btn btn-primary" id="addButton" type="button" value="Îì±Î°ù"/> 
+						                    <input class="btn btn-default" type="reset" value="Ï¥àÍ∏∞Ìôî" />
+						                    <a href="${pageContext.request.contextPath}/admin/getBoardList"><input class="btn btn-default" type="button" value="Î™©Î°ù"></a>
 						            	</div>
 						            </div>
 						        </form>
@@ -178,7 +174,7 @@ $(document).ready(function(){
         </div>
     </div>
         <!--**********************************
-            ºˆ¡§∆˚ ≥°!
+            ÏàòÏ†ïÌèº ÎÅù!
         ***********************************-->
        <!--**********************************
             Footer start
@@ -239,8 +235,8 @@ $(document).ready(function(){
 					</tr>
 				</tbody>
 			</table>
-			<button type="button" class="btn btn-light" id="btn">ºˆ¡§</button>
-			<a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}"><button type="button" class="btn btn-light">√Îº“</button></a>
+			<button type="button" class="btn btn-light" id="btn">ÏàòÏ†ï</button>
+			<a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}"><button type="button" class="btn btn-light">Ï∑®ÏÜå</button></a>
 		</form>
 	</div>
 </body>

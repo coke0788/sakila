@@ -80,7 +80,6 @@
                 </div>
                 <div class="header-left">
                     <div class="input-group icons">
-                    
                     	<!-- 검색어 입력창 -->
 					    <form action="/admin/getActorList" method="get">
                         <div class="input-group-prepend">
@@ -96,10 +95,6 @@
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
 	                            <!-- 로그아웃 디자인 해야 함. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">

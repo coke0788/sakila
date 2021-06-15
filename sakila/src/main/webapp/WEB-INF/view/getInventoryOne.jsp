@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -58,7 +58,7 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ∏”∏Æ ∫Œ∫– Ω√¿€
+            Î®∏Î¶¨ Î∂ÄÎ∂Ñ ÏãúÏûë
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
@@ -71,12 +71,7 @@ $(document).ready(function(){
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- ∑Œ±◊æ∆øÙ µ¿⁄¿Œ «ÿæﬂ «‘. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -87,7 +82,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ∏”∏Æ ≥°!
+            Î®∏Î¶¨ ÎÅù!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -97,7 +92,7 @@ $(document).ready(function(){
             Sidebar end
         ***********************************-->
       <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ Ω√¿€!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÏãúÏûë!
      ***********************************-->
  <div class="content-body">    
       <div class="row page-titles mx-0">
@@ -117,7 +112,7 @@ $(document).ready(function(){
                               <hr>
                               </div>
                               <div class="text-right">
-                              		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory?title=${title}&filmId=${filmId}&currentPage=${currentPage}&searchWord=${searchWord}"><i class="fa fa-pencil"> ¿Á∞Ì √ﬂ∞°</i></a>
+                              		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory?title=${title}&filmId=${filmId}&currentPage=${currentPage}&searchWord=${searchWord}"><i class="fa fa-pencil"> Ïû¨Í≥† Ï∂îÍ∞Ä</i></a>
                               </div>
                               <div>
                               	<h4 class="font-weight-bold"> store 1 </h4>
@@ -126,8 +121,8 @@ $(document).ready(function(){
                               	<thead>
                               		<tr>
                               			<th></th>
-                              			<th>¥Îø© ¡ﬂ</th>
-                              			<th>¥Îø© ∞°¥…</th>
+                              			<th>ÎåÄÏó¨ Ï§ë</th>
+                              			<th>ÎåÄÏó¨ Í∞ÄÎä•</th>
                               			<th>delete</th>
                               		</tr>
                               	</thead>
@@ -158,8 +153,8 @@ $(document).ready(function(){
                             <thead>
                            		<tr>
                            			<th></th>
-                           			<th>¥Îø© ¡ﬂ</th>
-                           			<th>¥Îø© ∞°¥…</th>
+                           			<th>ÎåÄÏó¨ Ï§ë</th>
+                           			<th>ÎåÄÏó¨ Í∞ÄÎä•</th>
                            			<th>delete</th>
                            		</tr>
                            	</thead>
@@ -183,7 +178,7 @@ $(document).ready(function(){
 							</tbody>
 							</table>
 							<hr>
-							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getInventoryInfoList?currentPage=${currentPage}&searchWord=${searchWord}">∏Ò∑œ</a>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getInventoryInfoList?currentPage=${currentPage}&searchWord=${searchWord}">Î™©Î°ù</a>
                            </div>
                       </div>
                   </div>
@@ -191,7 +186,7 @@ $(document).ready(function(){
         </div>
     </div>
      <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ ≥°!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÎÅù!
      ***********************************-->
       <!--**********************************
             Footer start

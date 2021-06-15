@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ¸Ó¸® ºÎºĞ ½ÃÀÛ
+            ë¨¸ë¦¬ ë¶€ë¶„ ì‹œì‘
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
@@ -75,12 +75,8 @@ $(document).ready(function(){
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- ·Î±×¾Æ¿ô µğÀÚÀÎ ÇØ¾ß ÇÔ. -->
+	                            <!-- ë¡œê·¸ì•„ì›ƒ ë””ìì¸ í•´ì•¼ í•¨. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -91,7 +87,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ¸Ó¸® ³¡!
+            ë¨¸ë¦¬ ë!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -101,7 +97,7 @@ $(document).ready(function(){
             Sidebar end
         ***********************************-->
       <!--**********************************
-         »ó¼¼ ³»¿ë Ãâ·Â ½ÃÀÛ!
+         ìƒì„¸ ë‚´ìš© ì¶œë ¥ ì‹œì‘!
      ***********************************-->
  <div class="content-body">    
       <div class="row page-titles mx-0">
@@ -146,9 +142,9 @@ $(document).ready(function(){
 										<td>boardfile </td>
 										<td>
 											<div>
-												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">ÆÄÀÏÃß°¡</a>
+												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}">íŒŒì¼ì¶”ê°€</a>
 											</div>
-											<!-- º¸µåÆÄÀÏ Ãâ·ÂÇÏ´Â ÄÚµå ±¸Çö(¹İº¹¹®) -->
+											<!-- ë³´ë“œíŒŒì¼ ì¶œë ¥í•˜ëŠ” ì½”ë“œ êµ¬í˜„(ë°˜ë³µë¬¸) -->
 											<c:forEach var="f" items="${boardfileList}">
 												<div>
 													<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
@@ -159,17 +155,17 @@ $(document).ready(function(){
 									</tr>
 								</tbody>
 		</table>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">¼öÁ¤</a>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">»èÁ¦</a>
-		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getBoardList">¸ñ·Ï</a>
+		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">ìˆ˜ì •</a>
+		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">ì‚­ì œ</a>
+		<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getBoardList">ëª©ë¡</a>
 		<hr>
 		<h4>Comment</h4>
-		${commentList.size()} °³ÀÇ ´ñ±ÛÀÌ ÀÖ½À´Ï´Ù.
+		${commentList.size()} ê°œì˜ ëŒ“ê¸€ì´ ìˆìŠµë‹ˆë‹¤.
 			<table class="table">
 				<tr>
-					<td style="width:50%; vertical-align:middle">³»¿ë</td>
-					<td style="width:20%; vertical-align:middle">ÀÌ¸§</td>
-					<td style="width:20%; vertical-align:middle">µî·ÏÀÏ</td>
+					<td style="width:50%; vertical-align:middle">ë‚´ìš©</td>
+					<td style="width:20%; vertical-align:middle">ì´ë¦„</td>
+					<td style="width:20%; vertical-align:middle">ë“±ë¡ì¼</td>
 					<td style="width:10%; vertical-align:middle"></td>
 				</tr>
 				<c:forEach var="c" items="${commentList}">
@@ -183,7 +179,7 @@ $(document).ready(function(){
 			</table>
 
 		<div>
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/addComment?boardId=${boardMap.boardId}">´ñ±Ûµî·Ï</a>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/addComment?boardId=${boardMap.boardId}">ëŒ“ê¸€ë“±ë¡</a>
 		</div>
                            </div>
                       </div>

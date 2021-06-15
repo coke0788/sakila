@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -58,11 +57,10 @@ $(document).ready(function(){
         Nav header end
     ***********************************-->
         <!--**********************************
-            ∏”∏Æ ∫Œ∫– Ω√¿€
+            Î®∏Î¶¨ Î∂ÄÎ∂Ñ ÏãúÏûë
         ***********************************-->
         <div class="header">    
             <div class="header-content clearfix">
-                
                 <div class="nav-control">
                     <div class="hamburger">
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
@@ -71,12 +69,7 @@ $(document).ready(function(){
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
-                            </div>
                             <c:if test="${loginStaff!=null}">
-	                            <!-- ∑Œ±◊æ∆øÙ µ¿⁄¿Œ «ÿæﬂ «‘. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>
@@ -87,7 +80,7 @@ $(document).ready(function(){
             </div>
         </div>
         <!--**********************************
-            ∏”∏Æ ≥°!
+            Î®∏Î¶¨ ÎÅù!
         ***********************************-->
         <!--**********************************
             Sidebar start
@@ -97,7 +90,7 @@ $(document).ready(function(){
             Sidebar end
         ***********************************-->
       <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ Ω√¿€!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÏãúÏûë!
      ***********************************-->
  <div class="content-body">    
       <div class="row page-titles mx-0">
@@ -171,10 +164,11 @@ $(document).ready(function(){
 									<tr>
 										<td>Now Rental</td>
 										<td>
+										<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addRental?customerId=${map.customerId}">ÎåÄÏó¨</a><br>
 										<c:forEach var="r" items="${rentalList}">
 											${r.inventoryId} / ${r.filmId} / ${r.title}
 											<c:if test="${r!=null}">
-												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}">π›≥≥</a>
+												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}">Î∞òÎÇ©</a>
 											</c:if>
 											<br>
 										</c:forEach>
@@ -199,7 +193,7 @@ $(document).ready(function(){
 									</tr>
 								</tbody>
 							</table>
-							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}&active=${active}">∏Ò∑œ</a>
+							<a class="btn btn-light" href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}&active=${active}">Î™©Î°ù</a>
 							<hr>
                            </div>
                       </div>
@@ -208,7 +202,7 @@ $(document).ready(function(){
         </div>
     </div>
      <!--**********************************
-         ªÛºº ≥ªøÎ √‚∑¬ ≥°!
+         ÏÉÅÏÑ∏ ÎÇ¥Ïö© Ï∂úÎ†• ÎÅù!
      ***********************************-->
       <!--**********************************
             Footer start
