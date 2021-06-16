@@ -76,7 +76,6 @@ $(document).ready(function(){
                     <ul class="clearfix">
                         <li class="icons dropdown">
                             <c:if test="${loginStaff!=null}">
-	                            <!-- 로그아웃 디자인 해야 함. -->
 	                            <form action="${pageContext.request.contextPath}/admin/logout" id="logout">
 	                            	<div><button type="button" id="logoutBtn" class="btn mb-1 btn-sm btn-outline-secondary">Logout</button></div>
 	                            </form>

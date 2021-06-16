@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Transactional
-@RequestMapping("/admin")
 public class ReportRestController {
 	@Autowired ReportMapper reportMapper;
 	

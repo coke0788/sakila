@@ -32,7 +32,7 @@ $(document).ready(function(){
 	let y = []
 	$.ajax({
 		type: 'get',
-		url: '/admin/getCategorySales',
+		url: '/getCategorySales',
 		success: function(category){
 			$(category).each(function(index, item){ 
 				x.push(item.category);
@@ -76,7 +76,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/admin/getStoreSales',
+		url: '/getStoreSales',
 		success: function(store){
 			$(store).each(function(index, item){ 
 				a.push(item.store);
@@ -110,7 +110,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/admin/getBestSeller',
+		url: '/getBestSeller',
 		success: function(bestSeller){
 			$(bestSeller).each(function(index, item){ 
 				c.push(item.title);
@@ -154,7 +154,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/admin/getMonthlySales',
+		url: '/getMonthlySales',
 		success: function(monthlySales){
 			$(monthlySales).each(function(index, item){ 
 				e.push(item.month);
@@ -268,7 +268,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Sales by Store</h4>
-                                <canvas id="storeReport" class="ct-chart ct-golden-section"></canvas>
+                                <canvas id="storeReport"></canvas>
                             </div>
                         </div>
                     </div>
@@ -276,7 +276,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Sales by Category</h4>
-                                <canvas id="categoryReport" class="ct-chart ct-golden-section"></canvas>
+                                <canvas id="categoryReport"></canvas>
                             </div>
                         </div>
                     </div>
@@ -286,7 +286,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Best Seller</h4>
-                                <canvas id="bestSeller" class="ct-chart ct-golden-section"></canvas>
+                                <canvas id="bestSeller"></canvas>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Monthly Sales</h4>
-                                <canvas id="monthlySales" class="ct-chart ct-golden-section"></canvas>
+                                <canvas id="monthlySales"></canvas>
                             </div>
                         </div>
                     </div>
