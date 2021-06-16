@@ -82,7 +82,7 @@
                     <div class="input-group icons">
                     
                     	<!-- 검색어 입력창 -->
-					    <form id="search" action="/admin/getCustomerList" method="get">
+					    <form id="search" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get">
                         <div class="input-group-prepend">
                         	<span class="input-group-text bg-transparent border-0 pr-2 pr-3" id="basic-addon1">
                         	<select class="btn btn-light dropdown-toggle" data-toggle="dropdown" name="storeId">                        		
