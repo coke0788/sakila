@@ -54,14 +54,14 @@
 		WHERE e.state='연체' AND e.customerId=#{customerId}
 	</select>
 	<select id="selectRentalListByCustomerId" parameterType="int" resultType="java.util.Map">
-			SELECT e.rentalId, e.inventoryId, e.filmId, e.title FROM (SELECT r.rental_id rentalId, r.customer_id customerId, i.inventory_id inventoryId, i.film_id filmId, f.title title, r.rental_date, r.return_date,
+		SELECT e.rentalId, e.inventoryId, e.filmId, e.title, DATEDIFF(NOW(), e.rentalDate)rentalDate, e.duration duration FROM (SELECT r.rental_date rentalDate, f.rental_duration duration, r.rental_id rentalId, r.customer_id customerId, i.inventory_id inventoryId, i.film_id filmId, f.title title, r.rental_date, r.return_date,
 		DATEDIFF(r.return_date, r.rental_date) DAY,
 		if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
-			if(DATEDIFF(r.return_date, r.rental_date) > f.rental_duration, '연체', '정상반납')) state, f.rental_duration
+		if(DATEDIFF(r.return_date, r.rental_date) > f.rental_duration, '연체', '정상반납')) state, f.rental_duration
 		FROM inventory i
 		JOIN film f ON i.film_id = f.film_id
 		JOIN rental r ON r.inventory_id = i.inventory_id) e 
-		WHERE e.state='대여중' AND e.customerId=${customerId}
+		WHERE e.state='대여중' AND e.customerId=#{customerId}
 	</select>
 	<!-- 고객당 판매량 130불 이상 일 경우 VIP -->
 	<select id="selectVIPCustomer" parameterType="int" resultType="int">
@@ -77,7 +77,7 @@
 		<selectKey resultType="Integer" keyProperty="addressId" order="BEFORE">
 	 		SELECT LAST_INSERT_ID()
 	 	</selectKey>
-		INSERT INTO customer(store_id, first_name, last_name, email, address_id, active)  VALUES(#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId}, 1)
+		INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date)  VALUES(#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId}, 1, NOW())
 	</insert>
 	
 	<!-- 고객 추가용 city 리스트 -->

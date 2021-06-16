@@ -9,19 +9,174 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Report</title>
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <!-- Custom Stylesheet -->
 <link rel="stylesheet" href="../static/plugins/chartist/css/chartist.min.css">
 <link rel="stylesheet" href="../static/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <link href="../static/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 $(document).ready(function(){
 	$('#logoutBtn').click(function(){
 		console.log('logout!');
 		$('#logout').submit();
 	});
-	
+	let a = []
+	let b = []
+	let c = []
+	let d = []
+	let e = []
+	let f = []
+	let x = []
+	let y = []
+	$.ajax({
+		type: 'get',
+		url: '/admin/getCategorySales',
+		success: function(category){
+			$(category).each(function(index, item){ 
+				x.push(item.category);
+				y.push(item.totalSales);
+			});
+			var categoryReport = new Chart(document.getElementById('categoryReport'), config);
+		}
+	});
+	let data = {
+			  labels: x,
+			  datasets: [{
+			    label: 'Sales by Category',
+			    data: y,
+			    backgroundColor: [
+			      'rgba(255, 99, 132, 0.2)',
+			      'rgba(255, 159, 64, 0.2)',
+			      'rgba(255, 205, 86, 0.2)',
+			      'rgba(75, 192, 192, 0.2)',
+			      'rgba(54, 162, 235, 0.2)'
+			    ],
+			    borderColor: [
+			      'rgb(255, 99, 132)',
+			      'rgb(255, 159, 64)',
+			      'rgb(255, 205, 86)',
+			      'rgb(75, 192, 192)',
+			      'rgb(54, 162, 235)'
+			    ],
+			    borderWidth: 1
+			  }]
+			};
+	const config = {
+			  type: 'bar',
+			  data: data,
+			  options: {
+			    scales: {
+			      y: {
+			        beginAtZero: true
+			      }
+			    }
+			  },
+			};
+	$.ajax({
+		type: 'get',
+		url: '/admin/getStoreSales',
+		success: function(store){
+			$(store).each(function(index, item){ 
+				a.push(item.store);
+				b.push(item.totalSales);
+			});
+			var storeReport = new Chart(document.getElementById('storeReport'), config2);
+		}
+	});
+	let data2 = {
+			labels: a,
+			  datasets: [{
+			    label: 'Sales by Store',
+			    data: b,
+			    backgroundColor: [
+			      'rgb(255, 99, 132)',
+			      'rgb(54, 162, 235)'
+			    ],
+			    hoverOffset: 4
+			  }]
+			};
+	const config2 = {
+			  type: 'doughnut',
+			  data: data2,
+			  options: {
+			    scales: {
+			      b: {
+			        beginAtZero: true
+			      }
+			    }
+			  },
+			};
+	$.ajax({
+		type: 'get',
+		url: '/admin/getBestSeller',
+		success: function(bestSeller){
+			$(bestSeller).each(function(index, item){ 
+				c.push(item.title);
+				d.push(item.totalSales);
+			});
+			var bestSeller = new Chart(document.getElementById('bestSeller'), config3);
+		}
+	});
+	let data3 = {
+			  labels: c,
+			  datasets: [{
+			    data: d,
+			    label: 'Best Seller Film',
+			    backgroundColor: [
+			      'rgba(255, 99, 132, 0.2)',
+			      'rgba(255, 159, 64, 0.2)',
+			      'rgba(255, 205, 86, 0.2)',
+			      'rgba(75, 192, 192, 0.2)',
+			      'rgba(54, 162, 235, 0.2)'
+			    ],
+			    borderColor: [
+			      'rgb(255, 99, 132)',
+			      'rgb(255, 159, 64)',
+			      'rgb(255, 205, 86)',
+			      'rgb(75, 192, 192)',
+			      'rgb(54, 162, 235)'
+			    ],
+			    borderWidth: 1
+			  }]
+			};
+	const config3 = {
+			  type: 'bar',
+			  data: data3,
+			  options: {
+			    scales: {
+			      y: {
+			        beginAtZero: true
+			      }
+			    }
+			  },
+			};
+	$.ajax({
+		type: 'get',
+		url: '/admin/getMonthlySales',
+		success: function(monthlySales){
+			$(monthlySales).each(function(index, item){ 
+				e.push(item.month);
+				f.push(item.totalSales);
+			});
+			var monthlySales = new Chart(document.getElementById('monthlySales'), config4);
+		}
+	});
+	let data4 = {
+	  labels: e,
+	  datasets: [{
+	    label: 'Monthly Sales',
+	    data: f,
+	    fill: false,
+	    borderColor: 'red',
+	    tension: 0.1
+	  }]
+	};
+	const config4 = {
+			  type: 'line',
+			  data: data4,
+			};
 });
 </script>
 </head>
@@ -105,15 +260,6 @@ $(document).ready(function(){
             Content body start
         ***********************************-->
         <div class="content-body">
-
-            <div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                    </ol>
-                </div>
-            </div>
             <!-- row -->
 
             <div class="container-fluid">
@@ -121,16 +267,16 @@ $(document).ready(function(){
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Advanced Smil Animation</h4>
-                                <div id="smil-animations" class="ct-chart ct-golden-section"></div>
+                                <h4 class="card-title">Sales by Store</h4>
+                                <canvas id="storeReport" class="ct-chart ct-golden-section"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Simple line chart</h4>
-                                <div id="simple-line-chart" class="ct-chart ct-golden-section"></div>
+                                <h4 class="card-title">Sales by Category</h4>
+                                <canvas id="categoryReport" class="ct-chart ct-golden-section"></canvas>
                             </div>
                         </div>
                     </div>
@@ -139,181 +285,20 @@ $(document).ready(function(){
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Line Scatter Diagram</h4>
-                                <div id="scatter-diagram" class="ct-chart ct-golden-section"></div>
+                                <h4 class="card-title">Best Seller</h4>
+                                <canvas id="bestSeller" class="ct-chart ct-golden-section"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Line chart with tooltips</h4>
-                                <div id="line-chart-tooltips" class="ct-chart ct-golden-section"></div>
+                                <h4 class="card-title">Monthly Sales</h4>
+                                <canvas id="monthlySales" class="ct-chart ct-golden-section"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Line chart with area</h4>
-                                <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Bi-polar Line chart with area only</h4>
-                                <div id="bi-polar-line" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">SVG Path animation</h4>
-                                <div id="svg-animation" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Line Interpolation / Smoothing</h4>
-                                <div id="line-smoothing" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Different configuration for different series</h4>
-                                <div id="different-series" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">SVG Animations chart</h4>
-                                <div id="svg-dot-animation" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Bi-polar bar chart</h4>
-                                <div id="bi-polar-bar" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Overlapping bars on mobile</h4>
-                                <div id="overlapping-bars" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Multi-line labels</h4>
-                                <div id="multi-line-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Stacked bar chart</h4>
-                                <div id="stacked-bar-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Horizontal bar chart</h4>
-                                <div id="horizontal-bar-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Extreme responsive configuration</h4>
-                                <div id="extreme-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Distributed series</h4>
-                                <div id="distributed-series" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Label placement</h4>
-                                <div id="label-placement-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Animating a Donut with Svg.animate</h4>
-                                <div id="animating-donut" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Simple pie chart</h4>
-                                <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Pie chart with custom labels</h4>
-                                <div id="pie-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Gauge chart</h4>
-                                <div id="gauge-chart" class="ct-chart ct-golden-section"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- #/ container -->

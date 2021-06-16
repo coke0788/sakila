@@ -29,6 +29,8 @@ public class CustomerService {
 	public void addCustomer(CustomerForm customerForm) {
 		int addressRow = customerMapper.insertAddressForCustomer(customerForm);
 		int row = customerMapper.insertCustomer(customerForm);
+		log.debug("=======================주소 등록:"+addressRow);
+		log.debug("=======================회원 등록:"+row);
 	}
 	
 	public Map<String, Object> getCustomerList(int currentPage, int rowPerPage, String searchWord, int storeId, int active){

@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.ReportMapper">
+	<!-- 월별 판매금액 -->
+	<select id="selectMonthlySales" resultType="java.util.Map">
+		SELECT SUM(amount) totalSales, LEFT(payment_date, 7)month FROM payment GROUP BY LEFT(payment_date, 7)
+	</select>
+	<!-- 지점별 판매금액 -->
+	<select id="selectSalesByStore" resultType="java.util.Map">
+		SELECT store, manager, total_sales totalSales FROM sales_by_store
+	</select>
+	<!-- 카테고리별 판매금액 -->
+	<select id="selectSalesByCategory" resultType="java.util.Map">
+		SELECT category, total_sales totalSales FROM sales_by_film_category
+	</select>
+	<!-- 베스트 셀러 -->
+	<select id="selectBestSeller" resultType="java.util.Map">
+		SELECT f.title title, SUM(p.amount) totalSales FROM payment p
+		INNER JOIN rental r ON p.rental_id = r.rental_id
+		INNER JOIN inventory i ON r.inventory_id = i.inventory_id
+		INNER JOIN film f ON i.film_id = f.film_id GROUP BY f.title
+		ORDER BY totalSales DESC LIMIT 10
+	</select>
 </mapper>

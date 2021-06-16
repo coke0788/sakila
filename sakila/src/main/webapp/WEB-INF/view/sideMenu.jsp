@@ -16,27 +16,27 @@
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/getFilmList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Film List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Staff List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/getActorList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Actor List</span>
+                            <i class="fa fa-film"></i><span class="nav-text">Film List</span>
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/getInventoryInfoList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Inventory List</span>
+                            <i class="fa fa-film"></i><span class="nav-text">Inventory List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/getStaffList" aria-expanded="false">
+                            <i class="fa fa-user"></i><span class="nav-text">Staff List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/getActorList" aria-expanded="false">
+                            <i class="fa fa-user"></i><span class="nav-text">Actor List</span>
                         </a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/admin/getCustomerList" aria-expanded="false">
-                            <i class="fa fa-clipboard"></i><span class="nav-text">Customer List</span>
+                            <i class="fa fa-user"></i><span class="nav-text">Customer List</span>
                         </a>
                     </li>
                     <li>

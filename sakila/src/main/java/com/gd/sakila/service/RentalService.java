@@ -41,12 +41,15 @@ public class RentalService {
 		log.debug("========================대여기간:"+map);
 		return map;
 	}
-	public void addRental(int inventoryId, int customerId, int staffId) {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("inventoryId", inventoryId);
-		paramMap.put("customerId", customerId);
-		paramMap.put("staffId", staffId);
-		int row = rentalMapper.insertRentalData(paramMap);
-		log.debug("========================반납 row값:"+row);
+	public void addRental(int[] inventoryId, int customerId, int staffId) {
+		int row = 0;
+		for(int i : (int[]) inventoryId) {
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("inventoryId", i);
+			paramMap.put("customerId", customerId);
+			paramMap.put("staffId", staffId);
+			row = rentalMapper.insertRentalData(paramMap);
+		}
+		log.debug("========================대여 row값:"+row);
 	}
 }

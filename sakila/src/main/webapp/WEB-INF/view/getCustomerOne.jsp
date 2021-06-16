@@ -17,6 +17,10 @@ $(document).ready(function(){
 		console.log('logout!');
 		$('#logout').submit();
 	});
+	$('#returnBtnLate').click(function(){
+		console.log('연체된 반납버튼');
+		var check = alert('연체 중인 비디오입니다. 확인하셨습니까?');
+	});
 });
 </script>
 </head>
@@ -166,11 +170,20 @@ $(document).ready(function(){
 										<td>
 										<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/addRental?customerId=${map.customerId}">대여</a><br>
 										<c:forEach var="r" items="${rentalList}">
-											${r.inventoryId} / ${r.filmId} / ${r.title}
-											<c:if test="${r!=null}">
-												<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}">반납</a>
+											<c:if test="${r.rentalDate > r.duration}">
+												<p style="color:red">${r.inventoryId} / ${r.filmId} / ${r.title}
+												<c:if test="${r!=null}">
+													<a href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}"><button type="button" class="btn btn-sm btn-light" id="returnBtnLate">반납</button></a>
+												</c:if>
+												</p>
 											</c:if>
-											<br>
+											<c:if test="${r.rentalDate <= r.duration}">
+												<p>${r.inventoryId} / ${r.filmId} / ${r.title}
+												<c:if test="${r!=null}">
+													<a id="getReturn" href="${pageContext.request.contextPath}/admin/getReturn?rentalId=${r.rentalId}&inventoryId=${r.inventoryId}&customerId=${map.customerId}&filmId=${r.filmId}"><button type="button" class="btn btn-sm btn-light" id="returnBtn">반납</button></a>
+												</c:if>
+												</p>
+											</c:if>
 										</c:forEach>
 										</td>
 									</tr>

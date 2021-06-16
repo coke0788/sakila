@@ -93,7 +93,7 @@ public class RentalController {
 	@PostMapping("/addRental")
 	public String addRental(@RequestParam(value= "customerId", required=true) int customerId,
 							@RequestParam(value= "staffId", required=true) int staffId,
-							@RequestParam(value= "inventoryId", required=true) int inventoryId) {
+							@RequestParam(value= "inventoryId", required=true) int[] inventoryId) {
 		rentalService.addRental(inventoryId, customerId, staffId);
 		return "redirect:/admin/getCustomerOne?customerId="+customerId;
 	}
