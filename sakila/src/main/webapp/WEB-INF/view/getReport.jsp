@@ -11,11 +11,10 @@
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon.png">
 <!-- Custom Stylesheet -->
-<link rel="stylesheet" href="../static/plugins/chartist/css/chartist.min.css">
-<link rel="stylesheet" href="../static/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <link href="../static/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../static/plugins/chart.js/Chart.bundle.min.js"></script>
+<script src="../static/js/plugins-init/chartjs-init.js"></script>
 <script>
 $(document).ready(function(){
 	$('#logoutBtn').click(function(){
@@ -32,7 +31,7 @@ $(document).ready(function(){
 	let y = []
 	$.ajax({
 		type: 'get',
-		url: '/getCategorySales',
+		url: '${pageContext.request.contextPath}/getCategorySales',
 		success: function(category){
 			$(category).each(function(index, item){ 
 				x.push(item.category);
@@ -76,7 +75,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/getStoreSales',
+		url: '${pageContext.request.contextPath}/getStoreSales',
 		success: function(store){
 			$(store).each(function(index, item){ 
 				a.push(item.store);
@@ -110,7 +109,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/getBestSeller',
+		url: '${pageContext.request.contextPath}/getBestSeller',
 		success: function(bestSeller){
 			$(bestSeller).each(function(index, item){ 
 				c.push(item.title);
@@ -154,7 +153,7 @@ $(document).ready(function(){
 			};
 	$.ajax({
 		type: 'get',
-		url: '/getMonthlySales',
+		url: '${pageContext.request.contextPath}/getMonthlySales',
 		success: function(monthlySales){
 			$(monthlySales).each(function(index, item){ 
 				e.push(item.month);
@@ -268,7 +267,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Sales by Store</h4>
-                                <canvas id="storeReport"></canvas>
+                                <canvas id="storeReport" width="500" height="250"></canvas>
                             </div>
                         </div>
                     </div>
@@ -276,7 +275,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Sales by Category</h4>
-                                <canvas id="categoryReport"></canvas>
+                                <canvas id="categoryReport" width="500" height="250"></canvas>
                             </div>
                         </div>
                     </div>
@@ -286,7 +285,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Best Seller</h4>
-                                <canvas id="bestSeller"></canvas>
+                                <canvas id="bestSeller" width="500" height="250"></canvas>
                             </div>
                         </div>
                     </div>
@@ -294,7 +293,7 @@ $(document).ready(function(){
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Monthly Sales</h4>
-                                <canvas id="monthlySales"></canvas>
+                                <canvas id="monthlySales" width="500" height="250"></canvas>
                             </div>
                         </div>
                     </div>
@@ -333,11 +332,6 @@ $(document).ready(function(){
     <script src="../static/js/settings.js"></script>
     <script src="../static/js/gleek.js"></script>
     <script src="../static/js/styleSwitcher.js"></script>
-
-    <script src="../static/plugins/chartist/js/chartist.min.js"></script>
-    <script src="../static/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
-    <script src="../static/js/plugins-init/chartist.init.js"></script>
-
 </body>
 
 </html>

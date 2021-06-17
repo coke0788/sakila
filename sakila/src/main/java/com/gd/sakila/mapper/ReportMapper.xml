@@ -3,7 +3,7 @@
 <mapper namespace="com.gd.sakila.mapper.ReportMapper">
 	<!-- 월별 판매금액 -->
 	<select id="selectMonthlySales" resultType="java.util.Map">
-		SELECT SUM(amount) totalSales, LEFT(payment_date, 7)month FROM payment GROUP BY LEFT(payment_date, 7)
+		SELECT SUM(amount) totalSales, LEFT(payment_date, 7)month FROM payment GROUP BY LEFT(payment_date, 7) LIMIT 10
 	</select>
 	<!-- 지점별 판매금액 -->
 	<select id="selectSalesByStore" resultType="java.util.Map">

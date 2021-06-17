@@ -1,9 +1,9 @@
 (function ($) {
     "use strict";
-
+	
     //Team chart
     var ctx = document.getElementById("team-chart");
-    ctx.height = 150;
+    ctx.height = 250;
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -398,7 +398,7 @@
 
     // single bar chart
     var ctx = document.getElementById("singelBarChart");
-    ctx.height = 150;
+    ctx.height = 250;
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -427,7 +427,7 @@
 
 
 
-})(jQuery);
+});
 
 
 
@@ -449,7 +449,7 @@ Chart.controllers.line = Chart.controllers.line.extend({
     }
 });
 
-(nk = document.getElementById("canvas")).height = 150;
+(nk = document.getElementById("canvas")).height = 250;
 myChart = new Chart(nk, {
     type: 'line',
     data: {
