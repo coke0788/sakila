@@ -115,52 +115,37 @@ $(document).ready(function(){
                                 <hr>
 						       	<form id="modifyForm" action="${pageContext.request.contextPath}/admin/modifyBoard" method="post">
 									<div class="form-group">
-										<label for="boardId" class="col-lg-8 col-form-label">board Id <span class="text-danger"></span></label>
-									</div>
-									<div>
-										<span>${boardMap.boardId}</span>
+										<input name="boardId" value="${boardMap.boardId}" hidden="hidden">
+										<label for="boardId" class="col-lg-2 col-form-label">Board Id</label>
+										 <div class="col-lg-8">${boardMap.boardId}</div>
 									</div>						       							
 						            <div class="form-group">
 						                <label for="boardTitle" class="col-lg-6 col-form-label">Title <span class="text-danger">*</span></label>
 						                <div class="col-lg-8"> 
-						                	<input class="form-control" name="board.boardTitle" id="boardTitle" type="text" placeholder="제목을 입력하세요."/>
+						                	<input class="form-control" name="boardTitle" id="boardTitle" type="text" value="${boardMap.boardTitle}"/>
 						                </div>
 						            </div>
 						            <div class="form-group">
 						                <label for="boardContent" class="col-lg-6 col-form-label">Content <span class="text-danger">*</span></label>
 						                <div class="col-lg-8">
-						                	<textarea class="form-control" name="board.boardContent" id="boardContent" rows="5" cols="50"></textarea>
+						                	<textarea class="form-control" name="boardContent" id="boardContent" rows="5" cols="50">${boardMap.boardContent}</textarea>
 						                </div>
-							        </div>
-							        <div class="form-group">
-							            <label for="boardfile" class="col-lg-6 col-form-label">File <span class="text-danger"> </span></label>
-							            <div class="col-lg-8">
-							                <button id="addFileBtn" type="button" class="btn btn-sm btn-light">파일추가</button>
-							                <button id="delFileBtn" type="button" class="btn btn-sm btn-light">파일삭제</button>
-							            </div>
-							            <div id="inputFile">
-							            </div>
 							        </div>
 						            <div class="form-group">
-						                <label for="staffId" class="col-lg-2 col-form-label">staff ID <span class="text-danger">*</span></label>
-						                <div class="col-lg-3">
-						                	<select class="form-control" id="staffId" name="board.staffId">
-						                		<option value="1">1: Mike</option>
-						                		<option value="2">2: Jon</option>
-						                	</select>
-						                </div>
+						                <label for="staffId" class="col-lg-2 col-form-label">Staff <span class="text-danger">*</span></label>
+						                <div class="col-lg-8">${boardMap.username}</div>
 						            </div>
 									<div class="form-group">
-						                <label for="boardPw" class="col-lg-8 col-form-label">board PW <span class="text-danger">*</span></label>
+						                <label for="boardPw" class="col-lg-8 col-form-label">Board PW <span class="text-danger">*</span></label>
 						              	<div class="col-lg-8"> 
-						                	<input class="form-control" name="board.boardPw" id="boardPw" type="password" placeholder="4자 이상의 비밀번호를 입력하세요."/>
+						                	<input class="form-control" name="boardPw" id="boardPw" type="password" placeholder="4자 이상의 비밀번호를 입력하세요."/>
 						                </div>
 						            </div>
 						            <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
-						                	<input class="btn btn-primary" id="addButton" type="button" value="등록"/> 
+						                	<input class="btn btn-primary" id="btn" type="button" value="수정"/> 
 						                    <input class="btn btn-default" type="reset" value="초기화" />
-						                    <a href="${pageContext.request.contextPath}/admin/getBoardList"><input class="btn btn-default" type="button" value="목록"></a>
+						                    <a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}"><button type="button" class="btn btn-light">취소</button></a>
 						            	</div>
 						            </div>
 						        </form>
@@ -199,45 +184,5 @@ $(document).ready(function(){
 
     <script src="../static/plugins/validation/jquery.validate.min.js"></script>
     <script src="../static/plugins/validation/jquery.validate-init.js"></script>
-	<div class="container">
-		<h1>modifyBoard</h1>
-		<form id="modifyForm"
-			action="${pageContext.request.contextPath}/admin/modifyBoard"
-			method="post">
-			<table class="table">
-				<tbody>
-					<tr>
-						<td>board_id :</td>
-						<td><input type="text" name="boardId" id="boardId"
-							value="${boardMap.boardId}" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<td>board_title :</td>
-						<td><input type="text" name="boardTitle" id="boardTitle"
-							value="${boardMap.boardTitle}"></td>
-					</tr>
-					<tr>
-						<td>board_content :</td>
-						<td><textarea name="boardContent" id="boardContent" rows="5"
-								cols="80">${boardMap.boardContent}</textarea></td>
-					</tr>
-					<tr>
-						<td>user_name :</td>
-						<td>${boardMap.username}</td>
-					</tr>
-					<tr>
-						<td>insert_date :</td>
-						<td>${boardMap.insertDate}</td>
-					</tr>
-					<tr>
-						<td>board_pw</td>
-						<td><input type="password" name="boardPw" id="boardPw"></td>
-					</tr>
-				</tbody>
-			</table>
-			<button type="button" class="btn btn-light" id="btn">수정</button>
-			<a href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}"><button type="button" class="btn btn-light">취소</button></a>
-		</form>
-	</div>
 </body>
 </html>

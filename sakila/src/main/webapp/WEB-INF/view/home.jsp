@@ -62,8 +62,8 @@ $(document).ready(function(){
                                 </form>
                             </c:if>
                             <c:if test="${loginStaff != null}">
+                            <a href="${pageContext.request.contextPath}/admin/getBoardList"><button class="btn btn-outline-primary w-100">리스트로 이동</button></a>
                             	<form action="${pageContext.request.contextPath}/admin/logout" id="logout">
-                            		<a href="${pageContext.request.contextPath}/admin/getBoardList"><button class="btn btn-outline-primary w-100" id="btn">리스트로 이동</button></a>
 	                            		<div><button type="button" id="logoutBtn" class="btn btn-outline-secondary w-100">LOGOUT</button></div>
 	                            </form>
                             </c:if>
